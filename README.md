@@ -60,8 +60,24 @@ Jalankan perintah ini setiap kali Anda mengubah markup kelas di `index.html`, `4
 ```bash
 npm run build
 ```
+Build ini melakukan dua hal: meminifikasi Tailwind ke `assets/site.css`, lalu menjalankan
+`scripts/cache-bust.js` yang menempelkan `?v=<hash isi>` pada setiap referensi `/assets/`
+di `index.html` & `404.html`. **Jangan hapus query versi itu** — tanpa hash, CDN akan
+menyajikan CSS/JS lama selama 7 hari (HTML baru + JS lama = tampilan seolah tidak sinkron).
 
-### 3. Mode Pengawasan (Live Reload CSS saat Edit)
+### 3. Optimasi Gambar Produk
+Foto produk mentah (JPG) diletakkan di `foto_produk_landing_page/`. Konversi ke WebP
+dua ukuran (600w untuk kartu, 1200w untuk galeri/Retina) memakai `ffmpeg`:
+```bash
+# Sesuaikan peta nama berkas di dalam skrip bila menambah produk baru
+node scripts/convert-photos.js
+```
+Untuk memangkas berat gambar besar yang sudah ada di `images/`:
+```bash
+node scripts/optimize-images.js
+```
+
+### 4. Mode Pengawasan (Live Reload CSS saat Edit)
 ```bash
 npm run watch
 ```

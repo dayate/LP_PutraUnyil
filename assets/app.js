@@ -22,6 +22,17 @@ const PRODUCTS = [
     desc: "Daging keong sawah pilihan yang kenyal empuk, dibakar dengan balutan bumbu rica-rica pedas gurih medok.",
   },
   {
+    id: "sate-usus",
+    name: "Sate Usus Bumbu Kuning",
+    category: "keong",
+    price: 5000,
+    unit: "porsi (5 tusuk)",
+    status: "available",
+    image: "images/sate-usus-600.webp",
+    imageHi: "images/sate-usus-1200.webp",
+    desc: "Usus ayam dibersihkan lalu diungkep bumbu kuning gurih, ditusuk dan dibakar hingga harum legit tanpa bau.",
+  },
+  {
     id: "oseng-keong",
     name: "Oseng Keong Pedas Cabai Hijau",
     category: "keong",
@@ -39,8 +50,8 @@ const PRODUCTS = [
     price: 45000,
     unit: "kg",
     status: "preorder",
-    image: "images/placeholder-keong-fresh-600.webp",
-    imageHi: "images/placeholder-keong-fresh-1200.webp",
+    image: "images/keong-fresh-600.webp",
+    imageHi: "images/keong-fresh-1200.webp",
     desc: "Keong sawah tangkapan segar yang sudah dikupas dan dicuci bersih higienis siap masak (Sistem Pre-Order H-1).",
   },
   {
