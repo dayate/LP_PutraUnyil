@@ -60,10 +60,13 @@ Jalankan perintah ini setiap kali Anda mengubah markup kelas di `index.html`, `4
 ```bash
 npm run build
 ```
-Build ini melakukan dua hal: meminifikasi Tailwind ke `assets/site.css`, lalu menjalankan
-`scripts/cache-bust.js` yang menempelkan `?v=<hash isi>` pada setiap referensi `/assets/`
-di `index.html` & `404.html`. **Jangan hapus query versi itu** — tanpa hash, CDN akan
-menyajikan CSS/JS lama selama 7 hari (HTML baru + JS lama = tampilan seolah tidak sinkron).
+Build ini melakukan tiga hal: meminifikasi Tailwind ke `assets/site.css`, menjalankan
+`scripts/cache-bust.js`, lalu mencetak ulang kartu katalog ke `index.html`. `cache-bust.js`
+menempelkan `?v=<hash isi>` pada setiap referensi `/assets/` & `/images/` di `index.html` &
+`404.html` — **termasuk setiap URL di dalam `srcset` / `imagesrcset`**. **Jangan hapus query
+versi itu** — tanpa hash, CDN akan menyajikan CSS/JS/foto lama selama 7 hari (HTML baru + aset
+lama = tampilan seolah tidak sinkron). Build akan gagal dengan pesan `cache-bust: GAGAL` bila
+ada URL aset yang lolos tanpa `?v=`, jadi regresi seperti ini tidak akan lolos ke produksi.
 
 ### 3. Optimasi Gambar Produk
 Foto produk mentah (JPG) diletakkan di `images/_source/`. Konversi ke WebP
