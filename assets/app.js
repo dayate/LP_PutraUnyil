@@ -29,7 +29,9 @@ const ASSET_VERSIONS = /* @asset-versions */ {
   "images/sate-usus-1200.webp": "d90b9f76ad",
   "images/sate-usus-600.webp": "c5b0926de7",
   "images/tahu-sarang-1200.webp": "4af1e181e2",
-  "images/tahu-sarang-600.webp": "085377adaf"
+  "images/tahu-sarang-600.webp": "085377adaf",
+  "vendor/leaflet/leaflet.css": "a783710282",
+  "vendor/leaflet/leaflet.js": "db49d009c8"
 };
 
 // Katalog Produk Mak Unyil dengan Status Stok Realistis
@@ -837,6 +839,38 @@ document.getElementById("cart-drawer").addEventListener("click", (e) => {
   if (e.target.id === "cart-drawer") closeCart();
 });
 
+// Jam operasional dapur, dipakai untuk validasi input type="time".
+const KITCHEN_OPEN_MIN = 6 * 60; // 06:00
+const KITCHEN_CLOSE_MIN = 18 * 60; // 18:00
+
+function timeToMinutes(value) {
+  const match = /^(\d{1,2}):(\d{2})$/.exec((value || "").trim());
+  if (!match) return null;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (hours > 23 || minutes > 59) return null;
+  return hours * 60 + minutes;
+}
+
+function normalizeOrderTime(value) {
+  const total = timeToMinutes(value);
+  if (total == null) return null;
+  const hh = String(Math.floor(total / 60)).padStart(2, "0");
+  const mm = String(total % 60).padStart(2, "0");
+  return `${hh}:${mm}`;
+}
+
+// Input type="time" mengikuti locale perangkat (bisa tampil "11:00 AM" di
+// browser berbahasa Inggris). Nilainya selalu 24 jam, jadi di bawah field
+// ditampilkan penegasan 24 jam supaya tidak ada salah baca.
+function updateOrderTimeEcho() {
+  const input = document.getElementById("order-time");
+  const echo = document.getElementById("order-time-echo");
+  if (!input || !echo) return;
+  const time = normalizeOrderTime(input.value);
+  echo.textContent = time ? ` · dipilih ${time} WIB` : "";
+}
+
 // Schedule Modal Handler
 function openScheduleModal() {
   const dateInput = document.getElementById("order-date");
@@ -850,18 +884,11 @@ function openScheduleModal() {
   dateInput.min = todayWib;
   if (!dateInput.value) dateInput.value = todayWib;
 
-  // Isi pilihan jam sekali saja, kelipatan 30 menit pada jam operasional
-  // dapur (06:00 - 18:00 WIB), selalu dalam format 24 jam.
-  if (timeInput.options.length <= 1) {
-    const opts = ['<option value="">Pilih jam…</option>'];
-    for (let m = 6 * 60; m <= 18 * 60; m += 30) {
-      const hh = String(Math.floor(m / 60)).padStart(2, "0");
-      const mm = String(m % 60).padStart(2, "0");
-      opts.push(`<option value="${hh}:${mm}">${hh}:${mm} WIB</option>`);
-    }
-    timeInput.innerHTML = opts.join("");
-  }
+  // Field jam kembali memakai input type="time" native. Atribut min/max hanya
+  // membatasi picker, bukan nilai yang diketik manual, jadi rentang 06:00-18:00
+  // tetap divalidasi di saveSchedule().
   if (!timeInput.value) timeInput.value = "11:00";
+  updateOrderTimeEcho();
 
   showModal("schedule-modal");
   dateInput.focus({ preventScroll: true });
@@ -880,6 +907,18 @@ function saveSchedule() {
     return;
   }
 
+  const normalizedTime = normalizeOrderTime(timeVal);
+  if (!normalizedTime) {
+    alert("Pilih jam pengantaran dulu (format 24 jam, contoh 14:30).");
+    return;
+  }
+
+  const minutes = timeToMinutes(normalizedTime);
+  if (minutes < KITCHEN_OPEN_MIN || minutes > KITCHEN_CLOSE_MIN) {
+    alert("Jam pengantaran hanya tersedia 06:00–18:00 WIB.");
+    return;
+  }
+
   const [yy, mm, dd] = dateVal.split("-").map(Number);
   const formattedDate = new Date(yy, mm - 1, dd).toLocaleDateString("id-ID", {
     weekday: "long",
@@ -888,7 +927,7 @@ function saveSchedule() {
     day: "numeric",
   });
 
-  selectedSchedule = `${formattedDate}, pukul ${timeVal || "11:00"} WIB`;
+  selectedSchedule = `${formattedDate}, pukul ${normalizedTime} WIB`;
   document.getElementById("schedule-display").innerHTML =
     `<span class="font-semibold text-stone-900">🗓️ ${selectedSchedule}</span>`;
   saveState();
@@ -896,8 +935,74 @@ function saveSchedule() {
   closeScheduleModal();
 }
 
+// ---- Leaflet on-demand -----------------------------------------------------
+// Peta hanya dipakai di modal pemilih titik pengantaran, jadi Leaflet (±45 KB
+// gzip CSS+JS) tidak dimuat saat halaman dibuka. loadLeaflet() menyuntikkan
+// asetnya sekali saja, lalu Promise-nya dipakai ulang untuk buka-tutup modal.
+const LEAFLET_CSS = "vendor/leaflet/leaflet.css";
+const LEAFLET_JS = "vendor/leaflet/leaflet.js";
+let leafletPromise = null;
+
+function loadLeaflet() {
+  if (window.L) return Promise.resolve(window.L);
+  if (leafletPromise) return leafletPromise;
+
+  leafletPromise = new Promise((resolve, reject) => {
+    if (!document.querySelector('link[data-leaflet-css="1"]')) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = assetUrl(LEAFLET_CSS);
+      link.dataset.leafletCss = "1";
+      document.head.appendChild(link);
+    }
+
+    const script = document.createElement("script");
+    script.src = assetUrl(LEAFLET_JS);
+    script.async = true;
+    script.onload = () => {
+      if (!window.L) {
+        reject(new Error("Leaflet gagal diinisialisasi"));
+        return;
+      }
+      // Path ikon marker default (dulu di-set di <head>, tidak bisa lagi karena
+      // Leaflet baru ada setelah modal peta dibuka).
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: "/vendor/leaflet/images/marker-icon-2x.png",
+        iconUrl: "/vendor/leaflet/images/marker-icon.png",
+        shadowUrl: "/vendor/leaflet/images/marker-shadow.png",
+      });
+      resolve(window.L);
+    };
+    script.onerror = () => reject(new Error("Aset Leaflet tidak dapat dimuat"));
+    document.body.appendChild(script);
+  }).catch((err) => {
+    leafletPromise = null; // biar percobaan berikutnya boleh ulang
+    throw err;
+  });
+
+  return leafletPromise;
+}
+
+function showMapLoading(visible) {
+  const el = document.getElementById("map-loading");
+  if (el) el.classList.toggle("hidden", !visible);
+}
+
+function showMapError(visible) {
+  const el = document.getElementById("map-error-note");
+  if (el) el.classList.toggle("hidden", !visible);
+}
+
+function syncGoogleMapsLink(lat, lng) {
+  const link = document.getElementById("map-gmaps-link");
+  if (link) {
+    link.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  }
+}
+
 // Map Picker Handlers
-function openMapPickerModal() {
+async function openMapPickerModal() {
   showModal("map-picker-modal");
 
   const targetLat = selectedLocation
@@ -907,42 +1012,85 @@ function openMapPickerModal() {
     ? parseFloat(selectedLocation.lng)
     : DEFAULT_LNG;
 
-  setTimeout(() => {
-    if (!pickerMap) {
-      pickerMap = L.map("picker-map", {
-        center: [targetLat, targetLng],
-        zoom: 15,
-      });
+  updateCoordsDisplay(targetLat, targetLng);
 
-      L.tileLayer(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-        {
-          maxZoom: 19,
-          attribution:
-            'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a> &mdash; Esri, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
-        },
-      ).addTo(pickerMap);
-
-      pickerMarker = L.marker([targetLat, targetLng], {
-        draggable: true,
-      }).addTo(pickerMap);
-
-      pickerMarker.on("dragend", function (e) {
-        const pos = e.target.getLatLng();
-        updateCoordsDisplay(pos.lat, pos.lng);
-      });
-
-      pickerMap.on("click", function (e) {
-        pickerMarker.setLatLng(e.latlng);
-        updateCoordsDisplay(e.latlng.lat, e.latlng.lng);
-      });
-    } else {
+  if (pickerMap) {
+    showMapLoading(false);
+    setTimeout(() => {
       pickerMap.invalidateSize();
       pickerMap.setView([targetLat, targetLng], 15);
       pickerMarker.setLatLng([targetLat, targetLng]);
-    }
-    updateCoordsDisplay(targetLat, targetLng);
-  }, 250);
+    }, 200);
+    return;
+  }
+
+  showMapLoading(true);
+  showMapError(false);
+
+  try {
+    await loadLeaflet();
+  } catch (err) {
+    console.error("Gagal memuat peta:", err);
+    showMapLoading(false);
+    showMapError(true);
+    return;
+  }
+
+  // Pengguna mungkin sudah menutup modal selagi aset dimuat.
+  if (document.getElementById("map-picker-modal").hasAttribute("inert")) {
+    showMapLoading(false);
+    return;
+  }
+
+  if (!pickerMap) {
+    pickerMap = L.map("picker-map", {
+      center: [targetLat, targetLng],
+      zoom: 15,
+    });
+
+    const tiles = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      {
+        maxZoom: 19,
+        attribution:
+          'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a> &mdash; Esri, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      },
+    ).addTo(pickerMap);
+
+    // Kalau tile diblokir ISP/jaringan, jangan tampilkan peta abu-abu kosong
+    // tanpa penjelasan: beri catatan + tautan Google Maps.
+    let tileErrors = 0;
+    tiles.on("tileerror", () => {
+      tileErrors += 1;
+      if (tileErrors >= 3) showMapError(true);
+    });
+    tiles.on("tileload", () => {
+      tileErrors = 0;
+      showMapError(false);
+    });
+
+    pickerMarker = L.marker([targetLat, targetLng], {
+      draggable: true,
+    }).addTo(pickerMap);
+
+    pickerMarker.on("dragend", function (e) {
+      const pos = e.target.getLatLng();
+      updateCoordsDisplay(pos.lat, pos.lng);
+    });
+
+    pickerMap.on("click", function (e) {
+      pickerMarker.setLatLng(e.latlng);
+      updateCoordsDisplay(e.latlng.lat, e.latlng.lng);
+    });
+  } else {
+    pickerMap.setView([targetLat, targetLng], 15);
+    pickerMarker.setLatLng([targetLat, targetLng]);
+  }
+
+  setTimeout(() => {
+    pickerMap.invalidateSize();
+    showMapLoading(false);
+  }, 150);
 }
 
 function closeMapPickerModal() {
@@ -952,6 +1100,7 @@ function closeMapPickerModal() {
 function updateCoordsDisplay(lat, lng) {
   document.getElementById("pin-coords-text").innerText =
     `Titik: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  syncGoogleMapsLink(lat.toFixed(5), lng.toFixed(5));
 }
 
 function locateCurrentPosition() {
@@ -977,7 +1126,95 @@ function locateCurrentPosition() {
   }
 }
 
+// ---- Pencarian lokasi (Photon) --------------------------------------------
+// Nominatim OSM melarang pemakaian untuk autocomplete/typeahead (maks 1 req/dtk),
+// jadi pencarian dialihkan ke Photon (komoot) yang dirancang untuk
+// search-as-you-type. Query dibias ke titik dapur agar nama tempat lokal
+// (masjid, perumahan, kelurahan) tidak melompat ke kota lain.
+const PHOTON_ENDPOINT = "https://photon.komoot.io/api/";
+const locationSearchCache = new Map();
 let searchDebounceTimer = null;
+let searchAbortController = null;
+
+function photonSearch(query, limit, signal) {
+  const cacheKey = `${limit}|${query.toLowerCase()}`;
+  if (locationSearchCache.has(cacheKey)) {
+    return Promise.resolve(locationSearchCache.get(cacheKey));
+  }
+
+  const params = new URLSearchParams({
+    q: query,
+    limit: String(limit),
+    // Photon hanya mendukung lang default/de/en/fr — jangan kirim lang=id (HTTP 400).
+    // Nama tempat tetap mengikuti data OSM, dan hasil dibias ke titik dapur.
+    lat: String(DEFAULT_LAT),
+    lon: String(DEFAULT_LNG),
+  });
+
+  return fetch(`${PHOTON_ENDPOINT}?${params.toString()}`, {
+    signal,
+    headers: { Accept: "application/json" },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`Photon HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((data) => {
+      const items = (data.features || []).map((feature) => {
+        const p = feature.properties || {};
+        const detail = [p.street, p.district, p.city, p.state]
+          .filter(Boolean)
+          .filter((part, idx, arr) => arr.indexOf(part) === idx)
+          .join(", ");
+        return {
+          lat: feature.geometry.coordinates[1],
+          lon: feature.geometry.coordinates[0],
+          name: p.name || p.street || p.city || "Lokasi",
+          detail,
+        };
+      });
+      locationSearchCache.set(cacheKey, items);
+      if (locationSearchCache.size > 80) {
+        locationSearchCache.delete(locationSearchCache.keys().next().value);
+      }
+      return items;
+    });
+}
+
+function renderSearchResults(items, suggestionsBox) {
+  if (!items.length) {
+    suggestionsBox.innerHTML = `<div class="p-2.5 text-stone-400 text-center text-[11px]">Tidak ada rekomendasi alamat ditemukan</div>`;
+    suggestionsBox.classList.remove("hidden");
+    return;
+  }
+
+  suggestionsBox.innerHTML = "";
+  items.forEach((item) => {
+    const row = document.createElement("div");
+    row.className =
+      "p-2.5 hover:bg-stone-100 cursor-pointer flex items-start gap-2 transition";
+
+    const pin = document.createElement("span");
+    pin.className = "text-stone-400 mt-0.5 shrink-0";
+    pin.textContent = "📍";
+
+    const wrap = document.createElement("div");
+    wrap.className = "min-w-0 flex-1";
+    const title = document.createElement("p");
+    title.className =
+      "font-semibold text-stone-800 text-[11px] truncate leading-tight";
+    title.textContent = item.name;
+    const sub = document.createElement("p");
+    sub.className = "text-[10px] text-stone-500 truncate leading-snug";
+    sub.textContent = item.detail;
+    wrap.append(title, sub);
+
+    row.append(pin, wrap);
+    row.onclick = () => selectSuggestedLocation(item);
+    suggestionsBox.appendChild(row);
+  });
+  suggestionsBox.classList.remove("hidden");
+}
 
 function handleSearchInput(query) {
   clearTimeout(searchDebounceTimer);
@@ -991,46 +1228,35 @@ function handleSearchInput(query) {
   }
 
   searchDebounceTimer = setTimeout(async () => {
+    if (searchAbortController) searchAbortController.abort();
+    searchAbortController = new AbortController();
+
+    // Photon butuh ~1-3 detik dari jaringan Indonesia; beri tanda sedang mencari
+    // supaya kotak saran tidak terasa kosong/rusak.
+    suggestionsBox.innerHTML = `<div class="p-2.5 text-stone-400 text-center text-[11px]">Mencari lokasi…</div>`;
+    suggestionsBox.classList.remove("hidden");
+
     try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&countrycodes=id&limit=5&addressdetails=1`,
+      const items = await photonSearch(
+        cleanQuery,
+        5,
+        searchAbortController.signal,
       );
-      const results = await res.json();
-
-      if (!results || results.length === 0) {
-        suggestionsBox.innerHTML = `<div class="p-2.5 text-stone-400 text-center text-[11px]">Tidak ada rekomendasi alamat ditemukan</div>`;
-        suggestionsBox.classList.remove("hidden");
-        return;
-      }
-
-      suggestionsBox.innerHTML = "";
-      results.forEach((item) => {
-        const row = document.createElement("div");
-        row.className =
-          "p-2.5 hover:bg-stone-100 cursor-pointer flex items-start gap-2 transition";
-        row.innerHTML = `
-        <span class="text-stone-400 mt-0.5 shrink-0">📍</span>
-        <div class="min-w-0 flex-1">
-          <p class="font-semibold text-stone-800 text-[11px] truncate leading-tight">${item.name || item.display_name.split(",")[0]}</p>
-          <p class="text-[10px] text-stone-500 truncate leading-snug">${item.display_name}</p>
-        </div>
-      `;
-        row.onclick = () => selectSuggestedLocation(item);
-        suggestionsBox.appendChild(row);
-      });
-      suggestionsBox.classList.remove("hidden");
+      renderSearchResults(items, suggestionsBox);
     } catch (err) {
+      if (err.name === "AbortError") return;
       console.error("Gagal memuat rekomendasi lokasi:", err);
+      suggestionsBox.innerHTML = `<div class="p-2.5 text-stone-400 text-center text-[11px]">Pencarian lokasi sedang tidak tersedia. Geser pin manual atau pakai tombol Lokasi Saya.</div>`;
+      suggestionsBox.classList.remove("hidden");
     }
-  }, 350);
+  }, 400);
 }
 
 function selectSuggestedLocation(item) {
   const lat = parseFloat(item.lat);
   const lon = parseFloat(item.lon);
 
-  document.getElementById("map-search-input").value =
-    item.name || item.display_name.split(",")[0];
+  document.getElementById("map-search-input").value = item.name;
   const suggestionsBox = document.getElementById("search-suggestions");
   suggestionsBox.classList.add("hidden");
   suggestionsBox.innerHTML = "";
@@ -1059,15 +1285,9 @@ async function searchLocationManual() {
   searchBtn.disabled = true;
 
   try {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=id&limit=1`,
-    );
-    const data = await res.json();
-
-    if (data && data.length > 0) {
-      const lat = parseFloat(data[0].lat);
-      const lon = parseFloat(data[0].lon);
-
+    const items = await photonSearch(query, 1);
+    if (items.length) {
+      const { lat, lon } = items[0];
       if (pickerMap && pickerMarker) {
         pickerMap.flyTo([lat, lon], 16, { duration: 1.2 });
         pickerMarker.setLatLng([lat, lon]);
@@ -1079,6 +1299,7 @@ async function searchLocationManual() {
       );
     }
   } catch (err) {
+    console.error("Pencarian lokasi gagal:", err);
     alert("Gagal melakukan pencarian lokasi. Periksa koneksi internet Anda.");
   } finally {
     searchBtn.innerText = originalText;

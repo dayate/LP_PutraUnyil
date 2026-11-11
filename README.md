@@ -22,7 +22,8 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 ## Arsitektur & Spesifikasi
 
 - **Single Origin / Zero External CDN:** Seluruh pustaka CSS (Tailwind v3.4 hasil kompilasi), JavaScript (Leaflet v1.9.4 & logika aplikasi), dan Web Fonts (Plus Jakarta Sans & Playfair Display format WOFF2) di-host secara lokal dari repositori ini. Menjamin loading kilat (<200 KB gzip awal) dan keamanan tinggi.
-- **Strict Content Security Policy (CSP):** Terkonfigurasi di `_headers`, memblokir script injection berbahaya dan membatasi koneksi hanya ke endpoint yang dibutuhkan (Esri Maps Tiles, Nominatim Geocoding, Google Maps Embed).
+- **Strict Content Security Policy (CSP):** Terkonfigurasi di `_headers`, memblokir script injection berbahaya dan membatasi koneksi hanya ke endpoint yang dibutuhkan (Esri Maps Tiles, Photon Geocoding, Google Maps Embed).
+- **Peta dimuat on-demand:** Leaflet (±45 KB gzip CSS + JS) tidak dimuat saat halaman dibuka. `loadLeaflet()` di `assets/app.js` baru menyuntikkan asetnya ketika modal "Tentukan Titik Pengantaran" dibuka, lengkap dengan indikator loading, deteksi tile gagal, dan tautan cadangan ke Google Maps. Pencarian lokasi memakai **Photon** (`photon.komoot.io`) yang mengizinkan search-as-you-type — berbeda dari Nominatim OSM yang melarang autocomplete.
 - **Client-Side Cart & Checkout State:** Keranjang belanja otomatis tersimpan di `localStorage` (`makunyil_state_v1`). Menyimpan daftar menu, pilihan pembayaran (COD / QRIS), jadwal, nama, dan koordinat maps.
 - **Estimasi Ongkir Haversine:** Perhitungan jarak real-time dari dapur Mak Unyil (`-7.752, 110.4915`):
   - $\le 0.5\text{ km}$: Gratis (Ambil di Dapur)

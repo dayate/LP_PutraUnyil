@@ -53,7 +53,11 @@ const appAbs = path.join(ROOT, APP_JS);
 if (fs.existsSync(appAbs)) {
   const src = fs.readFileSync(appAbs, "utf8");
   const refs = new Set();
-  for (const m of src.matchAll(/["'](images\/[A-Za-z0-9._-]+\.webp)["']/g)) {
+  // Foto produk + aset vendor yang di-inject on-demand dari app.js
+  // (Leaflet hanya dimuat saat modal peta dibuka, lihat loadLeaflet()).
+  for (const m of src.matchAll(
+    /["']((?:images\/[A-Za-z0-9._-]+\.webp)|(?:vendor\/[A-Za-z0-9._\/-]+\.(?:css|js)))["']/g,
+  )) {
     refs.add(m[1]);
   }
   const manifest = {};
