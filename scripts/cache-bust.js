@@ -118,8 +118,30 @@ function bustSrcset(text) {
   });
 }
 
+// Pass C — berkas ikon di root (/favicon.ico, dst). Cloudflare Pages memberi
+// cache 7 hari pada berkas ini juga (terbukti: apple-touch-icon.png lama masih
+// disajikan dari edge berumur 15 jam setelah diganti), jadi URL-nya ikut diberi
+// ?v=<hash isi> supaya penggantian ikon langsung terlihat.
+const ROOT_ASSET_NAMES = [
+  "favicon.ico",
+  "favicon-32x32.png",
+  "favicon-192x192.png",
+  "apple-touch-icon.png",
+];
+
+function bustRootAssets(text) {
+  const re = new RegExp(
+    `(["'])(/?)((?:${ROOT_ASSET_NAMES.map((n) => n.replace(/\./g, "\\.")).join("|")}))(\\?v=[A-Za-z0-9]*)?(["'])`,
+    "g",
+  );
+  return text.replace(re, (m, q1, slash, name) => {
+    const hash = hashOf(name);
+    return hash ? `${q1}${slash}${name}?v=${hash}${m.slice(-1)}` : m;
+  });
+}
+
 function bustRefs(text) {
-  return bustSrcset(bustQuoted(text));
+  return bustRootAssets(bustSrcset(bustQuoted(text)));
 }
 
 let changed = 0;
@@ -141,7 +163,8 @@ if (!changed) console.log("cache-bust: referensi aset HTML sudah terbaru.");
 // Setiap URL aset di src / srcset / imagesrcset / href HARUS ber-?v=. Bila ada
 // yang lolos (mis. markup baru ditulis tanpa melewati build), hentikan build.
 const ASSET_ATTRS = /\b(src|srcset|imagesrcset|href)\s*=\s*"([^"]*)"/g;
-const BARE_ASSET = /^\/?(?:assets|images)\/[A-Za-z0-9._-]+\.(?:webp|js|css)$/;
+const BARE_ASSET =
+  /^\/?(?:(?:assets|images)\/[A-Za-z0-9._-]+\.(?:webp|js|css)|favicon\.ico|favicon-32x32\.png|favicon-192x192\.png|apple-touch-icon\.png)$/;
 let missingTotal = 0;
 
 for (const name of HTML_FILES) {
