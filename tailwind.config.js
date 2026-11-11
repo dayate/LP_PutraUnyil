@@ -3,6 +3,9 @@ module.exports = {
   content: ["./index.html", "./404.html", "./assets/app.js"],
   theme: {
     extend: {
+      screens: {
+        xs: "420px",
+      },
       fontFamily: {
         serif: ['"Playfair Display"', "Georgia", "serif"],
         sans: ['"Plus Jakarta Sans"', "sans-serif"],
