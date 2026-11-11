@@ -1,0 +1,10 @@
+# Dependency build
+node_modules/
+
+# Arsip foto asli — tidak dipakai runtime, hanya sumber untuk regenerate WebP
+images/_source/
+
+# Berkas kerja sementara
+*.log
+.DS_Store
+Thumbs.db

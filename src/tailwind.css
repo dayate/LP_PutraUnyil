@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Gaya khusus yang tidak bisa diekspresikan sebagai utility Tailwind.
+   Semua aturan di bawah dipindahkan dari blok <style> di index.html
+   supaya CSP bisa memakai style-src 'self' tanpa 'unsafe-inline'.
+   ------------------------------------------------------------------ */
+
+@layer base {
+  body {
+    background-color: #faf8f5;
+    color: #1c1917;
+  }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+#picker-map {
+  z-index: 1;
+}
+
+/* Atribusi Leaflet wajib terlihat (lisensi Esri / OpenStreetMap). */
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  color: #57534e !important;
+  padding: 1px 5px !important;
+  border-radius: 3px 0 0 0 !important;
+}
+.leaflet-control-attribution a {
+  color: #57534e !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hilangkan spinner pada input angka jumlah pesanan. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}

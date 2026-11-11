@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /images/_source/
+
+Sitemap: https://store.putraunyil.biz.id/sitemap.xml

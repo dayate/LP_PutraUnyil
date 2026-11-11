@@ -1,0 +1,17 @@
+{
+  "updated": "2026-11-11T06:00:00+07:00",
+  "note": "Ubah status di sini tanpa menyentuh HTML. Nilai: available | preorder | soldout.",
+  "items": {
+    "sate-keong": "available",
+    "oseng-keong": "available",
+    "keong-fresh": "preorder",
+    "nasi-uduk": "soldout",
+    "nasi-kuning": "available",
+    "bakmi-capcay": "available",
+    "nasi-box": "preorder",
+    "tahu-sarang": "available",
+    "tahu-telur": "soldout",
+    "getuk-crispy": "available",
+    "daun-pisang": "preorder"
+  }
+}

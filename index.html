@@ -1,0 +1,1386 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mak Unyil — Sate Keong Sawah & Kuliner Tradisional Prambanan, Klaten</title>
+
+    <meta
+      name="description"
+      content="Sate keong sawah bumbu rica, oseng keong cabai hijau, nasi uduk, nasi kuning, nasi box acara, dan jajanan pasar dari dapur Mak Unyil di Kebondalem Kidul, Prambanan, Klaten. Pesan langsung via WhatsApp, antar Klaten–Sleman Timur–Jogja."
+    />
+    <link rel="canonical" href="https://store.putraunyil.biz.id/" />
+
+    <!-- Open Graph: preview WhatsApp / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mak Unyil" />
+    <meta
+      property="og:title"
+      content="Mak Unyil — Sate Keong Sawah & Kuliner Tradisional"
+    />
+    <meta
+      property="og:description"
+      content="Olahan keong sawah pedas gurih, nasi box acara, dan jajanan pasar. Dapur di Prambanan, Klaten. Pesan langsung via WhatsApp."
+    />
+    <meta property="og:url" content="https://store.putraunyil.biz.id/" />
+    <meta property="og:locale" content="id_ID" />
+    <meta
+      property="og:image"
+      content="https://store.putraunyil.biz.id/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Tusuk sate keong sawah bumbu rica dari dapur Mak Unyil"
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Mak Unyil — Sate Keong Sawah & Kuliner Tradisional"
+    />
+    <meta
+      name="twitter:description"
+      content="Olahan keong sawah pedas gurih, nasi box acara, dan jajanan pasar. Prambanan, Klaten."
+    />
+    <meta
+      name="twitter:image"
+      content="https://store.putraunyil.biz.id/og-image.jpg"
+    />
+
+    <meta name="theme-color" content="#FAF8F5" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FoodEstablishment",
+        "@id": "https://store.putraunyil.biz.id/#business",
+        "name": "Mak Unyil",
+        "alternateName": "Sate Keong Mak Unyil",
+        "description": "Dapur olahan keong sawah dan kuliner tradisional di Kebondalem Kidul, Prambanan, Klaten. Menyediakan sate keong bumbu rica, oseng keong cabai hijau, nasi uduk, nasi kuning, nasi box acara, dan aneka jajanan pasar.",
+        "url": "https://store.putraunyil.biz.id/",
+        "telephone": "+6285156175349",
+        "image": "https://store.putraunyil.biz.id/og-image.jpg",
+        "logo": "https://store.putraunyil.biz.id/apple-touch-icon.png",
+        "priceRange": "Rp10.000 - Rp45.000",
+        "currenciesAccepted": "IDR",
+        "servesCuisine": ["Indonesia", "Jawa"],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Kebondalem Kidul",
+          "addressLocality": "Prambanan",
+          "addressRegion": "Jawa Tengah",
+          "addressCountry": "ID"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -7.752,
+          "longitude": 110.4915
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "06:00",
+            "closes": "18:00"
+          }
+        ],
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Prambanan, Klaten" },
+          { "@type": "AdministrativeArea", "name": "Sleman Timur" },
+          { "@type": "AdministrativeArea", "name": "Yogyakarta" }
+        ],
+        "hasMenu": "https://store.putraunyil.biz.id/#katalog",
+        "potentialAction": {
+          "@type": "OrderAction",
+          "target": "https://wa.me/6285156175349"
+        }
+      }
+    </script>
+
+    <!-- Font: Plus Jakarta Sans + Playfair Display, di-host sendiri -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/plus-jakarta-sans-400-normal.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/plus-jakarta-sans-700-normal.woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+
+    <!-- Leaflet 1.9.4 CSS, disajikan dari /vendor -->
+    <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
+
+    <!-- Hasil build Tailwind (npm run build) -->
+    <link rel="stylesheet" href="/assets/site.css" />
+
+    <!-- Fix Leaflet default marker icon paths via JS head setup -->
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        if (window.L) {
+          delete L.Icon.Default.prototype._getIconUrl;
+          L.Icon.Default.mergeOptions({
+            iconRetinaUrl: "/vendor/leaflet/images/marker-icon-2x.png",
+            iconUrl: "/vendor/leaflet/images/marker-icon.png",
+            shadowUrl: "/vendor/leaflet/images/marker-shadow.png",
+          });
+        }
+      });
+    </script>
+  </head>
+  <body class="font-sans antialiased selection:bg-stone-200">
+    <!-- Header -->
+    <header
+      class="border-b border-stone-200 sticky top-0 bg-[#FAF8F5]/90 backdrop-blur-md z-30"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between"
+      >
+        <a href="#" class="flex flex-col">
+          <span
+            class="font-serif text-2xl tracking-tight font-bold text-stone-900"
+            >Mak Unyil</span
+          >
+          <span
+            class="text-[10px] tracking-widest uppercase text-stone-500 font-semibold"
+            >Olahan Keong & Kuliner Tradisional</span
+          >
+        </a>
+
+        <div class="flex items-center gap-3">
+          <a
+            href="#katalog"
+            class="hidden sm:inline-block text-xs uppercase font-semibold text-stone-600 hover:text-stone-900 tracking-wider transition"
+            >Katalog</a
+          >
+          <a
+            href="#gallery"
+            class="hidden sm:inline-block text-xs uppercase font-semibold text-stone-600 hover:text-stone-900 tracking-wider transition"
+            >Galeri</a
+          >
+
+          <!-- CTA Tanya Stok Header -->
+          <button
+            onclick="askGeneralStock()"
+            class="hidden md:flex items-center gap-1.5 border border-emerald-600 text-emerald-800 bg-emerald-50/60 rounded-full px-3.5 py-2 text-xs font-semibold tracking-wider hover:bg-emerald-600 hover:text-white transition"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.693.074-1.99-.462-1.637-.677-2.684-2.336-2.766-2.445-.08-.109-.664-.883-.664-1.682 0-.8.419-1.192.569-1.353.15-.162.327-.202.437-.202.11 0 .219.001.314.006.1.005.234-.038.366.279.136.327.465 1.134.506 1.216.041.082.068.178.013.288-.054.11-.082.178-.163.273-.082.096-.173.214-.247.288-.083.082-.169.172-.072.338.096.166.427.705.916 1.141.63.562 1.161.736 1.327.818.166.082.264.068.362-.045.099-.113.423-.493.536-.662.113-.169.227-.141.381-.084.155.056.983.464 1.152.548.169.085.282.127.324.197.042.07.042.408-.102.813z"
+              />
+            </svg>
+            <span>Tanya Stok</span>
+          </button>
+
+          <!-- Tombol Keranjang -->
+          <button
+            id="open-cart-btn"
+            class="flex items-center gap-2 border border-stone-300 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider hover:border-stone-900 transition bg-white sm:bg-transparent shadow-sm"
+          >
+            <span>Keranjang</span>
+            <span
+              id="cart-count"
+              class="bg-stone-900 text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] font-bold"
+              >0</span
+            >
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      class="max-w-6xl mx-auto px-6 pt-12 pb-10 border-b border-stone-200 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+    >
+      <div class="max-w-2xl lg:col-span-7">
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-3">
+          <span
+            class="text-xs font-semibold uppercase tracking-widest text-terracotta"
+            >Dapur Tradisional • Prambanan, Klaten</span
+          >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0"
+          ></span>
+          <span
+            class="text-[11px] font-medium text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 whitespace-nowrap shrink-0"
+            >Dapur Buka</span
+          >
+        </div>
+
+        <h1
+          class="font-serif text-3xl sm:text-5xl font-bold leading-tight text-stone-900 mb-4"
+        >
+          Cita rasa pedas gurih olahan keong sawah & aneka santapan rumahan.
+        </h1>
+        <p class="text-stone-600 leading-relaxed mb-6 text-sm sm:text-base">
+          Sate keong bumbu rica pedas medok, oseng cabai hijau segar, sarapan
+          nasi gurih, hingga aneka gorengan pasar. Siap kirim fresh langsung
+          dari dapur.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+          <a
+            href="#katalog"
+            class="px-5 py-2.5 bg-stone-900 text-white rounded text-xs uppercase font-bold tracking-wider hover:bg-stone-800 transition"
+          >
+            Pesan Sekarang
+          </a>
+          <button
+            onclick="askGeneralStock()"
+            class="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs uppercase font-bold tracking-wider transition flex items-center gap-2 shadow-sm"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.693.074-1.99-.462-1.637-.677-2.684-2.336-2.766-2.445-.08-.109-.664-.883-.664-1.682 0-.8.419-1.192.569-1.353.15-.162.327-.202.437-.202.11 0 .219.001.314.006.1.005.234-.038.366.279.136.327.465 1.134.506 1.216.041.082.068.178.013.288-.054.11-.082.178-.163.273-.082.096-.173.214-.247.288-.083.082-.169.172-.072.338.096.166.427.705.916 1.141.63.562 1.161.736 1.327.818.166.082.264.068.362-.045.099-.113.423-.493.536-.662.113-.169.227-.141.381-.084.155.056.983.464 1.152.548.169.085.282.127.324.197.042.07.042.408-.102.813z"
+              />
+            </svg>
+            <span>Tanya Stok Hari Ini via WA</span>
+          </button>
+        </div>
+
+        <!-- Filter Kategori -->
+        <div class="flex flex-wrap gap-2 sm:gap-2.5 pt-2">
+          <button
+            onclick="filterCategory('semua', this)"
+            aria-pressed="true"
+            class="filter-pill active border border-stone-900 bg-stone-900 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition"
+          >
+            Semua Menu
+          </button>
+          <button
+            onclick="filterCategory('keong', this)"
+            aria-pressed="false"
+            class="filter-pill border border-stone-300 px-3.5 py-1.5 rounded-full text-xs font-semibold text-stone-600 tracking-wide hover:border-stone-900 transition"
+          >
+            Olahan Keong
+          </button>
+          <button
+            onclick="filterCategory('nasi', this)"
+            aria-pressed="false"
+            class="filter-pill border border-stone-300 px-3.5 py-1.5 rounded-full text-xs font-semibold text-stone-600 tracking-wide hover:border-stone-900 transition"
+          >
+            Nasi &amp; Bakmi
+          </button>
+          <button
+            onclick="filterCategory('jajanan', this)"
+            aria-pressed="false"
+            class="filter-pill border border-stone-300 px-3.5 py-1.5 rounded-full text-xs font-semibold text-stone-600 tracking-wide hover:border-stone-900 transition"
+          >
+            Jajanan Pasar
+          </button>
+          <button
+            onclick="filterCategory('khusus', this)"
+            aria-pressed="false"
+            class="filter-pill border border-stone-300 px-3.5 py-1.5 rounded-full text-xs font-semibold text-stone-600 tracking-wide hover:border-stone-900 transition"
+          >
+            Pre-Order Khusus
+          </button>
+        </div>
+      </div>
+
+      <!-- Foto hero -->
+      <figure
+        class="lg:col-span-5 order-first lg:order-last relative rounded-lg overflow-hidden border border-stone-200 shadow-sm bg-stone-100"
+      >
+        <img
+          src="images/hero-dapur-600.webp"
+          srcset="
+            images/hero-dapur-600.webp   600w,
+            images/hero-dapur-1200.webp 1200w
+          "
+          sizes="(min-width: 1024px) 420px, 100vw"
+          width="1200"
+          height="900"
+          alt="Tumpukan nasi box pesanan pagi di dapur Mak Unyil, Prambanan"
+          class="w-full h-[230px] sm:h-[320px] lg:h-[430px] object-cover object-center"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <figcaption
+          class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950/80 to-transparent px-4 pt-10 pb-3.5"
+        >
+          <span
+            class="block text-[10px] uppercase tracking-widest font-bold text-white/80"
+            >Dari dapur hari ini</span
+          >
+          <p class="text-xs sm:text-sm font-semibold text-white">
+            Nasi box pesanan pagi, siap diantar
+          </p>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Product Catalog Grid -->
+    <main id="katalog" class="max-w-6xl mx-auto px-6 py-12">
+      <div class="flex items-baseline justify-between mb-8">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-stone-900">
+            Katalog Sajian
+          </h2>
+          <p class="text-xs text-stone-500 mt-1">
+            Cek status ketersediaan, pilih porsi, atau tanyakan ketersediaan
+            stok.
+          </p>
+          <p
+            id="stock-updated"
+            class="hidden text-[11px] text-stone-400 mt-1"
+          ></p>
+        </div>
+        <div
+          class="hidden sm:flex items-center gap-3 text-[11px] font-medium text-stone-500"
+        >
+          <span class="flex items-center gap-1"
+            ><span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            Tersedia</span
+          >
+          <span class="flex items-center gap-1"
+            ><span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            Pre-Order</span
+          >
+          <span class="flex items-center gap-1"
+            ><span class="w-2 h-2 rounded-full bg-rose-500"></span> Habis</span
+          >
+        </div>
+      </div>
+
+      <div
+        id="product-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Injected via JavaScript -->
+      </div>
+    </main>
+
+    <!-- Section: Galeri Slider & Lightbox Zoom -->
+    <section
+      id="gallery"
+      class="border-t border-stone-200 bg-white py-16 overflow-hidden"
+    >
+      <div class="max-w-6xl mx-auto px-6">
+        <div
+          class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4"
+        >
+          <div class="max-w-xl">
+            <p
+              class="text-xs font-semibold uppercase tracking-widest text-terracotta mb-2"
+            >
+              Dokumentasi Nyata
+            </p>
+            <h2 class="font-serif text-3xl font-bold text-stone-900">
+              Galeri Sajian & Pesanan Pelanggan
+            </h2>
+            <p class="text-xs sm:text-sm text-stone-600 mt-2">
+              Foto asli dari dapur dan pesanan yang kami antar. Klik pada foto
+              untuk memperbesar tampilan.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+            <button
+              onclick="scrollGallery(-1)"
+              aria-label="Geser ke kiri"
+              class="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center hover:bg-stone-900 hover:text-white hover:border-stone-900 transition text-stone-700"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <button
+              onclick="scrollGallery(1)"
+              aria-label="Geser ke kanan"
+              class="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center hover:bg-stone-900 hover:text-white hover:border-stone-900 transition text-stone-700"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="gallery-track"
+          class="flex gap-5 overflow-x-auto scroll-smooth no-scrollbar pb-4 pt-1 snap-x snap-mandatory"
+        >
+          <!-- Slide 1 -->
+          <div
+            tabindex="0"
+            role="button"
+            aria-label="Perbesar foto: Sate Keong Rica-Rica Fresh"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+            onclick="
+              openLightbox(
+                'images/sate-keong-1200.webp',
+                'Sate Keong Rica-Rica Fresh',
+                'Produk',
+                'Daging keong sawah dibakar dengan balutan bumbu rica-rica pedas gurih.',
+              )
+            "
+            class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            <div class="h-56 overflow-hidden relative">
+              <img
+                src="images/sate-keong-600.webp"
+                srcset="
+                  images/sate-keong-600.webp   600w,
+                  images/sate-keong-1200.webp 1200w
+                "
+                sizes="(min-width: 640px) 288px, 256px"
+                width="1200"
+                height="900"
+                alt="Tusuk sate keong sawah berbumbu rica-rica di atas nampan"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                class="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[11px] font-bold text-stone-800 shadow"
+                  ><span aria-hidden="true">🔍</span> Perbesar</span
+                >
+              </div>
+            </div>
+            <div class="p-3.5 bg-white border-t border-stone-100">
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
+                >Produk</span
+              >
+              <p class="text-xs font-semibold text-stone-900 mt-0.5">
+                Sate Keong Rica-Rica Fresh
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div
+            tabindex="0"
+            role="button"
+            aria-label="Perbesar foto: Nasi Box Siap Antar"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+            onclick="
+              openLightbox(
+                'images/nasi-box-1200.webp',
+                'Nasi Box Siap Antar',
+                'Pesanan',
+                'Nasi box komplit yang disusun rapi di kardus sebelum diantar ke lokasi acara.',
+              )
+            "
+            class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            <div class="h-56 overflow-hidden relative">
+              <img
+                src="images/nasi-box-600.webp"
+                srcset="
+                  images/nasi-box-600.webp   600w,
+                  images/nasi-box-1200.webp 1200w
+                "
+                sizes="(min-width: 640px) 288px, 256px"
+                width="1200"
+                height="900"
+                alt="Delapan nasi box berisi nasi kuning, bihun, dan timun tersusun di dalam kardus"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                class="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[11px] font-bold text-stone-800 shadow"
+                  ><span aria-hidden="true">🔍</span> Perbesar</span
+                >
+              </div>
+            </div>
+            <div class="p-3.5 bg-white border-t border-stone-100">
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded"
+                >Pesanan</span
+              >
+              <p class="text-xs font-semibold text-stone-900 mt-1">
+                Nasi Box Siap Antar
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div
+            tabindex="0"
+            role="button"
+            aria-label="Perbesar foto: Nasi Kuning Fresh dari Dapur"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+            onclick="
+              openLightbox(
+                'images/nasi-kuning-1200.webp',
+                'Nasi Kuning Fresh dari Dapur',
+                'Produk',
+                'Nasi kuning dengan orek tempe, bihun, kacang, timun, dan sambal dalam wadah siap antar.',
+              )
+            "
+            class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            <div class="h-56 overflow-hidden relative">
+              <img
+                src="images/nasi-kuning-600.webp"
+                srcset="
+                  images/nasi-kuning-600.webp   600w,
+                  images/nasi-kuning-1200.webp 1200w
+                "
+                sizes="(min-width: 640px) 288px, 256px"
+                width="1200"
+                height="900"
+                alt="Satu porsi nasi kuning lengkap dengan orek, bihun, kacang, dan timun"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                class="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[11px] font-bold text-stone-800 shadow"
+                  ><span aria-hidden="true">🔍</span> Perbesar</span
+                >
+              </div>
+            </div>
+            <div class="p-3.5 bg-white border-t border-stone-100">
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
+                >Produk</span
+              >
+              <p class="text-xs font-semibold text-stone-900 mt-0.5">
+                Nasi Kuning Fresh dari Dapur
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div
+            tabindex="0"
+            role="button"
+            aria-label="Perbesar foto: Tahu Sarang Burung"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+            onclick="
+              openLightbox(
+                'images/tahu-sarang-1200.webp',
+                'Tahu Sarang Burung',
+                'Produk',
+                'Tahu lembut isi telur dan bihun, digoreng gurih dengan cabai rawit hijau.',
+              )
+            "
+            class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            <div class="h-56 overflow-hidden relative">
+              <img
+                src="images/tahu-sarang-600.webp"
+                srcset="
+                  images/tahu-sarang-600.webp   600w,
+                  images/tahu-sarang-1200.webp 1200w
+                "
+                sizes="(min-width: 640px) 288px, 256px"
+                width="1200"
+                height="900"
+                alt="Tahu sarang burung goreng dengan cabai rawit hijau di dalam wadah mika"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                class="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[11px] font-bold text-stone-800 shadow"
+                  ><span aria-hidden="true">🔍</span> Perbesar</span
+                >
+              </div>
+            </div>
+            <div class="p-3.5 bg-white border-t border-stone-100">
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
+                >Produk</span
+              >
+              <p class="text-xs font-semibold text-stone-900 mt-0.5">
+                Tahu Sarang Burung
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div
+            tabindex="0"
+            role="button"
+            aria-label="Perbesar foto: Bakmi Capcay Porsi Rumahan"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+            onclick="
+              openLightbox(
+                'images/bakmi-capcay-1200.webp',
+                'Bakmi Capcay Porsi Rumahan',
+                'Produk',
+                'Bakmi goreng dengan capcay sayur, kerupuk, dan acar timun — dimasak per porsi.',
+              )
+            "
+            class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            <div class="h-56 overflow-hidden relative">
+              <img
+                src="images/bakmi-capcay-600.webp"
+                srcset="
+                  images/bakmi-capcay-600.webp   600w,
+                  images/bakmi-capcay-1200.webp 1200w
+                "
+                sizes="(min-width: 640px) 288px, 256px"
+                width="1200"
+                height="900"
+                alt="Bakmi goreng capcay dengan kerupuk dan acar timun dalam wadah mika"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                class="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[11px] font-bold text-stone-800 shadow"
+                  ><span aria-hidden="true">🔍</span> Perbesar</span
+                >
+              </div>
+            </div>
+            <div class="p-3.5 bg-white border-t border-stone-100">
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
+                >Produk</span
+              >
+              <p class="text-xs font-semibold text-stone-900 mt-0.5">
+                Bakmi Capcay Porsi Rumahan
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 6 -->
+          <div
+            tabindex="0"
+            role="button"
+            aria-label="Perbesar foto: Stok Nasi Box Pagi Ini"
+            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
+            onclick="
+              openLightbox(
+                'images/hero-dapur-1200.webp',
+                'Stok Nasi Box Pagi Ini',
+                'Dapur',
+                'Nasi box yang disiapkan sejak pagi untuk pesanan hari ini di dapur Mak Unyil.',
+              )
+            "
+            class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          >
+            <div class="h-56 overflow-hidden relative">
+              <img
+                src="images/hero-dapur-600.webp"
+                srcset="
+                  images/hero-dapur-600.webp   600w,
+                  images/hero-dapur-1200.webp 1200w
+                "
+                sizes="(min-width: 640px) 288px, 256px"
+                width="1200"
+                height="900"
+                alt="Tumpukan nasi box pesanan pagi di dapur Mak Unyil"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                class="absolute inset-0 bg-stone-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[11px] font-bold text-stone-800 shadow"
+                  ><span aria-hidden="true">🔍</span> Perbesar</span
+                >
+              </div>
+            </div>
+            <div class="p-3.5 bg-white border-t border-stone-100">
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
+                >Dapur</span
+              >
+              <p class="text-xs font-semibold text-stone-900 mt-0.5">
+                Stok Nasi Box Pagi Ini
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div
+      id="lightbox-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lightbox-title"
+      inert
+      onclick="if (event.target === this) closeLightbox();"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300"
+    >
+      <div
+        class="relative max-w-3xl w-full bg-[#FAF8F5] rounded-xl overflow-hidden shadow-2xl border border-stone-300"
+      >
+        <button
+          onclick="closeLightbox()"
+          aria-label="Tutup pratinjau foto"
+          class="absolute top-3 right-3 z-10 w-11 h-11 rounded-full bg-stone-900/70 hover:bg-stone-900 text-white flex items-center justify-center text-lg transition"
+        >
+          <span aria-hidden="true">✕</span>
+        </button>
+
+        <div
+          class="max-h-[70vh] bg-stone-900 flex items-center justify-center overflow-hidden"
+        >
+          <img
+            id="lightbox-img"
+            src=""
+            alt="Detail Foto"
+            class="w-full h-full max-h-[70vh] object-contain"
+          />
+        </div>
+
+        <div
+          class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-stone-200 bg-white"
+        >
+          <div>
+            <span
+              id="lightbox-tag"
+              class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
+              >Kategori</span
+            >
+            <h3
+              id="lightbox-title"
+              class="font-serif text-lg font-bold text-stone-900 mt-0.5"
+            >
+              Judul Foto
+            </h3>
+            <p id="lightbox-desc" class="text-xs text-stone-600 mt-0.5">
+              Deskripsi foto...
+            </p>
+          </div>
+          <button
+            onclick="closeLightbox()"
+            class="text-xs uppercase font-bold tracking-wider px-4 py-2 border border-stone-300 rounded hover:border-stone-900 self-start sm:self-auto transition"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Embed Peta Lokasi Dapur -->
+    <section id="lokasi" class="border-t border-stone-200 py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          <div>
+            <p
+              class="text-xs font-semibold uppercase tracking-widest text-terracotta mb-2"
+            >
+              Lokasi & Pengiriman
+            </p>
+            <h2 class="font-serif text-3xl font-bold text-stone-900 mb-4">
+              Dapur Mak Unyil
+            </h2>
+            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed mb-6">
+              Pusat olahan dapur dan pemrosesan kami berlokasi di Kebondalem
+              Kidul, Prambanan, Klaten. Melayani pengantaran pesanan via kurir
+              instan ke Klaten, Sleman Timur, hingga Jogja perbatasan.
+            </p>
+
+            <div class="space-y-3 text-xs border-y border-stone-200 py-4 mb-6">
+              <div class="flex gap-2">
+                <span class="font-bold text-stone-900 w-24 shrink-0"
+                  >Wilayah:</span
+                >
+                <span class="text-stone-600"
+                  >Prambanan, Klaten, Jawa Tengah</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="font-bold text-stone-900 w-24 shrink-0"
+                  >Jam Buka:</span
+                >
+                <span class="text-stone-600"
+                  >06:00 - 18:00 WIB (Setiap Hari)</span
+                >
+              </div>
+              <div class="flex gap-2">
+                <span class="font-bold text-stone-900 w-24 shrink-0"
+                  >Pre-Order:</span
+                >
+                <span class="text-stone-600"
+                  >H-1 untuk Nasi Box besar & Keong Segar kiloan</span
+                >
+              </div>
+            </div>
+
+            <a
+              href="https://maps.app.goo.gl/6XQMq59uyMQfXmxq9"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 text-xs uppercase font-bold tracking-wider px-4 py-2.5 border border-stone-900 rounded hover:bg-stone-900 hover:text-white transition"
+            >
+              <span>Buka Lokasi Dapur di Maps</span>
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                <path
+                  d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
+                />
+                <path
+                  d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div
+            class="lg:col-span-2 rounded border border-stone-200 overflow-hidden shadow-sm h-80 sm:h-96 bg-stone-100"
+          >
+            <iframe
+              src="https://www.google.com/maps?q=Sate%20Keong%20Mak%20Unyil,%20Kebondalem%20Kidul,%20Prambanan,%20Klaten&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              class="border-0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Peta Lokasi Sate Keong Mak Unyil Prambanan Klaten"
+            >
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cart Drawer -->
+    <div
+      id="cart-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cart-title"
+      inert
+      class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0 bg-stone-900/40"
+    >
+      <div
+        id="cart-panel"
+        class="absolute top-0 right-0 w-full max-w-md h-full bg-[#FAF8F5] shadow-2xl flex flex-col pointer-events-auto transform translate-x-full transition-transform duration-300 border-l border-stone-200"
+      >
+        <div
+          class="p-6 border-b border-stone-200 flex items-center justify-between"
+        >
+          <div>
+            <h2
+              id="cart-title"
+              class="font-serif text-xl font-bold text-stone-900"
+            >
+              Keranjang Belanja
+            </h2>
+            <p class="text-xs text-stone-500">Checkout langsung via WhatsApp</p>
+          </div>
+          <button
+            id="close-cart-btn"
+            aria-label="Tutup keranjang"
+            class="w-11 h-11 flex items-center justify-center text-stone-500 hover:text-stone-900 text-xl font-bold rounded transition"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+
+        <!-- Area gulir: daftar menu + formulir checkout -->
+        <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain">
+          <!-- Pemberitahuan singkat: minimal order, stok berubah, dll. -->
+          <div
+            id="cart-notice"
+            role="status"
+            aria-live="polite"
+            class="hidden mx-5 sm:mx-6 mt-3 text-[11px] leading-relaxed text-amber-900 bg-amber-50 border border-amber-200 rounded px-3 py-2"
+          ></div>
+
+          <!-- Item List Keranjang (Bisa Input Manual & Hapus Item) -->
+          <div id="cart-items" class="p-5 sm:p-6 space-y-4">
+            <!-- Cart items dynamically rendered -->
+          </div>
+
+          <!-- Form Checkout Info -->
+          <div
+            class="border-t border-stone-200 bg-stone-50 p-5 sm:p-6 space-y-3.5"
+          >
+            <div>
+              <label
+                for="cust-name"
+                class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1"
+                >Nama Pemesan</label
+              >
+              <input
+                type="text"
+                id="cust-name"
+                placeholder="Nama Anda..."
+                class="w-full text-xs border border-stone-300 rounded px-3 py-2 bg-white focus:outline-none focus:border-stone-900"
+              />
+            </div>
+
+            <!-- Jadwal Pengiriman -->
+            <div>
+              <span
+                class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1"
+                >Jadwal Pengiriman / Pengambilan</span
+              >
+              <div class="flex gap-2">
+                <div
+                  id="schedule-display"
+                  class="flex-1 text-xs border border-stone-300 rounded px-3 py-2 bg-white text-stone-600 truncate flex items-center"
+                >
+                  Belum dijadwalkan
+                </div>
+                <button
+                  type="button"
+                  onclick="openScheduleModal()"
+                  class="px-3 py-2 bg-stone-200 hover:bg-stone-300 text-stone-800 text-xs font-semibold rounded transition flex items-center gap-1.5 shrink-0"
+                >
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span>Atur Jadwal</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Titik Peta Lokasi Antar -->
+            <div>
+              <span
+                class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1"
+                >Titik Lokasi Antar (Peta)</span
+              >
+              <div class="flex gap-2">
+                <div
+                  id="map-point-display"
+                  class="flex-1 text-xs border border-stone-300 rounded px-3 py-2 bg-white text-stone-500 truncate flex items-center"
+                >
+                  Belum ada titik peta
+                </div>
+                <button
+                  type="button"
+                  onclick="openMapPickerModal()"
+                  class="px-3 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold rounded transition flex items-center gap-1.5 shrink-0"
+                >
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <span>Pilih Titik</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Metode Pembayaran (COD / QRIS) -->
+            <fieldset>
+              <legend
+                class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1"
+              >
+                Metode Pembayaran
+              </legend>
+              <div class="grid grid-cols-2 gap-2">
+                <label
+                  class="text-xs border border-stone-300 rounded px-2.5 py-2 bg-white flex items-start gap-2 cursor-pointer hover:border-stone-900 transition"
+                >
+                  <input
+                    type="radio"
+                    name="payment-method"
+                    value="cod"
+                    checked
+                    onchange="setPaymentMethod(this.value)"
+                    class="mt-0.5 accent-stone-900"
+                  />
+                  <span>
+                    <span class="block font-semibold text-stone-900">COD</span>
+                    <span class="block text-[10px] text-stone-500 mt-0.5"
+                      >Bayar di tempat</span
+                    >
+                  </span>
+                </label>
+                <label
+                  class="text-xs border border-stone-300 rounded px-2.5 py-2 bg-white flex items-start gap-2 cursor-pointer hover:border-stone-900 transition"
+                >
+                  <input
+                    type="radio"
+                    name="payment-method"
+                    value="qris"
+                    onchange="setPaymentMethod(this.value)"
+                    class="mt-0.5 accent-stone-900"
+                  />
+                  <span>
+                    <span class="block font-semibold text-stone-900">QRIS</span>
+                    <span class="block text-[10px] text-stone-500 mt-0.5"
+                      >Transfer di muka</span
+                    >
+                  </span>
+                </label>
+              </div>
+              <p id="payment-hint" class="text-[10px] text-stone-500 mt-1.5">
+                Bayar tunai saat pesanan diterima.
+              </p>
+            </fieldset>
+
+            <div>
+              <label
+                for="cust-note"
+                class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1"
+                >Detail Patokan / Alamat Lengkap</label
+              >
+              <textarea
+                id="cust-note"
+                rows="2"
+                placeholder="Nama jalan, nomor rumah, warna pagar, atau level pedas..."
+                class="w-full text-xs border border-stone-300 rounded px-3 py-2 bg-white focus:outline-none focus:border-stone-900"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ringkasan biaya + CTA selalu terlihat, tidak ikut tergulir -->
+        <div class="shrink-0 p-4 sm:p-5 border-t border-stone-200 bg-[#FAF8F5]">
+          <div class="space-y-1.5 mb-3">
+            <div class="flex items-center justify-between text-xs text-stone-600">
+              <span>Subtotal</span>
+              <span
+                id="cart-subtotal"
+                class="font-semibold text-stone-900 tabular-nums"
+                >Rp 0</span
+              >
+            </div>
+            <div class="flex items-center justify-between text-xs text-stone-600">
+              <span>Ongkir (estimasi)</span>
+              <span
+                id="cart-shipping"
+                class="font-semibold text-stone-900 tabular-nums"
+                >—</span
+              >
+            </div>
+            <p id="cart-shipping-note" class="text-[10px] text-stone-500 leading-snug">
+              Pilih titik lokasi antar untuk melihat estimasi ongkir.
+            </p>
+            <div class="flex items-center justify-between pt-2 border-t border-stone-200">
+              <span
+                class="text-xs uppercase font-semibold text-stone-500 tracking-wider"
+                >Perkiraan Total</span
+              >
+              <span
+                id="cart-total"
+                class="font-serif text-lg font-bold text-stone-900 tabular-nums"
+                >Rp 0</span
+              >
+            </div>
+          </div>
+          <button
+            onclick="checkoutWhatsApp()"
+            class="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 rounded text-xs uppercase font-bold tracking-widest transition flex items-center justify-center gap-2"
+          >
+            <span>Kirim Pesanan ke WhatsApp</span>
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.693.074-1.99-.462-1.637-.677-2.684-2.336-2.766-2.445-.08-.109-.664-.883-.664-1.682 0-.8.419-1.192.569-1.353.15-.162.327-.202.437-.202.11 0 .219.001.314.006.1.005.234-.038.366.279.136.327.465 1.134.506 1.216.041.082.068.178.013.288-.054.11-.082.178-.163.273-.082.096-.173.214-.247.288-.083.082-.169.172-.072.338.096.166.427.705.916 1.141.63.562 1.161.736 1.327.818.166.082.264.068.362-.045.099-.113.423-.493.536-.662.113-.169.227-.141.381-.084.155.056.983.464 1.152.548.169.085.282.127.324.197.042.07.042.408-.102.813z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popup Calendar Modal -->
+    <div
+      id="schedule-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="schedule-title"
+      inert
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"
+    >
+      <div
+        class="bg-[#FAF8F5] border border-stone-300 rounded-lg max-w-sm w-full p-6 shadow-2xl space-y-4"
+      >
+        <div
+          class="flex items-center justify-between pb-2 border-b border-stone-200"
+        >
+          <div>
+            <h3
+              id="schedule-title"
+              class="font-serif text-lg font-bold text-stone-900"
+            >
+              Jadwal Pesanan
+            </h3>
+            <p class="text-[11px] text-stone-500">
+              Tentukan tanggal & perkiraan jam antar
+            </p>
+          </div>
+          <button
+            onclick="closeScheduleModal()"
+            aria-label="Tutup jadwal"
+            class="w-10 h-10 flex items-center justify-center text-stone-400 hover:text-stone-800 text-lg font-bold rounded transition"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label
+              for="order-date"
+              class="block text-xs font-semibold text-stone-700 mb-1"
+              >Pilih Tanggal</label
+            >
+            <input
+              type="date"
+              id="order-date"
+              class="w-full border border-stone-300 rounded px-3 py-2 text-xs bg-white focus:outline-none focus:border-stone-900"
+            />
+          </div>
+
+          <div>
+            <label
+              for="order-time"
+              class="block text-xs font-semibold text-stone-700 mb-1"
+              >Estimasi Jam Pengantaran</label
+            >
+            <input
+              type="time"
+              id="order-time"
+              value="11:00"
+              class="w-full border border-stone-300 rounded px-3 py-2 text-xs bg-white focus:outline-none focus:border-stone-900"
+            />
+          </div>
+
+          <div
+            class="bg-stone-100 p-2.5 rounded text-[11px] text-stone-600 leading-normal"
+          >
+            💡 <strong>Tips:</strong> Untuk pesanan keong segar kiloan atau
+            paket nasi box di atas 15 porsi disarankan memilih jadwal minimal
+            <strong>H-1</strong>.
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button
+            onclick="closeScheduleModal()"
+            class="px-3 py-1.5 text-xs font-semibold text-stone-600 hover:text-stone-900"
+          >
+            Batal
+          </button>
+          <button
+            onclick="saveSchedule()"
+            class="px-4 py-1.5 bg-stone-900 text-white rounded text-xs font-bold uppercase tracking-wider hover:bg-stone-800 transition"
+          >
+            Simpan Jadwal
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popup Maps Picker Modal -->
+    <div
+      id="map-picker-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="map-picker-title"
+      inert
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200"
+    >
+      <div
+        class="bg-[#FAF8F5] border border-stone-300 rounded-lg max-w-lg w-full p-5 shadow-2xl flex flex-col space-y-3"
+      >
+        <div
+          class="flex items-center justify-between pb-2 border-b border-stone-200"
+        >
+          <div>
+            <h3
+              id="map-picker-title"
+              class="font-serif text-lg font-bold text-stone-900"
+            >
+              Tentukan Titik Pengantaran
+            </h3>
+            <p class="text-[11px] text-stone-500">
+              Cari lokasi, geser atau klik peta untuk menempatkan pin
+            </p>
+          </div>
+          <button
+            onclick="closeMapPickerModal()"
+            aria-label="Tutup peta"
+            class="w-10 h-10 flex items-center justify-center text-stone-400 hover:text-stone-800 text-lg font-bold rounded transition"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+
+        <!-- Input Pencarian Lokasi Manual dengan Autocomplete -->
+        <div class="relative">
+          <div class="flex gap-2">
+            <div class="relative flex-1 min-w-0">
+              <label for="map-search-input" class="sr-only"
+                >Cari lokasi pengantaran</label
+              >
+              <input
+                type="text"
+                id="map-search-input"
+                placeholder="Ketik nama jalan, masjid, kelurahan, perumahan..."
+                autocomplete="off"
+                oninput="handleSearchInput(this.value)"
+                onkeydown="if (event.key === 'Enter') searchLocationManual();"
+                class="w-full text-xs border border-stone-300 rounded px-3 py-2 bg-white focus:outline-none focus:border-stone-900 pr-8"
+              />
+              <button
+                type="button"
+                onclick="searchLocationManual()"
+                class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-800"
+              >
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button
+              id="search-action-btn"
+              onclick="searchLocationManual()"
+              class="px-3.5 py-2 min-w-[3.5rem] bg-stone-900 text-white rounded text-xs font-semibold hover:bg-stone-800 transition shrink-0 whitespace-nowrap"
+            >
+              Cari
+            </button>
+          </div>
+
+          <div
+            id="search-suggestions"
+            class="hidden absolute top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto bg-white border border-stone-300 rounded shadow-lg z-50 divide-y divide-stone-100 text-xs"
+          ></div>
+        </div>
+
+        <div class="flex items-center justify-between gap-2">
+          <span
+            id="pin-coords-text"
+            class="text-[11px] font-mono text-stone-600 truncate bg-stone-100 px-2.5 py-1.5 rounded border border-stone-200 flex-1"
+          >
+            Titik: -7.7520, 110.4915 (Prambanan)
+          </span>
+          <button
+            onclick="locateCurrentPosition()"
+            class="px-3 py-1.5 bg-white border border-stone-300 text-stone-700 hover:bg-stone-50 rounded text-xs font-semibold transition flex items-center gap-1 shrink-0"
+          >
+            <svg
+              class="w-3.5 h-3.5 fill-current text-terracotta"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span>Lokasi Saya</span>
+          </button>
+        </div>
+
+        <div
+          id="picker-map"
+          class="w-full h-72 rounded border border-stone-300 bg-stone-200"
+        ></div>
+
+        <div
+          class="flex items-center justify-end gap-2 pt-1 border-t border-stone-200"
+        >
+          <button
+            onclick="closeMapPickerModal()"
+            class="px-3 py-1.5 text-xs font-semibold text-stone-600 hover:text-stone-900"
+          >
+            Batal
+          </button>
+          <button
+            onclick="confirmSelectedLocation()"
+            class="px-4 py-1.5 bg-stone-900 text-white rounded text-xs font-bold uppercase tracking-wider hover:bg-stone-800 transition"
+          >
+            Gunakan Titik Ini
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-stone-200 py-10 bg-[#FAF8F5]">
+      <div
+        class="max-w-6xl mx-auto px-6 text-center text-xs text-stone-500 space-y-1"
+      >
+        <p class="font-serif text-stone-800 font-semibold text-sm">
+          Mak Unyil Kitchen — Prambanan, Klaten
+        </p>
+        <p>
+          Penyedia Olahan Keong Sawah Segar, Nasi Tradisional, & Aneka Jajanan
+          Pasar.
+        </p>
+        <p class="pt-2 text-[11px] text-stone-400">
+          Built with heart by Putra Unyil Dev • store.putraunyil.biz.id
+        </p>
+      </div>
+    </footer>
+
+    <!-- Tombol WhatsApp melayang (selalu terlihat) -->
+    <a
+      id="wa-fab"
+      href="https://wa.me/6285156175349?text=Halo%20Mak%20Unyil%2C%20saya%20mau%20tanya%20menu%20dan%20stok%20hari%20ini."
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat WhatsApp Mak Unyil"
+      title="Chat WhatsApp Mak Unyil"
+      class="fixed bottom-5 right-5 z-40 w-14 h-14 rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-900/30 flex items-center justify-center hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-600 transition print:hidden"
+    >
+      <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+        />
+      </svg>
+      <span class="sr-only">Chat WhatsApp</span>
+    </a>
+
+    <!-- Leaflet 1.9.4 JS, disajikan dari /vendor -->
+    <script src="/vendor/leaflet/leaflet.js" charset="utf-8"></script>
+
+    <!-- Logika aplikasi (diekstrak dari HTML agar bisa di-cache) -->
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>
