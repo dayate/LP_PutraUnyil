@@ -4,8 +4,35 @@
    Dimuat dengan defer, jadi seluruh DOM sudah tersedia saat skrip berjalan.
    ========================================================================== */
 
-// Konfigurasi WhatsApp Dapur Mak Unyil
+// Config WhatsApp Dapur Mak Unyil
 const WHATSAPP_PHONE = "6285156175349";
+
+// Versi aset gambar, dihasilkan npm run build (scripts/cache-bust.js).
+// Dipakai supaya CDN tidak menyajikan foto lama selama 7 hari.
+const ASSET_VERSIONS = /* @asset-versions */ {
+  "images/bakmi-capcay-1200.webp": "47c5ad1925",
+  "images/bakmi-capcay-600.webp": "de2c9f99b2",
+  "images/daun-pisang-1200.webp": "cfd8df8385",
+  "images/daun-pisang-600.webp": "2bd45e979d",
+  "images/keong-fresh-1200.webp": "73343a1eb3",
+  "images/keong-fresh-600.webp": "fafdf27116",
+  "images/nasi-box-1200.webp": "bec84a144d",
+  "images/nasi-box-600.webp": "057e76f0ba",
+  "images/nasi-kuning-1200.webp": "90726649a9",
+  "images/nasi-kuning-600.webp": "e46787f2a5",
+  "images/nasi-uduk-1200.webp": "1ecf5291ec",
+  "images/nasi-uduk-600.webp": "dff0378a93",
+  "images/placeholder-gethuk-1200.webp": "cc6b3780b2",
+  "images/placeholder-gethuk-600.webp": "bfb9d19130",
+  "images/placeholder-tahu-telur-1200.webp": "39c910e1eb",
+  "images/placeholder-tahu-telur-600.webp": "914031b7ec",
+  "images/sate-keong-1200.webp": "34bd0daaf1",
+  "images/sate-keong-600.webp": "a1bf0e349c",
+  "images/sate-usus-1200.webp": "d90b9f76ad",
+  "images/sate-usus-600.webp": "c5b0926de7",
+  "images/tahu-sarang-1200.webp": "4af1e181e2",
+  "images/tahu-sarang-600.webp": "085377adaf"
+};
 
 // Katalog Produk Mak Unyil dengan Status Stok Realistis
 // status: 'available' (Tersedia), 'preorder' (Pre-Order), 'soldout' (Habis)
@@ -225,6 +252,12 @@ function askItemStock(name) {
 }
 
 // Render Status Badge
+// Tambahkan query versi dari manifest build agar CDN tidak menyajikan foto lama.
+function assetUrl(path) {
+  const v = ASSET_VERSIONS[path];
+  return v ? `${path}?v=${v}` : path;
+}
+
 // Thumbnail produk: pakai foto asli bila ada, atau tile netral bila foto menyusul
 function productThumb(p, sizeClass) {
   if (p.image.includes("placeholder-")) {
@@ -236,7 +269,7 @@ function productThumb(p, sizeClass) {
       </svg>
     </span>`;
   }
-  return `<img src="${p.image}" alt="" width="600" height="450" class="${sizeClass} rounded object-cover border border-stone-200 shrink-0 bg-stone-100" loading="lazy" decoding="async">`;
+  return `<img src="${assetUrl(p.image)}" alt="" width="600" height="450" class="${sizeClass} rounded object-cover border border-stone-200 shrink-0 bg-stone-100" loading="lazy" decoding="async">`;
 }
 
 function getStatusBadge(status) {  if (status === "available") {
@@ -291,8 +324,8 @@ function renderProducts(filter = "semua") {
         `
             : `
         <img
-          src="${p.image}"
-          srcset="${p.image} 600w, ${p.imageHi} 1200w"
+          src="${assetUrl(p.image)}"
+          srcset="${assetUrl(p.image)} 600w, ${assetUrl(p.imageHi)} 1200w"
           sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
           width="1200"
           height="900"
