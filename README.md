@@ -180,12 +180,12 @@ Buka file `stock.json`:
   "note": "Ubah status di sini tanpa menyentuh HTML. Nilai: available | preorder | soldout.",
   "items": {
     "sate-keong": "available",
+    "sate-usus": "available",
     "oseng-keong": "available",
     "keong-fresh": "preorder",
     "nasi-uduk": "soldout",
     "nasi-kuning": "available",
     "bakmi-capcay": "available",
-    "nasi-box": "preorder",
     "tahu-sarang": "available",
     "tahu-telur": "soldout",
     "getuk-crispy": "available",

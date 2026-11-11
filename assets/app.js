@@ -16,8 +16,6 @@ const ASSET_VERSIONS = /* @asset-versions */ {
   "images/daun-pisang-600.webp": "2bd45e979d",
   "images/keong-fresh-1200.webp": "73343a1eb3",
   "images/keong-fresh-600.webp": "fafdf27116",
-  "images/nasi-box-1200.webp": "bec84a144d",
-  "images/nasi-box-600.webp": "057e76f0ba",
   "images/nasi-kuning-1200.webp": "90726649a9",
   "images/nasi-kuning-600.webp": "e46787f2a5",
   "images/nasi-uduk-1200.webp": "1ecf5291ec",
@@ -39,32 +37,32 @@ const ASSET_VERSIONS = /* @asset-versions */ {
 const PRODUCTS = [
   {
     id: "sate-keong",
-    name: "Sate Keong Sawah Bumbu Rica",
-    category: "keong",
-    price: 15000,
-    unit: "porsi (5 tusuk)",
+    name: "Sate Keong Sawah",
+    category: "sate",
+    price: 10000,
+    unit: "10 Tusuk",
     status: "available",
     image: "images/sate-keong-600.webp",
     imageHi: "images/sate-keong-1200.webp",
-    desc: "Daging keong sawah pilihan yang kenyal empuk, dibakar dengan balutan bumbu rica-rica pedas gurih medok.",
+    desc: "Daging keong sawah pilihan yang kenyal empuk dengan balutan bumbu rica-rica pedas",
   },
   {
     id: "sate-usus",
-    name: "Sate Usus Bumbu Kuning",
-    category: "keong",
-    price: 5000,
-    unit: "porsi (5 tusuk)",
+    name: "Sate Usus",
+    category: "sate",
+    price: 10000,
+    unit: "5 Tusuk",
     status: "available",
     image: "images/sate-usus-600.webp",
     imageHi: "images/sate-usus-1200.webp",
-    desc: "Usus ayam dibersihkan lalu diungkep bumbu kuning gurih, ditusuk dan dibakar hingga harum legit tanpa bau.",
+    desc: "Sate Usus Ayam dengan bumbu bacem khas Mak Unyil yang manis dan gurih",
   },
   {
     id: "oseng-keong",
     name: "Oseng Keong Pedas Cabai Hijau",
-    category: "keong",
-    price: 13000,
-    unit: "porsi",
+    category: "sate",
+    price: 5000,
+    unit: "1 porsi",
     status: "available",
     image: "images/placeholder-oseng-600.webp",
     imageHi: "images/placeholder-oseng-1200.webp",
@@ -74,69 +72,56 @@ const PRODUCTS = [
     id: "keong-fresh",
     name: "Daging Keong Fresh Siap Olah",
     category: "khusus",
-    price: 45000,
+    price: 35000,
     unit: "kg",
     status: "preorder",
     image: "images/keong-fresh-600.webp",
     imageHi: "images/keong-fresh-1200.webp",
-    desc: "Keong sawah tangkapan segar yang sudah dikupas dan dicuci bersih higienis siap masak (Sistem Pre-Order H-1).",
+    desc: "Keong sawah diambil langsung dari alam dan telah melewati proses sortir. Daging segar yang sudah dikupas dan dicuci bersih higienis siap dimasak (Sistem Pre-Order).",
   },
   {
     id: "nasi-uduk",
-    name: "Nasi Uduk Komplit Mak Unyil",
+    name: "Nasi Uduk",
     category: "nasi",
-    price: 12000,
-    unit: "porsi",
+    price: 5000,
+    unit: "pcs",
     status: "soldout",
     image: "images/nasi-uduk-600.webp",
     imageHi: "images/nasi-uduk-1200.webp",
-    desc: "Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir, bawang goreng & sambal.",
+    desc: "Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir. Sarapan pagi mulai 5000-an",
   },
   {
     id: "nasi-kuning",
-    name: "Nasi Kuning Gurih Harum",
+    name: "Nasi Kuning",
     category: "nasi",
-    price: 12000,
-    unit: "porsi",
+    price: 10000,
+    unit: "pcs",
     status: "available",
     image: "images/nasi-kuning-600.webp",
     imageHi: "images/nasi-kuning-1200.webp",
-    desc: "Warna kuning alami dari kunyit dengan aroma daun jeruk dan serai harum, lengkap dengan lauk pendamping.",
+    desc: "Nasi kuning dengan lauk pendamping dengan wadah thinwall ukuran 450ml",
   },
   {
     id: "bakmi-capcay",
-    name: "Bakmi Capcay Porsi Rumahan",
+    name: "Bakmi Capcay",
     category: "nasi",
     price: 10000,
-    unit: "porsi",
+    unit: "pcs",
     status: "available",
     image: "images/bakmi-capcay-600.webp",
     imageHi: "images/bakmi-capcay-1200.webp",
-    desc: "Bakmi goreng dimasak per porsi dengan capcay sayur segar, kerupuk, dan acar timun. Pas untuk sarapan atau makan siang.",
-  },
-  {
-    id: "nasi-box",
-    name: "Paket Nasi Box Acara",
-    category: "khusus",
-    price: 20000,
-    unit: "box (Min. 15)",
-    minQty: 15,
-    minUnit: "box",
-    status: "preorder",
-    image: "images/nasi-box-600.webp",
-    imageHi: "images/nasi-box-1200.webp",
-    desc: "Pesanan prasmanan/box untuk hajatan keluarga, rapat kantor, atau arisan. Menu lauk bisa disesuaikan.",
+    desc: "Bakmi dengan capcay sayur segar pas untuk sarapan atau makan siang.",
   },
   {
     id: "tahu-sarang",
     name: "Tahu Sarang Burung",
     category: "jajanan",
-    price: 2500,
+    price: 1000,
     unit: "pcs",
     status: "available",
     image: "images/tahu-sarang-600.webp",
     imageHi: "images/tahu-sarang-1200.webp",
-    desc: "Olahan tahu lembut dengan isian telur puyuh dan bihun renyah bumbu gurih khas jajanan pasar tempo dulu.",
+    desc: "Olahan tahu lembut dicetak menyerupai sarang burung.",
   },
   {
     id: "tahu-telur",
@@ -147,27 +132,27 @@ const PRODUCTS = [
     status: "soldout",
     image: "images/placeholder-tahu-telur-600.webp",
     imageHi: "images/placeholder-tahu-telur-1200.webp",
-    desc: "Kombinasi tahu goreng isi telur dengan adonan bumbu rempah gurih, pas dinikmati bersama cabai rawit hijau.",
+    desc: "Kombinasi tahu yang dicetak ditambah telur ayam setangah pas dinikmati bersama cabai rawit hijau.",
   },
   {
     id: "getuk-crispy",
-    name: "Getuk Crispy Saus Juruh",
+    name: "Getuk Crispy",
     category: "jajanan",
-    price: 10000,
-    unit: "porsi (5 pcs)",
+    price: 1000,
+    unit: "pcs",
     status: "available",
     image: "images/placeholder-gethuk-600.webp",
     imageHi: "images/placeholder-gethuk-1200.webp",
-    desc: "Singkong pulen manis berbalut lapisan luar renyah keemasan, disajikan dengan cocolan saus gula jawa kental.",
+    desc: "Singkong pulen manis berbalut lapisan luar renyah crispy dengan rasa manis didalam tanpa pemanis buatan.",
   },
   {
     id: "daun-pisang",
-    name: "Daun Pisang Segar",
+    name: "Daun Pisang",
     category: "khusus",
-    price: 7000,
-    unit: "ikat",
+    price: 5000,
+    unit: "lipat",
     status: "preorder",
-    desc: "Daun pisang segar lentur dari kebun, bersih siap pakai untuk bungkus lontong, nagasari, atau nasi berkat.",
+    desc: "Daun pisang serbaguna untuk berbagai keperluan seperti bungkus lontong, nagasari, atau nasi berkat dan lain-lain.",
     image: "images/daun-pisang-600.webp",
     imageHi: "images/daun-pisang-1200.webp",
   },
@@ -272,7 +257,8 @@ function productThumb(p, sizeClass) {
   return `<img src="${assetUrl(p.image)}" alt="" width="600" height="450" class="${sizeClass} rounded object-cover border border-stone-200 shrink-0 bg-stone-100" loading="lazy" decoding="async">`;
 }
 
-function getStatusBadge(status) {  if (status === "available") {
+function getStatusBadge(status) {
+  if (status === "available") {
     return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
           </span>`;
@@ -396,20 +382,12 @@ function renderProducts(filter = "semua") {
 
 function filterCategory(cat, btn) {
   document.querySelectorAll(".filter-pill").forEach((pill) => {
-    pill.classList.remove(
-      "bg-stone-900",
-      "text-white",
-      "border-stone-900",
-    );
+    pill.classList.remove("bg-stone-900", "text-white", "border-stone-900");
     pill.classList.add("border-stone-300", "text-stone-600");
     pill.setAttribute("aria-pressed", "false");
   });
   const active = btn || document.querySelector(".filter-pill");
-  active.classList.add(
-    "bg-stone-900",
-    "text-white",
-    "border-stone-900",
-  );
+  active.classList.add("bg-stone-900", "text-white", "border-stone-900");
   active.classList.remove("border-stone-300", "text-stone-600");
   active.setAttribute("aria-pressed", "true");
   renderProducts(cat);
@@ -585,7 +563,11 @@ function updateTotals() {
   if (subEl) subEl.innerText = formatRupiah(t.subtotal);
   if (shipEl) {
     shipEl.innerText =
-      t.ship.cost == null ? (selectedLocation ? "Konfirmasi" : "—") : formatRupiah(t.ship.cost);
+      t.ship.cost == null
+        ? selectedLocation
+          ? "Konfirmasi"
+          : "—"
+        : formatRupiah(t.ship.cost);
   }
   if (noteEl) noteEl.innerText = t.ship.label;
   if (totalEl) {
@@ -849,12 +831,8 @@ function closeCart() {
   hideModal("cart-drawer");
 }
 
-document
-  .getElementById("open-cart-btn")
-  .addEventListener("click", openCart);
-document
-  .getElementById("close-cart-btn")
-  .addEventListener("click", closeCart);
+document.getElementById("open-cart-btn").addEventListener("click", openCart);
+document.getElementById("close-cart-btn").addEventListener("click", closeCart);
 document.getElementById("cart-drawer").addEventListener("click", (e) => {
   if (e.target.id === "cart-drawer") closeCart();
 });
@@ -903,15 +881,12 @@ function saveSchedule() {
   }
 
   const [yy, mm, dd] = dateVal.split("-").map(Number);
-  const formattedDate = new Date(yy, mm - 1, dd).toLocaleDateString(
-    "id-ID",
-    {
-      weekday: "long",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    },
-  );
+  const formattedDate = new Date(yy, mm - 1, dd).toLocaleDateString("id-ID", {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
   selectedSchedule = `${formattedDate}, pukul ${timeVal || "11:00"} WIB`;
   document.getElementById("schedule-display").innerHTML =
@@ -1104,9 +1079,7 @@ async function searchLocationManual() {
       );
     }
   } catch (err) {
-    alert(
-      "Gagal melakukan pencarian lokasi. Periksa koneksi internet Anda.",
-    );
+    alert("Gagal melakukan pencarian lokasi. Periksa koneksi internet Anda.");
   } finally {
     searchBtn.innerText = originalText;
     searchBtn.disabled = false;
@@ -1133,8 +1106,7 @@ function renderLocationDisplay() {
     return;
   }
   const ship = getShipping();
-  const distance =
-    ship.km != null ? ` · ± ${ship.km.toFixed(1)} km` : "";
+  const distance = ship.km != null ? ` · ± ${ship.km.toFixed(1)} km` : "";
   el.innerHTML = `<span class="text-stone-900 font-semibold truncate">📍 ${selectedLocation.lat}, ${selectedLocation.lng}${distance}</span>`;
 }
 
@@ -1201,8 +1173,7 @@ function checkoutWhatsApp() {
     return;
   }
 
-  const name =
-    document.getElementById("cust-name").value.trim() || "Pelanggan";
+  const name = document.getElementById("cust-name").value.trim() || "Pelanggan";
   const note = document.getElementById("cust-note").value.trim() || "-";
   const schedule = selectedSchedule || "Kirim segera / hari ini";
   const ship = getShipping();
@@ -1262,9 +1233,7 @@ function checkoutWhatsApp() {
   }
 
   lines.push("");
-  lines.push(
-    "Mohon konfirmasi ketersediaan menu dan ongkirnya. Terima kasih!",
-  );
+  lines.push("Mohon konfirmasi ketersediaan menu dan ongkirnya. Terima kasih!");
 
   track("checkout_click", {
     items: itemIds.length,
