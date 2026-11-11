@@ -4,7 +4,7 @@
   "private": true,
   "description": "Landing page statis Mak Unyil — build CSS Tailwind lokal, tanpa CDN.",
   "scripts": {
-    "build": "tailwindcss -i src/tailwind.css -o assets/site.css --minify",
+    "build": "tailwindcss -i src/tailwind.css -o assets/site.css --minify && node scripts/cache-bust.js",
     "watch": "tailwindcss -i src/tailwind.css -o assets/site.css --watch"
   },
   "devDependencies": {

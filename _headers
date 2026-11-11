@@ -33,6 +33,9 @@
 /vendor/*
   Cache-Control: public, max-age=31536000
 
+# CSS/JS di-cache 7 hari, TETAPI direferensikan dengan ?v=<hash isi>
+# (lihat scripts/cache-bust.js). Setiap perubahan menghasilkan URL baru,
+# jadi cache lama tidak akan pernah menyajikan kode usang.
 /assets/*
   Cache-Control: public, max-age=604800
 
