@@ -53,7 +53,9 @@
     />
 
     <meta name="theme-color" content="#FAF8F5" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <script type="application/ld+json">
@@ -144,7 +146,7 @@
          loadLeaflet() di assets/app.js. Ini menghemat ±45 KB gzip per kunjungan. -->
 
     <!-- Hasil build Tailwind (npm run build) -->
-    <link rel="stylesheet" href="/assets/site.css?v=401a5f688a" />
+    <link rel="stylesheet" href="/assets/site.css?v=2a38d38000" />
   </head>
   <body class="font-sans antialiased selection:bg-stone-200">
     <!-- Header -->
@@ -595,8 +597,8 @@
     <div class="flex flex-col flex-1">
       <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
         <img
-          src="images/nasi-uduk-600.webp?v=dff0378a93"
-          srcset="images/nasi-uduk-600.webp?v=dff0378a93 600w, images/nasi-uduk-1200.webp?v=1ecf5291ec 1200w"
+          src="images/nasi-uduk-600.webp?v=e544f08fb8"
+          srcset="images/nasi-uduk-600.webp?v=e544f08fb8 600w, images/nasi-uduk-1200.webp?v=b2b8da2291 1200w"
           sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
           width="1200"
           height="900"
@@ -695,8 +697,8 @@
     <div class="flex flex-col flex-1">
       <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
         <img
-          src="images/bakmi-capcay-600.webp?v=de2c9f99b2"
-          srcset="images/bakmi-capcay-600.webp?v=de2c9f99b2 600w, images/bakmi-capcay-1200.webp?v=47c5ad1925 1200w"
+          src="images/bakmi-capcay-600.webp?v=5ffc6fe3cc"
+          srcset="images/bakmi-capcay-600.webp?v=5ffc6fe3cc 600w, images/bakmi-capcay-1200.webp?v=e9686e1547 1200w"
           sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
           width="1200"
           height="900"
@@ -1178,7 +1180,7 @@
             "
             onclick="
               openLightbox(
-                '/images/bakmi-capcay-1200.webp?v=47c5ad1925',
+                '/images/bakmi-capcay-1200.webp?v=e9686e1547',
                 'Bakmi Capcay',
                 'Produk',
                 'Bakmi goreng dengan capcay sayur, kerupuk, dan acar timun — dimasak per porsi.',
@@ -1188,10 +1190,10 @@
           >
             <div class="h-56 overflow-hidden relative">
               <img
-                src="/images/bakmi-capcay-600.webp?v=de2c9f99b2"
+                src="/images/bakmi-capcay-600.webp?v=5ffc6fe3cc"
                 srcset="
-                  images/bakmi-capcay-600.webp?v=de2c9f99b2   600w,
-                  images/bakmi-capcay-1200.webp?v=47c5ad1925 1200w
+                  images/bakmi-capcay-600.webp?v=5ffc6fe3cc   600w,
+                  images/bakmi-capcay-1200.webp?v=e9686e1547 1200w
                 "
                 sizes="(min-width: 640px) 288px, 256px"
                 width="1200"
@@ -1687,18 +1689,18 @@
               <div
                 class="flex items-center justify-between text-xs text-stone-700"
               >
-                <span class="font-medium">Ongkir (estimasi)</span>
+                <span class="font-medium">Ongkir</span>
                 <span
                   id="cart-shipping"
-                  class="font-bold text-stone-900 tabular-nums"
-                  >—</span
+                  class="font-bold text-emerald-700 tabular-nums"
+                  >Gratis</span
                 >
               </div>
               <p
                 id="cart-shipping-note"
                 class="text-[11px] text-stone-600 leading-snug"
               >
-                Pilih titik lokasi antar untuk melihat estimasi ongkir.
+                Ongkir gratis untuk area sekitar. Titik antar bersifat opsional.
               </p>
             </div>
           </div>
@@ -2015,6 +2017,24 @@
         <p class="pt-2 text-[11px] text-stone-400">
           Dibuat dengan hati oleh Putra Unyil Dev
         </p>
+        <p class="pt-1 text-[10px] text-stone-400">
+          Peta: &copy;
+          <a
+            href="https://www.esri.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline hover:text-stone-600"
+            >Esri</a
+          >, HERE, Garmin, &copy;
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline hover:text-stone-600"
+            >OpenStreetMap</a
+          >
+          contributors
+        </p>
       </div>
     </footer>
 
@@ -2043,6 +2063,6 @@
     <!-- Leaflet di-inject on-demand oleh loadLeaflet() saat modal peta dibuka. -->
 
     <!-- Logika aplikasi (diekstrak dari HTML agar bisa di-cache) -->
-    <script src="/assets/app.js?v=c9d50e56c0" defer></script>
+    <script src="/assets/app.js?v=f1a1063132" defer></script>
   </body>
 </html>

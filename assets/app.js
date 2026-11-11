@@ -10,16 +10,16 @@ const WHATSAPP_PHONE = "6285156175349";
 // Versi aset gambar, dihasilkan npm run build (scripts/cache-bust.js).
 // Dipakai supaya CDN tidak menyajikan foto lama selama 7 hari.
 const ASSET_VERSIONS = /* @asset-versions */ {
-  "images/bakmi-capcay-1200.webp": "47c5ad1925",
-  "images/bakmi-capcay-600.webp": "de2c9f99b2",
+  "images/bakmi-capcay-1200.webp": "e9686e1547",
+  "images/bakmi-capcay-600.webp": "5ffc6fe3cc",
   "images/daun-pisang-1200.webp": "cfd8df8385",
   "images/daun-pisang-600.webp": "2bd45e979d",
   "images/keong-fresh-1200.webp": "73343a1eb3",
   "images/keong-fresh-600.webp": "fafdf27116",
   "images/nasi-kuning-1200.webp": "90726649a9",
   "images/nasi-kuning-600.webp": "e46787f2a5",
-  "images/nasi-uduk-1200.webp": "1ecf5291ec",
-  "images/nasi-uduk-600.webp": "dff0378a93",
+  "images/nasi-uduk-1200.webp": "b2b8da2291",
+  "images/nasi-uduk-600.webp": "e544f08fb8",
   "images/placeholder-gethuk-1200.webp": "cc6b3780b2",
   "images/placeholder-gethuk-600.webp": "bfb9d19130",
   "images/placeholder-tahu-telur-1200.webp": "39c910e1eb",
@@ -175,16 +175,13 @@ const DEFAULT_LNG = 110.4915;
 const STORAGE_KEY = "makunyil_state_v1";
 const MAX_QTY = 9999;
 
-// Koordinat dapur sebagai titik awal hitung ongkir.
+// Koordinat dapur sebagai titik awal hitung jarak pengantaran.
 const KITCHEN = { lat: -7.752, lng: 110.4915 };
 
-// Tarif ongkir berjenjang berdasarkan jarak garis lurus (haversine) dari dapur.
-// Lebih dari 10 km tidak diberi harga otomatis — dikonfirmasi lewat WhatsApp.
-const SHIPPING_TIERS = [
-  { maxKm: 3, cost: 8000 },
-  { maxKm: 6, cost: 12000 },
-  { maxKm: 10, cost: 18000 },
-];
+// Ongkir: TIDAK ada biaya pengantaran. Dapur hanya melayani area sekitar, jadi
+// jarak tetap ditampilkan (untuk kurir & konfirmasi area) tetapi tidak menambah
+// total belanja.
+const FREE_DELIVERY_RADIUS_KM = 10;
 
 const PAYMENT_LABEL = {
   cod: "Bayar di Tempat (COD)",
@@ -491,7 +488,7 @@ function removeFromCart(id) {
   }
 }
 
-// --- Ongkir & total ---
+// --- Jarak & total ---
 function haversineKm(a, b) {
   const R = 6371;
   const rad = (d) => (d * Math.PI) / 180;
@@ -503,12 +500,13 @@ function haversineKm(a, b) {
   return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
+// Ongkir selalu 0 — yang dihitung hanya jarak, untuk info kurir dan pengecekan
+// apakah titik masih masuk area layanan sekitar.
 function getShipping() {
   if (!selectedLocation) {
     return {
       km: null,
-      cost: null,
-      label: "Pilih titik lokasi antar untuk melihat estimasi ongkir.",
+      label: "Ongkir gratis untuk area sekitar. Titik antar bersifat opsional.",
     };
   }
   const km = haversineKm(KITCHEN, {
@@ -518,22 +516,18 @@ function getShipping() {
   if (km <= 0.5) {
     return {
       km: km,
-      cost: 0,
-      label: "Titik di dapur — ambil sendiri, tanpa ongkir.",
+      label: "Titik di dapur — bisa diambil sendiri atau diantar.",
     };
   }
-  const tier = SHIPPING_TIERS.find((t) => km <= t.maxKm);
-  if (!tier) {
+  if (km > FREE_DELIVERY_RADIUS_KM) {
     return {
       km: km,
-      cost: null,
-      label: `± ${km.toFixed(1)} km dari dapur — ongkir di luar 10 km dikonfirmasi lewat WhatsApp.`,
+      label: `± ${km.toFixed(1)} km dari dapur — di luar area biasa, akan dikonfirmasi lewat WhatsApp.`,
     };
   }
   return {
     km: km,
-    cost: tier.cost,
-    label: `± ${km.toFixed(1)} km dari dapur, tarif datar ${formatRupiah(tier.cost)}.`,
+    label: `± ${km.toFixed(1)} km dari dapur — masih area layanan, ongkir gratis.`,
   };
 }
 
@@ -551,7 +545,7 @@ function cartTotals() {
     qty: qty,
     subtotal: subtotal,
     ship: ship,
-    total: subtotal + (ship.cost || 0),
+    total: subtotal,
   };
 }
 
@@ -563,21 +557,9 @@ function updateTotals() {
   const totalEl = document.getElementById("cart-total");
 
   if (subEl) subEl.innerText = formatRupiah(t.subtotal);
-  if (shipEl) {
-    shipEl.innerText =
-      t.ship.cost == null
-        ? selectedLocation
-          ? "Konfirmasi"
-          : "—"
-        : formatRupiah(t.ship.cost);
-  }
+  if (shipEl) shipEl.innerText = "Gratis";
   if (noteEl) noteEl.innerText = t.ship.label;
-  if (totalEl) {
-    totalEl.innerText =
-      t.ship.cost == null
-        ? `${formatRupiah(t.subtotal)} + ongkir`
-        : formatRupiah(t.total);
-  }
+  if (totalEl) totalEl.innerText = formatRupiah(t.total);
 }
 
 // --- Pemberitahuan singkat di dalam keranjang ---
@@ -1046,14 +1028,16 @@ async function openMapPickerModal() {
     pickerMap = L.map("picker-map", {
       center: [targetLat, targetLng],
       zoom: 15,
+      // Kontrol atribusi Leaflet + kredit tile disembunyikan dari peta supaya
+      // tidak ada tulisan kecil menutupi sudut. Kredit tetap dipenuhi lewat
+      // baris kecil di footer situs (lihat "Peta: ...").
+      attributionControl: false,
     });
 
     const tiles = L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       {
         maxZoom: 19,
-        attribution:
-          'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a> &mdash; Esri, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
       },
     ).addTo(pickerMap);
 
@@ -1421,7 +1405,6 @@ function confirmSelectedLocation() {
     const ship = getShipping();
     track("location_set", {
       km: ship.km != null ? Number(ship.km.toFixed(2)) : null,
-      shipping: ship.cost,
     });
   }
   closeMapPickerModal();
@@ -1487,22 +1470,15 @@ function checkoutWhatsApp() {
 
   lines.push("");
   lines.push(`*Subtotal:* ${formatRupiah(totals.subtotal)}`);
-  lines.push(
-    `*Ongkir:* ${
-      ship.cost == null
-        ? selectedLocation
-          ? "konfirmasi lewat WhatsApp (di luar 10 km)"
-          : "belum dihitung"
-        : formatRupiah(ship.cost)
-    }`,
-  );
-  lines.push(
-    `*Total Perkiraan:* ${
-      ship.cost == null
-        ? `${formatRupiah(totals.subtotal)} + ongkir`
-        : formatRupiah(totals.total)
-    }`,
-  );
+  lines.push("*Ongkir:* Gratis (area sekitar)");
+
+  if (ship.km != null && ship.km > FREE_DELIVERY_RADIUS_KM) {
+    lines.push(
+      `*Catatan area:* ± ${ship.km.toFixed(1)} km dari dapur, mohon konfirmasi apakah masih bisa diantar.`,
+    );
+  }
+
+  lines.push(`*Total:* ${formatRupiah(totals.total)}`);
 
   if (selectedPayment === "qris") {
     lines.push("");
@@ -1510,12 +1486,11 @@ function checkoutWhatsApp() {
   }
 
   lines.push("");
-  lines.push("Mohon konfirmasi ketersediaan menu dan ongkirnya. Terima kasih!");
+  lines.push("Mohon konfirmasi ketersediaan menunya ya Mak. Terima kasih!");
 
   track("checkout_click", {
     items: itemIds.length,
     subtotal: totals.subtotal,
-    shipping: ship.cost,
     payment: selectedPayment,
   });
 
