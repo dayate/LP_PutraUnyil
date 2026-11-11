@@ -1097,33 +1097,89 @@ function closeMapPickerModal() {
   hideModal("map-picker-modal");
 }
 
-function updateCoordsDisplay(lat, lng) {
+function updateCoordsDisplay(lat, lng, accuracyMeters) {
+  const accuracy =
+    accuracyMeters != null
+      ? ` · akurasi ± ${
+          accuracyMeters >= 1000
+            ? `${(accuracyMeters / 1000).toFixed(1)} km`
+            : `${Math.round(accuracyMeters)} m`
+        }`
+      : "";
   document.getElementById("pin-coords-text").innerText =
-    `Titik: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    `Titik: ${lat.toFixed(5)}, ${lng.toFixed(5)}${accuracy}`;
   syncGoogleMapsLink(lat.toFixed(5), lng.toFixed(5));
 }
 
+// Perkiraan lokasi berbasis jaringan/IP (bukan GPS) sering keluar di kota lain
+// — di desktop, Chrome/Firefox bisa melaporkan titik Jakarta meski pengguna di
+// Klaten. Titik yang jauh dari jangkauan antar atau berakurasi sangat kasar
+// dianggap tidak layak dipakai untuk menghitung ongkir.
+const MAX_PLAUSIBLE_KM = 40; // jangkauan antar realistis Klaten – Jogja
+const MAX_PLAUSIBLE_ACCURACY_M = 5000;
+
 function locateCurrentPosition() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        if (pickerMap && pickerMarker) {
-          pickerMap.setView([lat, lng], 16);
-          pickerMarker.setLatLng([lat, lng]);
-          updateCoordsDisplay(lat, lng);
-        }
-      },
-      () => {
-        alert(
-          "Tidak dapat mengakses GPS. Silakan gunakan kotak pencarian atau geser pin manual pada peta.",
-        );
-      },
-    );
-  } else {
+  if (!navigator.geolocation) {
     alert("Browser Anda belum mendukung fitur GPS lokasi.");
+    return;
   }
+
+  const btn = document.getElementById("locate-btn");
+  const label = btn ? btn.querySelector("span") : null;
+  const originalLabel = label ? label.textContent : "";
+
+  const restoreButton = () => {
+    if (btn) btn.disabled = false;
+    if (label) label.textContent = originalLabel;
+  };
+
+  if (btn) btn.disabled = true;
+  if (label) label.textContent = "Mencari…";
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      restoreButton();
+
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const accuracy = pos.coords.accuracy;
+      const km = haversineKm(KITCHEN, { lat, lng });
+
+      if (km > MAX_PLAUSIBLE_KM || accuracy > MAX_PLAUSIBLE_ACCURACY_M) {
+        alert(
+          `Perangkat Anda melaporkan titik ± ${km.toFixed(
+            0,
+          )} km dari dapur dengan akurasi ± ${
+            accuracy >= 1000
+              ? `${(accuracy / 1000).toFixed(1)} km`
+              : `${Math.round(accuracy)} m`
+          }.\n\n` +
+            "Kemungkinan itu perkiraan dari jaringan internet/WiFi, bukan GPS — biasa terjadi di komputer desktop.\n\n" +
+            "Pin tidak dipindahkan. Silakan ketik nama jalan/kelurahan di kotak pencarian, atau geser pin langsung pada peta.",
+        );
+        return;
+      }
+
+      if (pickerMap && pickerMarker) {
+        pickerMap.setView([lat, lng], 16);
+        pickerMarker.setLatLng([lat, lng]);
+        updateCoordsDisplay(lat, lng, accuracy);
+      }
+    },
+    (err) => {
+      restoreButton();
+      const messages = {
+        1: "Izin lokasi ditolak. Aktifkan izin lokasi untuk situs ini di browser, atau geser pin manual pada peta.",
+        2: "Lokasi perangkat tidak tersedia. Coba lagi, atau geser pin manual pada peta.",
+        3: "Pencarian lokasi melebihi batas waktu. Coba lagi, atau geser pin manual pada peta.",
+      };
+      alert(
+        messages[err.code] ||
+          "Tidak dapat mengakses GPS. Silakan gunakan kotak pencarian atau geser pin manual pada peta.",
+      );
+    },
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 },
+  );
 }
 
 // ---- Pencarian lokasi (Photon) --------------------------------------------
