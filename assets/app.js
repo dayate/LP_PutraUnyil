@@ -784,54 +784,23 @@ function updateCartUI() {
       container.appendChild(row);
     });
 
-    // Sub-bagian: Tambah sajian lainnya langsung dari dalam keranjang
-    const availableToAdd = PRODUCTS.filter(
-      (p) => !cart[p.id] && p.status !== "soldout",
-    );
-
-    if (availableToAdd.length > 0) {
-      const addSection = document.createElement("div");
-      addSection.className = "mt-5 pt-4 border-t border-stone-200";
-      addSection.innerHTML = `
-        <div class="flex items-center justify-between mb-2.5">
-          <span class="text-xs font-bold uppercase tracking-wider text-stone-700">Tambah Sajian Lain</span>
-          <button
-            type="button"
-            onclick="continueShopping()"
-            class="text-[11px] font-semibold text-stone-600 hover:text-stone-900 transition flex items-center gap-1"
-          >
-            <span>Lihat Semua di Katalog</span>
-            <span aria-hidden="true">&darr;</span>
-          </button>
-        </div>
-        <div class="space-y-2 max-h-56 overflow-y-auto pr-1">
-          ${availableToAdd
-            .map(
-              (p) => `
-            <div class="flex items-center justify-between p-2.5 bg-white rounded border border-stone-200 hover:border-stone-400 transition shadow-xs">
-              <div class="flex items-center gap-2.5 min-w-0 pr-2">
-                ${productThumb(p, "w-10 h-10")}
-                <div class="min-w-0">
-                  <p class="text-xs font-bold text-stone-900 truncate leading-snug">${p.name}</p>
-                  <p class="text-[11px] text-stone-600 font-medium">${formatRupiah(p.price)} / ${displayUnit(p)}</p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onclick="addToCart('${p.id}')"
-                aria-label="Tambah ${p.name} ke keranjang"
-                class="shrink-0 text-xs font-bold px-3 py-1.5 bg-stone-900 hover:bg-stone-800 text-white rounded transition shadow-sm active:scale-95"
-              >
-                + Tambah
-              </button>
-            </div>
-          `,
-            )
-            .join("")}
-        </div>
-      `;
-      container.appendChild(addSection);
-    }
+    // Ajakan satu tombol: tutup keranjang lalu arahkan ke katalog produk
+    const addSection = document.createElement("div");
+    addSection.className = "mt-5 pt-4 border-t border-stone-200";
+    addSection.innerHTML = `
+      <button
+        type="button"
+        onclick="continueShopping()"
+        class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold uppercase tracking-wider rounded transition shadow-sm active:scale-[0.98]"
+      >
+        <span aria-hidden="true">+</span>
+        <span>Tambah Menu Lain</span>
+      </button>
+      <p class="text-[11px] text-stone-500 text-center mt-2 leading-relaxed">
+        Keranjang ditutup dan Anda diarahkan ke katalog produk.
+      </p>
+    `;
+    container.appendChild(addSection);
   }
 
   badge.innerText = totalQty;
@@ -893,6 +862,7 @@ document.getElementById("cart-drawer").addEventListener("click", (e) => {
 // Schedule Modal Handler
 function openScheduleModal() {
   const dateInput = document.getElementById("order-date");
+  const timeInput = document.getElementById("order-time");
 
   // Tanggal hari ini menurut WIB (UTC+7), bukan UTC
   const todayWib = new Date(Date.now() + 7 * 60 * 60 * 1000)
@@ -901,6 +871,19 @@ function openScheduleModal() {
 
   dateInput.min = todayWib;
   if (!dateInput.value) dateInput.value = todayWib;
+
+  // Isi pilihan jam sekali saja, kelipatan 30 menit pada jam operasional
+  // dapur (06:00 - 18:00 WIB), selalu dalam format 24 jam.
+  if (timeInput.options.length <= 1) {
+    const opts = ['<option value="">Pilih jam…</option>'];
+    for (let m = 6 * 60; m <= 18 * 60; m += 30) {
+      const hh = String(Math.floor(m / 60)).padStart(2, "0");
+      const mm = String(m % 60).padStart(2, "0");
+      opts.push(`<option value="${hh}:${mm}">${hh}:${mm} WIB</option>`);
+    }
+    timeInput.innerHTML = opts.join("");
+  }
+  if (!timeInput.value) timeInput.value = "11:00";
 
   showModal("schedule-modal");
   dateInput.focus({ preventScroll: true });

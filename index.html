@@ -131,17 +131,24 @@
     <link
       rel="preload"
       as="image"
-      href="/images/hero-dapur-600.webp?v=8df8232f15"
-      imagesrcset="/images/hero-dapur-600.webp 600w, /images/hero-dapur-1200.webp 1200w"
+      href="/images/sate-keong-600.webp?v=a1bf0e349c"
+      imagesrcset="/images/sate-keong-600.webp 600w, /images/sate-keong-1200.webp 1200w"
       imagesizes="(min-width: 1024px) 420px, (min-width: 640px) 100vw, 100vw"
       fetchpriority="high"
     />
 
-    <!-- Leaflet 1.9.4 CSS, disajikan dari /vendor -->
-    <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
+    <!-- Leaflet 1.9.4 CSS, disajikan dari /vendor. Dimuat non-blocking karena
+         peta hanya dipakai di modal pemilih lokasi yang dibuka on-demand. -->
+    <link
+      rel="stylesheet"
+      href="/vendor/leaflet/leaflet.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="/vendor/leaflet/leaflet.css" /></noscript>
 
     <!-- Hasil build Tailwind (npm run build) -->
-    <link rel="stylesheet" href="/assets/site.css?v=85a3912773" />
+    <link rel="stylesheet" href="/assets/site.css?v=cbb39668cb" />
 
     <!-- Fix Leaflet default marker icon paths via JS head setup -->
     <script>
@@ -317,15 +324,15 @@
         class="lg:col-span-5 order-first lg:order-last relative rounded-lg overflow-hidden border border-stone-200 shadow-sm bg-stone-100"
       >
         <img
-          src="/images/hero-dapur-600.webp?v=8df8232f15"
+          src="/images/sate-keong-600.webp?v=a1bf0e349c"
           srcset="
-            images/hero-dapur-600.webp   600w,
-            images/hero-dapur-1200.webp 1200w
+            images/sate-keong-600.webp   600w,
+            images/sate-keong-1200.webp 1200w
           "
           sizes="(min-width: 1024px) 420px, 100vw"
           width="1200"
           height="900"
-          alt="Tumpukan nasi box pesanan pagi di dapur Mak Unyil, Prambanan"
+          alt="Sate keong sawah bumbu rica-rica khas dapur Mak Unyil, Prambanan"
           class="w-full h-[230px] sm:h-[320px] lg:h-[430px] object-cover object-center"
           fetchpriority="high"
           decoding="async"
@@ -335,10 +342,10 @@
         >
           <span
             class="block text-[10px] uppercase tracking-[0.16em] font-bold text-white/75 mb-0.5"
-            >Dari dapur hari ini</span
+            >Sajian andalan</span
           >
           <p class="text-sm font-semibold text-white leading-snug">
-            Nasi box pesanan pagi, siap diantar
+            Sate keong sawah bumbu rica, dibakar fresh tiap hari
           </p>
         </figcaption>
       </figure>
@@ -385,7 +392,600 @@
         id="product-grid"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
       >
-        <!-- Injected via JavaScript -->
+        <!-- CATALOG:START -->
+
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/sate-keong-600.webp?v=a1bf0e349c"
+          srcset="images/sate-keong-600.webp?v=a1bf0e349c 600w, images/sate-keong-1200.webp?v=34bd0daaf1 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Sate Keong Sawah Bumbu Rica"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi (5 tusuk)
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Sate Keong Sawah Bumbu Rica</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Daging keong sawah pilihan yang kenyal empuk, dibakar dengan balutan bumbu rica-rica pedas gurih medok.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 15.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Sate Keong Sawah Bumbu Rica')"
+          aria-label="Tanya ketersediaan Sate Keong Sawah Bumbu Rica via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('sate-keong')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/sate-usus-600.webp?v=c5b0926de7"
+          srcset="images/sate-usus-600.webp?v=c5b0926de7 600w, images/sate-usus-1200.webp?v=d90b9f76ad 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Sate Usus Bumbu Kuning"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi (5 tusuk)
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Sate Usus Bumbu Kuning</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Usus ayam dibersihkan lalu diungkep bumbu kuning gurih, ditusuk dan dibakar hingga harum legit tanpa bau.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 5.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Sate Usus Bumbu Kuning')"
+          aria-label="Tanya ketersediaan Sate Usus Bumbu Kuning via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('sate-usus')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <div class="w-full h-full bg-gradient-to-br from-stone-100 via-white to-stone-100 flex flex-col items-center justify-center gap-1.5">
+          <svg class="w-9 h-9 text-stone-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-stone-400">Foto menyusul</span>
+        </div>
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Oseng Keong Pedas Cabai Hijau</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Dimasak oseng rempah cabai hijau pedas nampol, gurih mantap tanpa bau amis, cocok untuk lauk harian.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 13.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Oseng Keong Pedas Cabai Hijau')"
+          aria-label="Tanya ketersediaan Oseng Keong Pedas Cabai Hijau via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('oseng-keong')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/keong-fresh-600.webp?v=fafdf27116"
+          srcset="images/keong-fresh-600.webp?v=fafdf27116 600w, images/keong-fresh-1200.webp?v=73343a1eb3 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Daging Keong Fresh Siap Olah"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          kg
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pre-Order
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Daging Keong Fresh Siap Olah</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Keong sawah tangkapan segar yang sudah dikupas dan dicuci bersih higienis siap masak (Sistem Pre-Order H-1).</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 45.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Daging Keong Fresh Siap Olah')"
+          aria-label="Tanya ketersediaan Daging Keong Fresh Siap Olah via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('keong-fresh')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm opacity-75">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/nasi-uduk-600.webp?v=dff0378a93"
+          srcset="images/nasi-uduk-600.webp?v=dff0378a93 600w, images/nasi-uduk-1200.webp?v=1ecf5291ec 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Nasi Uduk Komplit Mak Unyil"
+          class="w-full h-full object-cover transition-transform duration-500 grayscale-[60%]"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Habis Hari Ini
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Nasi Uduk Komplit Mak Unyil</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir, bawang goreng &amp; sambal.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 12.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Nasi Uduk Komplit Mak Unyil')"
+          aria-label="Tanya ketersediaan Nasi Uduk Komplit Mak Unyil via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button disabled class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-100 text-stone-400 border border-stone-200 rounded cursor-not-allowed shrink-0">
+            Habis
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/nasi-kuning-600.webp?v=e46787f2a5"
+          srcset="images/nasi-kuning-600.webp?v=e46787f2a5 600w, images/nasi-kuning-1200.webp?v=90726649a9 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Nasi Kuning Gurih Harum"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Nasi Kuning Gurih Harum</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Warna kuning alami dari kunyit dengan aroma daun jeruk dan serai harum, lengkap dengan lauk pendamping.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 12.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Nasi Kuning Gurih Harum')"
+          aria-label="Tanya ketersediaan Nasi Kuning Gurih Harum via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('nasi-kuning')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/bakmi-capcay-600.webp?v=de2c9f99b2"
+          srcset="images/bakmi-capcay-600.webp?v=de2c9f99b2 600w, images/bakmi-capcay-1200.webp?v=47c5ad1925 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Bakmi Capcay Porsi Rumahan"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Bakmi Capcay Porsi Rumahan</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Bakmi goreng dimasak per porsi dengan capcay sayur segar, kerupuk, dan acar timun. Pas untuk sarapan atau makan siang.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 10.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Bakmi Capcay Porsi Rumahan')"
+          aria-label="Tanya ketersediaan Bakmi Capcay Porsi Rumahan via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('bakmi-capcay')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/nasi-box-600.webp?v=057e76f0ba"
+          srcset="images/nasi-box-600.webp?v=057e76f0ba 600w, images/nasi-box-1200.webp?v=bec84a144d 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Paket Nasi Box Acara"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          box (Min. 15)
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pre-Order
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Paket Nasi Box Acara</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Pesanan prasmanan/box untuk hajatan keluarga, rapat kantor, atau arisan. Menu lauk bisa disesuaikan.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 20.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Paket Nasi Box Acara')"
+          aria-label="Tanya ketersediaan Paket Nasi Box Acara via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('nasi-box')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/tahu-sarang-600.webp?v=085377adaf"
+          srcset="images/tahu-sarang-600.webp?v=085377adaf 600w, images/tahu-sarang-1200.webp?v=4af1e181e2 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Tahu Sarang Burung"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          pcs
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Tahu Sarang Burung</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Olahan tahu lembut dengan isian telur puyuh dan bihun renyah bumbu gurih khas jajanan pasar tempo dulu.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 2.500</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Tahu Sarang Burung')"
+          aria-label="Tanya ketersediaan Tahu Sarang Burung via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('tahu-sarang')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm opacity-75">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <div class="w-full h-full bg-gradient-to-br from-stone-100 via-white to-stone-100 flex flex-col items-center justify-center gap-1.5">
+          <svg class="w-9 h-9 text-stone-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-stone-400">Foto menyusul</span>
+        </div>
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          pcs
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Habis Hari Ini
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Tahu Telur Setengah</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Kombinasi tahu goreng isi telur dengan adonan bumbu rempah gurih, pas dinikmati bersama cabai rawit hijau.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 3.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Tahu Telur Setengah')"
+          aria-label="Tanya ketersediaan Tahu Telur Setengah via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button disabled class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-100 text-stone-400 border border-stone-200 rounded cursor-not-allowed shrink-0">
+            Habis
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <div class="w-full h-full bg-gradient-to-br from-stone-100 via-white to-stone-100 flex flex-col items-center justify-center gap-1.5">
+          <svg class="w-9 h-9 text-stone-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-stone-400">Foto menyusul</span>
+        </div>
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          porsi (5 pcs)
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Getuk Crispy Saus Juruh</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Singkong pulen manis berbalut lapisan luar renyah keemasan, disajikan dengan cocolan saus gula jawa kental.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 10.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Getuk Crispy Saus Juruh')"
+          aria-label="Tanya ketersediaan Getuk Crispy Saus Juruh via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('getuk-crispy')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm hover:border-stone-300 hover:shadow-md">
+    <div class="flex flex-col flex-1">
+      <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
+        <img
+          src="images/daun-pisang-600.webp?v=2bd45e979d"
+          srcset="images/daun-pisang-600.webp?v=2bd45e979d 600w, images/daun-pisang-1200.webp?v=cfd8df8385 1200w"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
+          width="1200"
+          height="900"
+          alt="Daun Pisang Segar"
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        >
+        <span class="absolute top-3 right-3 bg-stone-900/85 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full">
+          ikat
+        </span>
+        <div class="absolute top-3 left-3">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pre-Order
+          </span>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5 flex-1 flex flex-col">
+        <h3 class="font-serif text-lg font-bold text-stone-900 leading-snug">Daun Pisang Segar</h3>
+        <p class="text-stone-600 text-[13px] leading-relaxed line-clamp-3 mt-1.5">Daun pisang segar lentur dari kebun, bersih siap pakai untuk bungkus lontong, nagasari, atau nasi berkat.</p>
+      </div>
+    </div>
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 pt-3.5 flex items-center justify-between border-t border-stone-100 gap-2">
+      <div class="min-w-0">
+        <span class="block text-[10px] uppercase tracking-wider text-stone-500 font-semibold leading-none mb-1">Harga</span>
+        <span class="font-serif font-bold text-stone-900 text-base leading-none">Rp 7.000</span>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button
+          onclick="askItemStock('Daun Pisang Segar')"
+          aria-label="Tanya ketersediaan Daun Pisang Segar via WhatsApp"
+          title="Tanya stok menu ini via WhatsApp"
+          class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
+        >
+          <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+        </button>
+        <button onclick="addToCart('daun-pisang')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
+            + Tambah
+          </button>
+      </div>
+    </div>
+  </div>
+<!-- CATALOG:END -->
       </div>
     </main>
 
@@ -706,29 +1306,29 @@
           <div
             tabindex="0"
             role="button"
-            aria-label="Perbesar foto: Stok Nasi Box Pagi Ini"
+            aria-label="Perbesar foto: Paket Nasi Box Acara"
             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"
             onclick="
               openLightbox(
-                '/images/hero-dapur-1200.webp?v=d5e446c67d',
-                'Stok Nasi Box Pagi Ini',
-                'Dapur',
-                'Nasi box yang disiapkan sejak pagi untuk pesanan hari ini di dapur Mak Unyil.',
+                '/images/nasi-box-1200.webp?v=bec84a144d',
+                'Paket Nasi Box Acara',
+                'Produk',
+                'Nasi box yang disiapkan untuk hajatan, rapat, atau arisan — lauk bisa disesuaikan.',
               )
             "
             class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
           >
             <div class="h-56 overflow-hidden relative">
               <img
-                src="/images/hero-dapur-600.webp?v=8df8232f15"
+                src="/images/nasi-box-600.webp?v=057e76f0ba"
                 srcset="
-                  images/hero-dapur-600.webp   600w,
-                  images/hero-dapur-1200.webp 1200w
+                  images/nasi-box-600.webp   600w,
+                  images/nasi-box-1200.webp 1200w
                 "
                 sizes="(min-width: 640px) 288px, 256px"
                 width="1200"
                 height="900"
-                alt="Tumpukan nasi box pesanan pagi di dapur Mak Unyil"
+                alt="Tumpukan nasi box pesanan acara di dapur Mak Unyil"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
                 decoding="async"
@@ -745,10 +1345,10 @@
             <div class="p-3.5 bg-white border-t border-stone-100">
               <span
                 class="text-[10px] uppercase font-bold tracking-wider text-terracotta"
-                >Dapur</span
+                >Produk</span
               >
               <p class="text-xs font-semibold text-stone-900 mt-0.5">
-                Stok Nasi Box Pagi Ini
+                Paket Nasi Box Acara
               </p>
             </div>
           </div>
@@ -1283,14 +1883,14 @@
             <label
               for="order-time"
               class="block text-xs font-semibold text-stone-700 mb-1"
-              >Estimasi Jam Pengantaran</label
+              >Estimasi Jam Pengantaran (format 24 jam)</label
             >
-            <input
-              type="time"
+            <select
               id="order-time"
-              value="11:00"
               class="w-full border border-stone-300 rounded px-3 py-2 text-xs bg-white focus:outline-none focus:border-stone-900"
-            />
+            >
+              <option value="">Pilih jam…</option>
+            </select>
           </div>
 
           <div
@@ -1488,6 +2088,6 @@
     <script src="/vendor/leaflet/leaflet.js" charset="utf-8"></script>
 
     <!-- Logika aplikasi (diekstrak dari HTML agar bisa di-cache) -->
-    <script src="/assets/app.js?v=18987c8f45" defer></script>
+    <script src="/assets/app.js?v=79d8a8e791" defer></script>
   </body>
 </html>

@@ -66,7 +66,7 @@ di `index.html` & `404.html`. **Jangan hapus query versi itu** — tanpa hash, C
 menyajikan CSS/JS lama selama 7 hari (HTML baru + JS lama = tampilan seolah tidak sinkron).
 
 ### 3. Optimasi Gambar Produk
-Foto produk mentah (JPG) diletakkan di `foto_produk_landing_page/`. Konversi ke WebP
+Foto produk mentah (JPG) diletakkan di `images/_source/`. Konversi ke WebP
 dua ukuran (600w untuk kartu, 1200w untuk galeri/Retina) memakai `ffmpeg`:
 ```bash
 # Sesuaikan peta nama berkas di dalam skrip bila menambah produk baru

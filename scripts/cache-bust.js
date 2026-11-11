@@ -77,12 +77,14 @@ if (fs.existsSync(appAbs)) {
 // perubahan pada peta versi pun otomatis menghasilkan URL app.js baru.
 function bustRefs(text) {
   const re =
-    /(["'])\/?(assets|images)\/([A-Za-z0-9._-]+\.(?:webp|js|css))(\?v=[A-Za-z0-9]*)?(["'])/g;
-  return text.replace(re, (m, q1, dir, name, _old, q2) => {
+    /(["'])(\/?)(assets|images)\/([A-Za-z0-9._-]+\.(?:webp|js|css))(\?v=[A-Za-z0-9]*)?(["'])/g;
+  return text.replace(re, (m, q1, slash, dir, name, _old, q2) => {
     const file = `${dir}/${name}`;
     const hash = hashOf(file);
     if (!hash) return m;
-    return `${q1}/${file}?v=${hash}${q2}`;
+    // Pertahankan bentuk asli (dengan/tanpa garis miring depan) agar output
+    // stabil antar-build dan tidak menulis ulang berkas tanpa perubahan.
+    return `${q1}${slash}${file}?v=${hash}${q2}`;
   });
 }
 
