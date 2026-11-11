@@ -168,6 +168,9 @@ const PAYMENT_LABEL = {
 
 let selectedPayment = "cod";
 
+// SVG Ikon Resmi WhatsApp (Path Tajam & Terstandar)
+const WA_ICON_SVG = `<svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>`;
+
 function formatRupiah(num) {
   return "Rp " + Number(num || 0).toLocaleString("id-ID");
 }
@@ -274,7 +277,7 @@ function renderProducts(filter = "semua") {
 
       <div class="p-5">
         <h3 class="font-serif text-lg font-bold text-stone-900 mb-1 leading-snug">${p.name}</h3>
-        <p class="text-stone-600 text-xs leading-relaxed line-clamp-3 mb-2">${p.desc}</p>
+        <p class="text-stone-700 text-[13px] leading-relaxed line-clamp-3 mb-2">${p.desc}</p>
       </div>
     </div>
 
@@ -284,21 +287,22 @@ function renderProducts(filter = "semua") {
       </div>
 
       <div class="flex items-center gap-1.5">
-        <!-- Tombol Tanya Stok Per Item -->
-        <button onclick="askItemStock('${p.name}')" aria-label="Tanya ketersediaan ${p.name}" title="Tanya ketersediaan menu ini" class="w-10 h-10 flex items-center justify-center border border-stone-300 hover:border-emerald-600 text-stone-600 hover:text-emerald-700 rounded transition">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.693.074-1.99-.462-1.637-.677-2.684-2.336-2.766-2.445-.08-.109-.664-.883-.664-1.682 0-.8.419-1.192.569-1.353.15-.162.327-.202.437-.202.11 0 .219.001.314.006.1.005.234-.038.366.279.136.327.465 1.134.506 1.216.041.082.068.178.013.288-.054.11-.082.178-.163.273-.082.096-.173.214-.247.288-.083.082-.169.172-.072.338.096.166.427.705.916 1.141.63.562 1.161.736 1.327.818.166.082.264.068.362-.045.099-.113.423-.493.536-.662.113-.169.227-.141.381-.084.155.056.983.464 1.152.548.169.085.282.127.324.197.042.07.042.408-.102.813z"/></svg>
+        <!-- Tombol Tanya Stok Per Item (Hijau WhatsApp Jelas) -->
+        <button onclick="askItemStock('${p.name}')" aria-label="Tanya ketersediaan ${p.name} via WhatsApp" title="Tanya ketersediaan menu ini via WhatsApp" class="h-10 px-2.5 flex items-center justify-center gap-1 border border-emerald-300 bg-emerald-50 hover:bg-emerald-600 text-emerald-800 hover:text-white rounded transition font-semibold text-xs shadow-sm">
+          ${WA_ICON_SVG}
+          <span class="hidden sm:inline text-[11px]">Tanya</span>
         </button>
 
         <!-- Tombol Tambah / Habis -->
         ${
           isSoldOut
             ? `
-          <button disabled class="text-xs uppercase font-bold tracking-wider px-3 py-1.5 bg-stone-100 text-stone-400 border border-stone-200 rounded cursor-not-allowed">
+          <button disabled class="text-xs uppercase font-bold tracking-wider px-3.5 py-2.5 bg-stone-100 text-stone-400 border border-stone-200 rounded cursor-not-allowed">
             Habis
           </button>
         `
             : `
-          <button onclick="addToCart('${p.id}')" class="text-xs uppercase font-bold tracking-wider px-4 py-2.5 border border-stone-900 hover:bg-stone-900 hover:text-white rounded transition">
+          <button onclick="addToCart('${p.id}')" class="text-xs uppercase font-bold tracking-wider px-4 py-2.5 bg-stone-900 text-white hover:bg-stone-800 rounded transition shadow-sm">
             + Tambah
           </button>
         `
@@ -616,6 +620,14 @@ function loadState() {
   }
 }
 
+function continueShopping() {
+  closeCart();
+  const katalog = document.getElementById("katalog");
+  if (katalog) {
+    katalog.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 function updateCartUI() {
   const container = document.getElementById("cart-items");
   const badge = document.getElementById("cart-count");
@@ -628,7 +640,20 @@ function updateCartUI() {
   const itemIds = Object.keys(cart);
 
   if (itemIds.length === 0) {
-    container.innerHTML = `<div class="text-center py-12 text-stone-400 text-xs">Keranjang belanja masih kosong.</div>`;
+    container.innerHTML = `
+      <div class="text-center py-10 px-4">
+        <div class="w-12 h-12 rounded-full bg-stone-200 text-stone-600 mx-auto flex items-center justify-center text-xl mb-3" aria-hidden="true">🛒</div>
+        <p class="text-sm font-bold text-stone-900">Keranjang masih kosong</p>
+        <p class="text-xs text-stone-600 mt-1 mb-5 leading-relaxed max-w-xs mx-auto">Silakan pilih olahan keong sawah, aneka nasi gurih, atau jajanan pasar di katalog.</p>
+        <button
+          type="button"
+          onclick="continueShopping()"
+          class="inline-flex items-center gap-2 px-4 py-2.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold uppercase tracking-wider rounded transition shadow-sm"
+        >
+          <span>+ Lihat & Pilih Menu</span>
+        </button>
+      </div>
+    `;
   } else {
     itemIds.forEach((id) => {
       const item = PRODUCTS.find((p) => p.id === id);
@@ -641,14 +666,14 @@ function updateCartUI() {
       totalPrice += subtotal;
 
       const row = document.createElement("div");
-      row.className = "border-b border-stone-100 pb-3.5";
+      row.className = "border-b border-stone-200 pb-3.5";
       row.innerHTML = `
       <div class="flex items-start gap-2.5">
         <img src="${item.image}" alt="" width="600" height="450" class="w-12 h-12 rounded object-cover border border-stone-200 shrink-0 bg-stone-100" loading="lazy" decoding="async">
         <div class="min-w-0 flex-1">
-          <h4 class="text-xs font-bold text-stone-900 leading-snug">${item.name}</h4>
-          <p class="text-[11px] text-stone-500 mt-0.5">${formatRupiah(item.price)} / ${displayUnit(item)}</p>
-          ${minQty > 1 ? `<p class="text-[10px] text-amber-700 mt-0.5">Minimal ${minQtyText(item)}</p>` : ""}
+          <h4 class="text-sm font-bold text-stone-900 leading-snug">${item.name}</h4>
+          <p class="text-xs text-stone-700 font-medium mt-0.5">${formatRupiah(item.price)} / ${displayUnit(item)}</p>
+          ${minQty > 1 ? `<span class="inline-block mt-1 text-[11px] font-semibold text-amber-900 bg-amber-100/90 px-2 py-0.5 rounded border border-amber-300">Minimal ${minQtyText(item)}</span>` : ""}
         </div>
 
         <!-- Tombol Hapus Menu -->
@@ -659,8 +684,8 @@ function updateCartUI() {
 
       <!-- Controller Kuantitas (Tombol +/- & Input Manual) -->
       <div class="flex items-center justify-between gap-2 mt-2 pl-[3.625rem]">
-        <div class="flex items-center border border-stone-200 rounded bg-white">
-          <button onclick="changeQty('${id}', -1)" aria-label="Kurangi jumlah ${item.name}" class="w-10 h-10 flex items-center justify-center text-sm text-stone-600 hover:bg-stone-100 rounded-l transition">−</button>
+        <div class="flex items-center border border-stone-300 rounded bg-white shadow-sm">
+          <button onclick="changeQty('${id}', -1)" aria-label="Kurangi jumlah ${item.name}" class="w-10 h-10 flex items-center justify-center text-base font-bold text-stone-700 hover:bg-stone-100 rounded-l transition">−</button>
           <input
             type="number"
             min="1"
@@ -668,16 +693,31 @@ function updateCartUI() {
             value="${qty}"
             aria-label="Jumlah ${item.name}"
             onchange="updateQtyManual('${id}', this.value)"
-            class="w-10 h-10 text-center text-xs font-semibold focus:outline-none bg-transparent"
+            class="w-10 h-10 text-center text-xs font-bold text-stone-900 focus:outline-none bg-transparent"
           >
-          <button onclick="changeQty('${id}', 1)" aria-label="Tambah jumlah ${item.name}" class="w-10 h-10 flex items-center justify-center text-sm text-stone-600 hover:bg-stone-100 rounded-r transition">+</button>
+          <button onclick="changeQty('${id}', 1)" aria-label="Tambah jumlah ${item.name}" class="w-10 h-10 flex items-center justify-center text-base font-bold text-stone-700 hover:bg-stone-100 rounded-r transition">+</button>
         </div>
 
-        <span class="text-xs font-bold text-stone-900 tabular-nums">${formatRupiah(subtotal)}</span>
+        <span class="text-sm font-bold text-stone-900 tabular-nums">${formatRupiah(subtotal)}</span>
       </div>
     `;
       container.appendChild(row);
     });
+
+    // Tombol Tambah Menu Lainnya di bawah daftar produk
+    const addMoreDiv = document.createElement("div");
+    addMoreDiv.className = "pt-2";
+    addMoreDiv.innerHTML = `
+      <button
+        type="button"
+        onclick="continueShopping()"
+        class="w-full py-2.5 px-3 border border-dashed border-stone-400 hover:border-stone-900 bg-white hover:bg-stone-100 text-stone-800 text-xs font-bold uppercase tracking-wider rounded transition flex items-center justify-center gap-2 shadow-sm"
+      >
+        <span class="text-base leading-none font-bold text-emerald-700">+</span>
+        <span>Tambah Menu Lainnya</span>
+      </button>
+    `;
+    container.appendChild(addMoreDiv);
   }
 
   badge.innerText = totalQty;
