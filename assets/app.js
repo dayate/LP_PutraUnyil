@@ -4,8 +4,37 @@
    Dimuat dengan defer, jadi seluruh DOM sudah tersedia saat skrip berjalan.
    ========================================================================== */
 
-// Config WhatsApp Dapur Mak Unyil
-const WHATSAPP_PHONE = "6285156175349";
+// Pengaturan situs. Blok ini dihasilkan `npm run build` dari content/site.json
+// (dikelola lewat /admin), jadi jangan diubah manual di sini.
+const SITE = /* @site:start */ {
+  "brand": "Mak Unyil Snack",
+  "whatsapp": "6285156175349",
+  "hours": {
+    "open": "06:00",
+    "close": "18:00"
+  },
+  "freeDeliveryRadiusKm": 10,
+  "kitchen": {
+    "lat": -7.752,
+    "lng": 110.4915
+  },
+  "payment": {
+    "cod": "Bayar di Tempat (COD)",
+    "qris": "QRIS / Transfer di muka"
+  },
+  "hero": {
+    "kicker": "Masakan Rumahan • Prambanan, Klaten",
+    "title": "Cita rasa pedas yang nampol, olahan keong sawah & aneka sarapan pagi dan jajanan pasar.",
+    "subtitle": "Sate keong bumbu rica pedasnya nampol, oseng cabai hijau segar, sarapan pagi nasi uduk, nasi kuning, hingga aneka jajanan pasar. Siap menerima pesanan partai kecil untuk berbagai keperluan.",
+    "ctaPrimary": "Pesan Sekarang",
+    "ctaSecondary": "Konsultasi pesanan via WA",
+    "captionKicker": "Sajian andalan",
+    "captionTitle": "Sate keong sawah bumbu rica, dibakar fresh tiap hari"
+  }
+} /* @site:end */;
+
+// Config WhatsApp Dapur Mak Unyil (dari content/site.json)
+const WHATSAPP_PHONE = SITE.whatsapp;
 
 // Versi aset gambar, dihasilkan npm run build (scripts/cache-bust.js).
 // Dipakai supaya CDN tidak menyajikan foto lama selama 7 hari.
@@ -20,10 +49,6 @@ const ASSET_VERSIONS = /* @asset-versions */ {
   "images/nasi-kuning-600.webp": "e46787f2a5",
   "images/nasi-uduk-1200.webp": "b2b8da2291",
   "images/nasi-uduk-600.webp": "e544f08fb8",
-  "images/placeholder-gethuk-1200.webp": "cc6b3780b2",
-  "images/placeholder-gethuk-600.webp": "bfb9d19130",
-  "images/placeholder-tahu-telur-1200.webp": "39c910e1eb",
-  "images/placeholder-tahu-telur-600.webp": "914031b7ec",
   "images/sate-keong-1200.webp": "34bd0daaf1",
   "images/sate-keong-600.webp": "a1bf0e349c",
   "images/sate-usus-1200.webp": "d90b9f76ad",
@@ -34,131 +59,130 @@ const ASSET_VERSIONS = /* @asset-versions */ {
   "vendor/leaflet/leaflet.js": "db49d009c8"
 };
 
-// Katalog Produk Mak Unyil dengan Status Stok Realistis
+// Katalog produk. Blok di bawah dihasilkan `npm run build` dari
+// content/products.json (dikelola lewat /admin), jangan diubah manual.
 // status: 'available' (Tersedia), 'preorder' (Pre-Order), 'soldout' (Habis)
-const PRODUCTS = [
+const PRODUCTS = /* @products:start */ [
   {
-    id: "sate-keong",
-    name: "Sate Keong Sawah",
-    category: "sate",
-    price: 10000,
-    unit: "10 Tusuk",
-    status: "available",
-    image: "images/sate-keong-600.webp",
-    imageHi: "images/sate-keong-1200.webp",
-    desc: "Daging keong sawah pilihan yang kenyal empuk dengan balutan bumbu rica-rica pedas",
+    "id": "sate-keong",
+    "name": "Sate Keong Sawah",
+    "category": "sate",
+    "price": 10000,
+    "unit": "10 Tusuk",
+    "status": "available",
+    "photo": "sate-keong",
+    "desc": "Daging keong sawah pilihan yang kenyal empuk dengan balutan bumbu rica-rica pedas"
   },
   {
-    id: "sate-usus",
-    name: "Sate Usus",
-    category: "sate",
-    price: 10000,
-    unit: "5 Tusuk",
-    status: "available",
-    image: "images/sate-usus-600.webp",
-    imageHi: "images/sate-usus-1200.webp",
-    desc: "Sate Usus Ayam dengan bumbu bacem khas Mak Unyil yang manis dan gurih",
+    "id": "sate-usus",
+    "name": "Sate Usus",
+    "category": "sate",
+    "price": 10000,
+    "unit": "5 Tusuk",
+    "status": "available",
+    "photo": "sate-usus",
+    "desc": "Sate Usus Ayam dengan bumbu bacem khas Mak Unyil yang manis dan gurih"
   },
   {
-    id: "oseng-keong",
-    name: "Oseng Keong Pedas Cabai Hijau",
-    category: "sate",
-    price: 5000,
-    unit: "1 porsi",
-    status: "available",
-    image: "images/placeholder-oseng-600.webp",
-    imageHi: "images/placeholder-oseng-1200.webp",
-    desc: "Dimasak oseng rempah cabai hijau pedas nampol, gurih mantap tanpa bau amis, cocok untuk lauk harian.",
+    "id": "oseng-keong",
+    "name": "Oseng Keong Pedas Cabai Hijau",
+    "category": "sate",
+    "price": 5000,
+    "unit": "1 porsi",
+    "status": "available",
+    "photo": "",
+    "desc": "Dimasak oseng rempah cabai hijau pedas nampol, gurih mantap tanpa bau amis, cocok untuk lauk harian."
   },
   {
-    id: "keong-fresh",
-    name: "Daging Keong Fresh Siap Olah",
-    category: "khusus",
-    price: 35000,
-    unit: "kg",
-    status: "preorder",
-    image: "images/keong-fresh-600.webp",
-    imageHi: "images/keong-fresh-1200.webp",
-    desc: "Keong sawah diambil langsung dari alam dan telah melewati proses sortir. Daging segar yang sudah dikupas dan dicuci bersih higienis siap dimasak (Sistem Pre-Order).",
+    "id": "keong-fresh",
+    "name": "Daging Keong Fresh Siap Olah",
+    "category": "khusus",
+    "price": 35000,
+    "unit": "kg",
+    "status": "preorder",
+    "photo": "keong-fresh",
+    "desc": "Keong sawah diambil langsung dari alam dan telah melewati proses sortir. Daging segar yang sudah dikupas dan dicuci bersih higienis siap dimasak (Sistem Pre-Order)."
   },
   {
-    id: "nasi-uduk",
-    name: "Nasi Uduk",
-    category: "nasi",
-    price: 5000,
-    unit: "pcs",
-    status: "soldout",
-    image: "images/nasi-uduk-600.webp",
-    imageHi: "images/nasi-uduk-1200.webp",
-    desc: "Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir. Sarapan pagi mulai 5000-an",
+    "id": "nasi-uduk",
+    "name": "Nasi Uduk",
+    "category": "nasi",
+    "price": 5000,
+    "unit": "pcs",
+    "status": "soldout",
+    "photo": "nasi-uduk",
+    "desc": "Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir. Sarapan pagi mulai 5000-an"
   },
   {
-    id: "nasi-kuning",
-    name: "Nasi Kuning",
-    category: "nasi",
-    price: 10000,
-    unit: "pcs",
-    status: "available",
-    image: "images/nasi-kuning-600.webp",
-    imageHi: "images/nasi-kuning-1200.webp",
-    desc: "Nasi kuning dengan lauk pendamping dengan wadah thinwall ukuran 450ml",
+    "id": "nasi-kuning",
+    "name": "Nasi Kuning",
+    "category": "nasi",
+    "price": 10000,
+    "unit": "pcs",
+    "status": "available",
+    "photo": "nasi-kuning",
+    "desc": "Nasi kuning dengan lauk pendamping dengan wadah thinwall ukuran 450ml"
   },
   {
-    id: "bakmi-capcay",
-    name: "Bakmi Capcay",
-    category: "nasi",
-    price: 10000,
-    unit: "pcs",
-    status: "available",
-    image: "images/bakmi-capcay-600.webp",
-    imageHi: "images/bakmi-capcay-1200.webp",
-    desc: "Bakmi dengan capcay sayur segar pas untuk sarapan atau makan siang.",
+    "id": "bakmi-capcay",
+    "name": "Bakmi Capcay",
+    "category": "nasi",
+    "price": 10000,
+    "unit": "pcs",
+    "status": "available",
+    "photo": "bakmi-capcay",
+    "desc": "Bakmi dengan capcay sayur segar pas untuk sarapan atau makan siang."
   },
   {
-    id: "tahu-sarang",
-    name: "Tahu Sarang Burung",
-    category: "jajanan",
-    price: 1000,
-    unit: "pcs",
-    status: "available",
-    image: "images/tahu-sarang-600.webp",
-    imageHi: "images/tahu-sarang-1200.webp",
-    desc: "Olahan tahu lembut dicetak menyerupai sarang burung.",
+    "id": "tahu-sarang",
+    "name": "Tahu Sarang Burung",
+    "category": "jajanan",
+    "price": 1000,
+    "unit": "pcs",
+    "status": "available",
+    "photo": "tahu-sarang",
+    "desc": "Olahan tahu lembut dicetak menyerupai sarang burung."
   },
   {
-    id: "tahu-telur",
-    name: "Tahu Telur Setengah",
-    category: "jajanan",
-    price: 3000,
-    unit: "pcs",
-    status: "soldout",
-    image: "images/placeholder-tahu-telur-600.webp",
-    imageHi: "images/placeholder-tahu-telur-1200.webp",
-    desc: "Kombinasi tahu yang dicetak ditambah telur ayam setangah pas dinikmati bersama cabai rawit hijau.",
+    "id": "tahu-telur",
+    "name": "Tahu Telur Setengah",
+    "category": "jajanan",
+    "price": 3000,
+    "unit": "pcs",
+    "status": "soldout",
+    "photo": "",
+    "desc": "Kombinasi tahu yang dicetak ditambah telur ayam setangah pas dinikmati bersama cabai rawit hijau."
   },
   {
-    id: "getuk-crispy",
-    name: "Getuk Crispy",
-    category: "jajanan",
-    price: 1000,
-    unit: "pcs",
-    status: "available",
-    image: "images/placeholder-gethuk-600.webp",
-    imageHi: "images/placeholder-gethuk-1200.webp",
-    desc: "Singkong pulen manis berbalut lapisan luar renyah crispy dengan rasa manis didalam tanpa pemanis buatan.",
+    "id": "getuk-crispy",
+    "name": "Getuk Crispy",
+    "category": "jajanan",
+    "price": 1000,
+    "unit": "pcs",
+    "status": "available",
+    "photo": "",
+    "desc": "Singkong pulen manis berbalut lapisan luar renyah crispy dengan rasa manis didalam tanpa pemanis buatan."
   },
   {
-    id: "daun-pisang",
-    name: "Daun Pisang",
-    category: "khusus",
-    price: 5000,
-    unit: "lipat",
-    status: "preorder",
-    desc: "Daun pisang serbaguna untuk berbagai keperluan seperti bungkus lontong, nagasari, atau nasi berkat dan lain-lain.",
-    image: "images/daun-pisang-600.webp",
-    imageHi: "images/daun-pisang-1200.webp",
-  },
-];
+    "id": "daun-pisang",
+    "name": "Daun Pisang",
+    "category": "khusus",
+    "price": 5000,
+    "unit": "lipat",
+    "status": "preorder",
+    "photo": "daun-pisang",
+    "desc": "Daun pisang serbaguna untuk berbagai keperluan seperti bungkus lontong, nagasari, atau nasi berkat dan lain-lain."
+  }
+] /* @products:end */;
+
+// Foto produk diturunkan dari slug `photo` (berkas hasil scripts/build-images.js).
+// photo kosong = belum ada foto -> kartu memakai tile netral.
+PRODUCTS.forEach((p) => {
+  if (p.photo) {
+    p.image = `images/${p.photo}-600.webp`;
+    p.imageHi = `images/${p.photo}-1200.webp`;
+  }
+});
 
 let cart = {};
 let selectedSchedule = null;
@@ -167,8 +191,8 @@ let selectedLocation = null;
 // Map Picker Variables
 let pickerMap = null;
 let pickerMarker = null;
-const DEFAULT_LAT = -7.752;
-const DEFAULT_LNG = 110.4915;
+const DEFAULT_LAT = SITE.kitchen.lat;
+const DEFAULT_LNG = SITE.kitchen.lng;
 
 // --- Konfigurasi operasional ---
 // Satu kunci penyimpanan untuk keranjang + jadwal + titik antar + pembayaran.
@@ -176,17 +200,14 @@ const STORAGE_KEY = "makunyil_state_v1";
 const MAX_QTY = 9999;
 
 // Koordinat dapur sebagai titik awal hitung jarak pengantaran.
-const KITCHEN = { lat: -7.752, lng: 110.4915 };
+const KITCHEN = { lat: SITE.kitchen.lat, lng: SITE.kitchen.lng };
 
 // Ongkir: TIDAK ada biaya pengantaran. Dapur hanya melayani area sekitar, jadi
 // jarak tetap ditampilkan (untuk kurir & konfirmasi area) tetapi tidak menambah
 // total belanja.
-const FREE_DELIVERY_RADIUS_KM = 10;
+const FREE_DELIVERY_RADIUS_KM = SITE.freeDeliveryRadiusKm;
 
-const PAYMENT_LABEL = {
-  cod: "Bayar di Tempat (COD)",
-  qris: "QRIS / Transfer di muka",
-};
+const PAYMENT_LABEL = SITE.payment;
 
 let selectedPayment = "cod";
 
@@ -244,7 +265,7 @@ function assetUrl(path) {
 
 // Thumbnail produk: pakai foto asli bila ada, atau tile netral bila foto menyusul
 function productThumb(p, sizeClass) {
-  if (p.image.includes("placeholder-")) {
+  if (!p.image) {
     return `<span class="${sizeClass} rounded bg-stone-100 border border-stone-200 shrink-0 flex items-center justify-center text-stone-300" aria-hidden="true">
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -288,7 +309,7 @@ function renderProducts(filter = "semua") {
 
   filtered.forEach((p) => {
     const isSoldOut = p.status === "soldout";
-    const isPlaceholder = p.image.includes("placeholder-");
+    const isPlaceholder = !p.image;
     const card = document.createElement("div");
     card.className = `border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm ${isSoldOut ? "opacity-75" : "hover:border-stone-300 hover:shadow-md"}`;
 
@@ -821,9 +842,10 @@ document.getElementById("cart-drawer").addEventListener("click", (e) => {
   if (e.target.id === "cart-drawer") closeCart();
 });
 
-// Jam operasional dapur, dipakai untuk validasi input type="time".
-const KITCHEN_OPEN_MIN = 6 * 60; // 06:00
-const KITCHEN_CLOSE_MIN = 18 * 60; // 18:00
+// Jam operasional dapur (dari content/site.json), dipakai untuk validasi
+// input type="time".
+const KITCHEN_OPEN_MIN = timeToMinutes(SITE.hours.open) ?? 6 * 60;
+const KITCHEN_CLOSE_MIN = timeToMinutes(SITE.hours.close) ?? 18 * 60;
 
 function timeToMinutes(value) {
   const match = /^(\d{1,2}):(\d{2})$/.exec((value || "").trim());
@@ -1560,7 +1582,15 @@ async function applyStockOverrides() {
     if (!res.ok) return;
 
     const data = await res.json();
-    const items = data && data.items ? data.items : data;
+    // Dua format diterima: objek peta { "sate-keong": "soldout" } (format lama)
+    // dan daftar [{ id, status }] (format yang diedit lewat /admin).
+    const raw = data && data.items ? data.items : data;
+    const items = Array.isArray(raw)
+      ? raw.reduce((acc, row) => {
+          if (row && row.id) acc[row.id] = row.status;
+          return acc;
+        }, {})
+      : raw;
     if (!items || typeof items !== "object") return;
 
     const valid = ["available", "preorder", "soldout"];

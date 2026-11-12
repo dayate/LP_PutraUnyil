@@ -1,17 +1,17 @@
 {
   "updated": "2026-11-11T06:00:00+07:00",
-  "note": "Ubah status di sini tanpa menyentuh HTML. Nilai: available | preorder | soldout.",
-  "items": {
-    "sate-keong": "soldout",
-    "sate-usus": "available",
-    "oseng-keong": "soldout",
-    "keong-fresh": "preorder",
-    "nasi-uduk": "preorder",
-    "nasi-kuning": "preorder",
-    "bakmi-capcay": "preorder",
-    "tahu-sarang": "available",
-    "tahu-telur": "soldout",
-    "getuk-crispy": "available",
-    "daun-pisang": "preorder"
-  }
+  "note": "Status stok harian. Ubah lewat /admin (menu Stok) atau langsung di sini. Nilai: available | preorder | soldout.",
+  "items": [
+    { "id": "sate-keong", "status": "soldout" },
+    { "id": "sate-usus", "status": "available" },
+    { "id": "oseng-keong", "status": "soldout" },
+    { "id": "keong-fresh", "status": "preorder" },
+    { "id": "nasi-uduk", "status": "preorder" },
+    { "id": "nasi-kuning", "status": "preorder" },
+    { "id": "bakmi-capcay", "status": "preorder" },
+    { "id": "tahu-sarang", "status": "available" },
+    { "id": "tahu-telur", "status": "soldout" },
+    { "id": "getuk-crispy", "status": "available" },
+    { "id": "daun-pisang", "status": "preorder" }
+  ]
 }

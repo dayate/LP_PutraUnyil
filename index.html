@@ -235,22 +235,19 @@
       <div class="max-w-2xl lg:col-span-7">
         <div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
           <span
+            data-content="hero.kicker"
             class="text-[11px] sm:text-xs font-bold uppercase tracking-[0.16em] text-terracotta"
-            >Masakan Rumahan • Prambanan, Klaten</span
-          >
+            >Masakan Rumahan • Prambanan, Klaten</span>
         </div>
 
         <h1
+          data-content="hero.title"
           class="font-serif text-[1.75rem] leading-[1.15] sm:text-5xl sm:leading-tight font-bold text-stone-900 mb-5"
-        >
-          Cita rasa pedas yang nampol, olahan keong sawah &amp; aneka sarapan
-          pagi dan jajanan pasar.
-        </h1>
-        <p class="text-stone-600 leading-relaxed mb-7 text-sm sm:text-base">
-          Sate keong bumbu rica pedasnya nampol, oseng cabai hijau segar,
-          sarapan pagi nasi uduk, nsi kuning, hingga aneka jajanan pasar. Siap
-          menerima pesanan partai kecil untuk berbagai keperluan.
-        </p>
+        >Cita rasa pedas yang nampol, olahan keong sawah &amp; aneka sarapan pagi dan jajanan pasar.</h1>
+        <p
+          data-content="hero.subtitle"
+          class="text-stone-600 leading-relaxed mb-7 text-sm sm:text-base"
+        >Sate keong bumbu rica pedasnya nampol, oseng cabai hijau segar, sarapan pagi nasi uduk, nasi kuning, hingga aneka jajanan pasar. Siap menerima pesanan partai kecil untuk berbagai keperluan.</p>
 
         <!-- CTA Action Buttons -->
         <div
@@ -258,10 +255,9 @@
         >
           <a
             href="#katalog"
+            data-content="hero.ctaPrimary"
             class="px-5 py-3 sm:py-2.5 bg-stone-900 text-white rounded text-xs uppercase font-bold tracking-wider hover:bg-stone-800 transition text-center"
-          >
-            Pesan Sekarang
-          </a>
+          >Pesan Sekarang</a>
           <button
             onclick="askGeneralStock()"
             class="px-5 py-3 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs uppercase font-bold tracking-wider transition flex items-center justify-center gap-2 shadow-sm"
@@ -275,7 +271,7 @@
                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
               />
             </svg>
-            <span>Konsultasi pesanan via WA</span>
+            <span data-content="hero.ctaSecondary">Konsultasi pesanan via WA</span>
           </button>
         </div>
 
@@ -341,12 +337,13 @@
           class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950/85 to-transparent px-4 pt-12 pb-3.5"
         >
           <span
+            data-content="hero.captionKicker"
             class="block text-[10px] uppercase tracking-[0.16em] font-bold text-white/75 mb-0.5"
-            >Sajian andalan</span
-          >
-          <p class="text-sm font-semibold text-white leading-snug">
-            Sate keong sawah bumbu rica, dibakar fresh tiap hari
-          </p>
+            >Sajian andalan</span>
+          <p
+            data-content="hero.captionTitle"
+            class="text-sm font-semibold text-white leading-snug"
+          >Sate keong sawah bumbu rica, dibakar fresh tiap hari</p>
         </figcaption>
       </figure>
     </section>
@@ -936,8 +933,7 @@
           </button>
       </div>
     </div>
-  </div>
-<!-- CATALOG:END -->
+  </div><!-- CATALOG:END -->
       </div>
     </main>
 
@@ -999,7 +995,7 @@
           id="gallery-track"
           class="flex gap-5 overflow-x-auto scroll-smooth no-scrollbar pb-4 pt-1 snap-x snap-mandatory"
         >
-          <!-- Slide 1 -->
+          <!-- GALLERY:START -->
           <div
             tabindex="0"
             role="button"
@@ -1055,7 +1051,6 @@
             </div>
           </div>
 
-          <!-- Slide 3 -->
           <div
             tabindex="0"
             role="button"
@@ -1111,7 +1106,6 @@
             </div>
           </div>
 
-          <!-- Slide 4 -->
           <div
             tabindex="0"
             role="button"
@@ -1167,7 +1161,6 @@
             </div>
           </div>
 
-          <!-- Slide 5 -->
           <div
             tabindex="0"
             role="button"
@@ -1183,7 +1176,7 @@
                 '/images/bakmi-capcay-1200.webp?v=e9686e1547',
                 'Bakmi Capcay',
                 'Produk',
-                'Bakmi goreng dengan capcay sayur, kerupuk, dan acar timun — dimasak per porsi.',
+                'Bakmi goreng dengan capcay sayur, kerupuk, dan acar timun - dimasak per porsi.',
               )
             "
             class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
@@ -1223,7 +1216,6 @@
             </div>
           </div>
 
-          <!-- Slide 7 -->
           <div
             tabindex="0"
             role="button"
@@ -1279,7 +1271,6 @@
             </div>
           </div>
 
-          <!-- Slide 8 -->
           <div
             tabindex="0"
             role="button"
@@ -1295,7 +1286,7 @@
                 '/images/keong-fresh-zoom-1200.webp?v=2c95f2a283',
                 'Daging Keong Fresh Siap Olah',
                 'Produk',
-                'Detail daging keong sawah yang sudah dikupas dan dicuci bersih — kenyal, segar, siap dimasak.',
+                'Detail daging keong sawah yang sudah dikupas dan dicuci bersih - kenyal, segar, siap dimasak.',
               )
             "
             class="group cursor-pointer shrink-0 w-64 sm:w-72 snap-start border border-stone-200 rounded-lg overflow-hidden bg-stone-50 hover:border-stone-400 hover:shadow-md transition focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
@@ -1334,6 +1325,7 @@
               </p>
             </div>
           </div>
+<!-- GALLERY:END -->
         </div>
       </div>
     </section>
@@ -2063,6 +2055,6 @@
     <!-- Leaflet di-inject on-demand oleh loadLeaflet() saat modal peta dibuka. -->
 
     <!-- Logika aplikasi (diekstrak dari HTML agar bisa di-cache) -->
-    <script src="/assets/app.js?v=f1a1063132" defer></script>
+    <script src="/assets/app.js?v=07f9bd2356" defer></script>
   </body>
 </html>

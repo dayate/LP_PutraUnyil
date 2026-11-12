@@ -4,10 +4,13 @@
   "private": true,
   "description": "Landing page statis Mak Unyil — build CSS Tailwind lokal, tanpa CDN.",
   "scripts": {
-    "build": "tailwindcss -i src/tailwind.css -o assets/site.css --minify && node scripts/cache-bust.js && node scripts/prerender-catalog.js",
+    "build": "node scripts/build-content.js && node scripts/build-images.js && tailwindcss -i src/tailwind.css -o assets/site.css --minify && node scripts/prerender.js && node scripts/cache-bust.js",
+    "content": "node scripts/build-content.js",
+    "images": "node scripts/build-images.js",
     "watch": "tailwindcss -i src/tailwind.css -o assets/site.css --watch"
   },
   "devDependencies": {
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.17"
   }
 }

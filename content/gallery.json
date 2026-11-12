@@ -1,0 +1,52 @@
+{
+  "slides": [
+    {
+      "id": "sate-keong-rica",
+      "photo": "/images/sate-keong-1200.webp",
+      "kicker": "Produk",
+      "title": "Sate Keong Rica-Rica Fresh",
+      "caption": "Daging keong sawah dibakar dengan balutan bumbu rica-rica pedas gurih.",
+      "alt": "Tusuk sate keong sawah berbumbu rica-rica di atas nampan"
+    },
+    {
+      "id": "nasi-kuning-fresh",
+      "photo": "/images/nasi-kuning-1200.webp",
+      "kicker": "Produk",
+      "title": "Nasi Kuning Fresh dari Dapur",
+      "caption": "Nasi kuning dengan orek tempe, bihun, kacang, timun, dan sambal dalam wadah siap antar.",
+      "alt": "Satu porsi nasi kuning lengkap dengan orek, bihun, kacang, dan timun"
+    },
+    {
+      "id": "tahu-sarang-burung",
+      "photo": "/images/tahu-sarang-1200.webp",
+      "kicker": "Produk",
+      "title": "Tahu Sarang Burung",
+      "caption": "Tahu lembut isi telur dan bihun, digoreng gurih dengan cabai rawit hijau.",
+      "alt": "Tahu sarang burung goreng dengan cabai rawit hijau di dalam wadah mika"
+    },
+    {
+      "id": "bakmi-capcay",
+      "photo": "/images/bakmi-capcay-1200.webp",
+      "kicker": "Produk",
+      "title": "Bakmi Capcay",
+      "caption": "Bakmi goreng dengan capcay sayur, kerupuk, dan acar timun - dimasak per porsi.",
+      "alt": "Bakmi goreng capcay dengan kerupuk dan acar timun dalam wadah mika"
+    },
+    {
+      "id": "sate-usus-bacem",
+      "photo": "/images/sate-usus-1200.webp",
+      "kicker": "Produk",
+      "title": "Sate Usus",
+      "caption": "Usus ayam dibumbui bacem khas Mak Unyil, ditusuk rapi siap goreng atau bakar ulang.",
+      "alt": "Tusuk sate usus bacem tersusun rapi di atas wadah plastik"
+    },
+    {
+      "id": "keong-fresh-zoom",
+      "photo": "/images/keong-fresh-zoom-1200.webp",
+      "kicker": "Produk",
+      "title": "Daging Keong Fresh Siap Olah",
+      "caption": "Detail daging keong sawah yang sudah dikupas dan dicuci bersih - kenyal, segar, siap dimasak.",
+      "alt": "Close-up daging keong sawah segar yang sudah dikupas dan dicuci bersih"
+    }
+  ]
+}

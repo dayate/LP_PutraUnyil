@@ -56,9 +56,11 @@ if (fs.existsSync(appAbs)) {
   // Foto produk + aset vendor yang di-inject on-demand dari app.js
   // (Leaflet hanya dimuat saat modal peta dibuka, lihat loadLeaflet()).
   for (const m of src.matchAll(
-    /["']((?:images\/[A-Za-z0-9._-]+\.webp)|(?:vendor\/[A-Za-z0-9._\/-]+\.(?:css|js)))["']/g,
+    /["'](\/?)((?:images\/[A-Za-z0-9._-]+\.webp)|(?:vendor\/[A-Za-z0-9._\/-]+\.(?:css|js)))["']/g,
   )) {
-    refs.add(m[1]);
+    // Path absolut dan relatif sama-sama diterima; manifest memakai bentuk
+    // relatif karena assetUrl() dipanggil dengan path tanpa garis miring depan.
+    refs.add(m[2]);
   }
   const manifest = {};
   for (const rel of [...refs].sort()) {
