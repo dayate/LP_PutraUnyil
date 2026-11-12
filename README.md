@@ -23,7 +23,7 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 ## Arsitektur & Spesifikasi
 
 - **Single Origin / Zero External CDN:** Seluruh pustaka CSS (Tailwind v3.4 hasil kompilasi), JavaScript (Leaflet v1.9.4 & logika aplikasi), dan Web Fonts (Plus Jakarta Sans & Playfair Display format WOFF2) di-host secara lokal dari repositori ini. Menjamin loading kilat (<200 KB gzip awal) dan keamanan tinggi.
-- **Strict Content Security Policy (CSP):** Terkonfigurasi di `_headers`, memblokir script injection berbahaya dan membatasi koneksi hanya ke endpoint yang dibutuhkan (Esri Maps Tiles, Photon Geocoding, Google Maps Embed).
+- **Strict Content Security Policy (CSP):** Dipasang per-path oleh `functions/_middleware.js` (satu header per respons), memblokir script injection berbahaya dan membatasi koneksi hanya ke endpoint yang dibutuhkan (Esri Maps Tiles, Photon Geocoding, Google Maps Embed). Halaman publik dan panel admin punya kebijakan terpisah — lihat catatan penting di `_headers`.
 - **Peta dimuat on-demand:** Leaflet (±45 KB gzip CSS + JS) tidak dimuat saat halaman dibuka. `loadLeaflet()` di `assets/app.js` baru menyuntikkan asetnya ketika modal "Tentukan Titik Pengantaran" dibuka, lengkap dengan indikator loading, deteksi tile gagal, dan tautan cadangan ke Google Maps. Pencarian lokasi memakai **Photon** (`photon.komoot.io`) yang mengizinkan search-as-you-type — berbeda dari Nominatim OSM yang melarang autocomplete.
 - **Client-Side Cart & Checkout State:** Keranjang belanja otomatis tersimpan di `localStorage` (`makunyil_state_v1`). Menyimpan daftar menu, pilihan pembayaran (COD / QRIS), jadwal, nama, dan koordinat maps.
 - **Ongkir Gratis:** Dapur hanya melayani area sekitar, jadi **tidak ada biaya pengantaran**. Jarak garis lurus (haversine) dari dapur Mak Unyil (`-7.752, 110.4915`) tetap dihitung untuk info kurir dan peringatan area:
@@ -187,9 +187,17 @@ Semua isi halaman dikelola dari satu panel di `https://store.putraunyil.biz.id/a
 1. **OAuth (disarankan).** Deploy `github.com/sveltia/sveltia-cms-auth` ke Cloudflare
    Workers, lalu `base_url` di `admin/config.yml` diarahkan ke Worker Anda.
    Default di repo: `https://sveltia-cms-auth.dayate.workers.dev` — **ganti subdomainnya
-   bila Worker Anda berbeda**, dan tambahkan host itu ke `connect-src` di `_headers`.
-2. **Token.** Di halaman login pilih *Sign in with token*, tempel GitHub Personal Access
-   Token (scope `repo`). Berguna sebelum Worker siap; token tidak disimpan di repo.
+   bila Worker Anda berbeda**, dan tambahkan host itu ke `connect-src` pada `ADMIN_CSP`
+   di `functions/_middleware.js` (bukan di `_headers`).
+2. **Token.** Di halaman login pilih *Sign In Using Access Token*, tempel GitHub Personal
+   Access Token (scope `repo`). Berguna sebelum Worker siap; token tidak disimpan di repo.
+
+> **Penting soal CSP:** Cloudflare Pages menerapkan **semua** baris `_headers` yang cocok,
+> jadi menaruh CSP di `/*` dan `/admin/*` sekaligus membuat browser menegakkan irisan
+> keduanya — `api.github.com` ikut terblokir dan login gagal dengan pesan `Failed to fetch`.
+> Karena itu CSP **hanya** dipasang di `functions/_middleware.js`. Jangan menambahkan
+> `Content-Security-Policy` ke `_headers` lagi.
+
 
 Tidak ada password di repo. Hanya akun GitHub dengan akses tulis ke
 `dayate/LP_PutraUnyil` yang bisa masuk.
@@ -200,7 +208,7 @@ Perubahan **stok** dikecualikan: `stock.json` di-fetch runtime, jadi langsung te
 
 ### Keamanan panel
 - `/admin` ber-`noindex` + `X-Robots-Tag: noindex` dan diblokir di `robots.txt`.
-- CSP khusus `/admin/*` hanya mengizinkan `self`, GitHub API, dan Worker OAuth.
+- CSP `/admin/*` (dari `functions/_middleware.js`) hanya mengizinkan `self`, GitHub API, unpkg/jsdelivr, dan Worker OAuth.
 - `images/uploads/` (foto asli) tidak diindeks mesin pencari.
 
 ---
@@ -279,7 +287,9 @@ Tidak ada kartu kredit yang diperlukan untuk mengaktifkan Cloudflare Pages.
 
 ```text
 LP_store/
-├── _headers                   # CSP ketat & caching edge (aturan terpisah untuk /admin/*)
+├── _headers                   # Caching edge + noindex /admin (TANPA CSP — lihat functions/)
+├── functions/
+│   └── _middleware.js         # Pasang satu header CSP per path (publik vs /admin)
 ├── 404.html                   # Halaman fallback 404 mandiri tanpa dependensi luar
 ├── index.html                 # Markup utama; katalog & galeri dicetak build dari content/
 ├── stock.json                 # Status stok runtime (diedit lewat /admin)

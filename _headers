@@ -5,7 +5,13 @@
 #
 # Sejak Fase 1 tidak ada lagi CDN eksternal (Tailwind, Leaflet, Google Fonts
 # semuanya di-host sendiri), jadi CSP bisa jauh lebih ketat.
-# script-src masih butuh 'unsafe-inline' karena tombol memakai atribut onclick.
+#
+# PENTING — CSP TIDAK didefinisikan di berkas ini.
+# Cloudflare Pages menerapkan SEMUA baris yang cocok sekaligus (tidak saling
+# menimpa). Kalau `/*` dan `/admin/*` sama-sama mengirim Content-Security-Policy,
+# browser menegakkan IRISAN keduanya, sehingga /admin kehilangan izin ke
+# api.github.com dan login gagal dengan "Failed to fetch".
+# Karena itu CSP dipasang per-path oleh functions/_middleware.js (satu header).
 
 /*
   X-Content-Type-Options: nosniff
@@ -13,7 +19,6 @@
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self'; font-src 'self'; img-src 'self' data: https://server.arcgisonline.com; connect-src 'self' https://photon.komoot.io https://cloudflareinsights.com; frame-src https://www.google.com https://maps.google.com https://maps.google.co.id; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'self'; upgrade-insecure-requests
 
 # HTML selalu revalidasi supaya update cepat sampai ke pengunjung
 /*.html
@@ -53,13 +58,12 @@
 
 # ---------------------------------------------------------------------------
 # Panel admin (/admin) — Sveltia CMS, di-host sendiri.
-# Halaman ini tidak untuk pengunjung: noindex + CSP terpisah yang hanya
-# mengizinkan GitHub API dan Worker OAuth.
+# Halaman ini tidak untuk pengunjung: noindex. CSP-nya (yang mengizinkan
+# GitHub API + Worker OAuth) dipasang oleh functions/_middleware.js.
 # ---------------------------------------------------------------------------
 /admin/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: public, max-age=0, must-revalidate
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://cdn.jsdelivr.net; img-src 'self' data: blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com https://*.githubusercontent.com; connect-src 'self' https://api.github.com https://github.com https://raw.githubusercontent.com https://*.githubusercontent.com https://unpkg.com https://cdn.jsdelivr.net https://sveltia-cms-auth.dayate.workers.dev; worker-src 'self' blob:; frame-src 'self' https://github.com; base-uri 'self'; form-action 'self'; object-src 'none'
 
 /admin/vendor/*
   Cache-Control: public, max-age=604800
