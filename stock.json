@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-11T06:00:00+07:00",
-  "note": "Status stok harian. Ubah lewat /admin (menu Stok) atau langsung di sini. Nilai: available | preorder | soldout.",
+  "updated": "2026-11-12T06:00:00+07:00",
+  "note": "Ketersediaan, bukan stok harian. Semua produk dibuat setelah dipesan. Nilai: open (bisa dipesan) | off (tidak tersedia / di luar musim). Ubah lewat /admin (menu Stok Harian) atau langsung di sini.",
   "items": [
-    { "id": "sate-keong", "status": "soldout" },
-    { "id": "sate-usus", "status": "available" },
-    { "id": "oseng-keong", "status": "soldout" },
-    { "id": "keong-fresh", "status": "preorder" },
-    { "id": "nasi-uduk", "status": "preorder" },
-    { "id": "nasi-kuning", "status": "preorder" },
-    { "id": "bakmi-capcay", "status": "preorder" },
-    { "id": "tahu-sarang", "status": "available" },
-    { "id": "tahu-telur", "status": "soldout" },
-    { "id": "getuk-crispy", "status": "available" },
-    { "id": "daun-pisang", "status": "preorder" }
+    { "id": "sate-keong", "status": "open" },
+    { "id": "sate-usus", "status": "open" },
+    { "id": "oseng-keong", "status": "open" },
+    { "id": "keong-fresh", "status": "open" },
+    { "id": "nasi-uduk", "status": "open" },
+    { "id": "nasi-kuning", "status": "open" },
+    { "id": "bakmi-capcay", "status": "open" },
+    { "id": "tahu-sarang", "status": "open" },
+    { "id": "tahu-telur", "status": "open" },
+    { "id": "getuk-crispy", "status": "open" },
+    { "id": "daun-pisang", "status": "open" }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "brand": "Mak Unyil Snack",
+  "brand": "Dapur Mak Unyil",
   "whatsapp": "6285156175349",
   "hours": {
     "open": "07:00",
@@ -10,17 +10,22 @@
     "lat": -7.752,
     "lng": 110.4915
   },
+  "orderRules": {
+    "nasiLeadDays": 3,
+    "jajananLeadDays": 1,
+    "maxNasiPcs": 200
+  },
   "payment": {
-    "cod": "Bayar di Tempat (COD)",
-    "qris": "QRIS / Transfer di muka"
+    "cod": "Tunai saat pesanan tiba (COD), DP 50% dikonfirmasi lewat WhatsApp",
+    "qris": "QRIS / transfer (bila diminta), DP 50%"
   },
   "hero": {
-    "kicker": "Masakan Rumahan • Prambanan",
-    "title": "Cita rasa pedas yang nampol, olahan keong sawah & aneka sarapan pagi dan jajanan pasar.",
-    "subtitle": "Sate keong bumbu rica pedasnya nampol, oseng cabai hijau segar, sarapan pagi nasi uduk, nasi kuning, hingga aneka jajanan pasar. Siap menerima pesanan partai kecil untuk berbagai keperluan.",
-    "ctaPrimary": "Pesan Sekarang",
-    "ctaSecondary": "Konsultasi pesanan via WA",
-    "captionKicker": "Sajian andalan",
-    "captionTitle": "Sate keong sawah bumbu rica, dibakar fresh tiap hari"
+    "kicker": "Prambanan, Klaten · Sejak 2015",
+    "title": "Nasi untuk acara, daun pisang, dan sate keong saat musim hujan.",
+    "subtitle": "Nasi uduk, nasi kuning, dan bakmi capcay mulai Rp5.000 untuk Jumat berkah, takjil, atau hajatan. Sate keong sawah jadi andalan saat hujan — 10 tusuk Rp10.000, bumbu rica. Semua dimasak setelah dipesan, bukan stok harian.",
+    "ctaPrimary": "Lihat menu & harga",
+    "ctaSecondary": "Konsultasi pesanan",
+    "captionKicker": "Andalan musim hujan",
+    "captionTitle": "Sate keong sawah bumbu rica, 10 tusuk."
   }
 }

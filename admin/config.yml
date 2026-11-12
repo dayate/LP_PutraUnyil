@@ -1,5 +1,5 @@
 # ==========================================================================
-#  Admin Mak Unyil Snack — Sveltia CMS
+#  Admin Dapur Mak Unyil — Sveltia CMS
 #
 #  Cara login:
 #   1. OAuth (disarankan): deploy github.com/sveltia/sveltia-cms-auth ke
@@ -80,13 +80,21 @@ collections:
                   hint: 'Contoh: "pcs", "1 porsi", "10 Tusuk".',
                 }
               - name: status
-                label: Status bawaan
+                label: Ketersediaan
                 widget: select
-                hint: "Status harian tetap diatur di menu Stok."
+                default: open
+                hint: "Bisa dipesan = open. off dipakai saat menu sedang tidak tersedia (mis. keong di luar musim)."
                 options:
-                  - { label: Tersedia, value: available }
-                  - { label: Pre-Order, value: preorder }
-                  - { label: Habis, value: soldout }
+                  - { label: Bisa dipesan, value: open }
+                  - { label: Tidak tersedia / di luar musim, value: off }
+              - {
+                  name: seasonal,
+                  label: Musiman (hanya saat musim hujan),
+                  widget: boolean,
+                  required: false,
+                  default: false,
+                  hint: "Aktifkan untuk keong. Saat tidak tersedia, badge berbunyi 'Di luar musim'.",
+                }
               - name: photo
                 label: Foto
                 widget: image
@@ -155,14 +163,14 @@ collections:
                   hint: "Untuk pembaca layar. Kosongkan = memakai judul.",
                 }
 
-  # -------------------------------------------------------------------- Stok
+  # ------------------------------------------------------------ Ketersediaan
   - name: stok
-    label: Stok Harian
-    label_singular: Stok
-    description: "Perubahan di sini langsung terlihat tanpa menunggu deploy ulang."
+    label: Ketersediaan Menu
+    label_singular: Ketersediaan
+    description: "Tidak ada stok harian. Bagian ini hanya untuk menutup menu yang sedang tidak tersedia (mis. keong di luar musim). Situs ikut ter-update setelah build selesai (±1-2 menit)."
     files:
       - name: stok-harian
-        label: Status Stok
+        label: Status Ketersediaan
         file: stock.json
         fields:
           - {
@@ -188,9 +196,8 @@ collections:
                 label: Status
                 widget: select
                 options:
-                  - { label: Tersedia, value: available }
-                  - { label: Pre-Order, value: preorder }
-                  - { label: Habis, value: soldout }
+                  - { label: Bisa dipesan, value: open }
+                  - { label: Tidak tersedia / di luar musim, value: off }
 
   # -------------------------------------------------------------- Pengaturan
   - name: pengaturan
@@ -215,12 +222,38 @@ collections:
               - { name: close, label: Tutup (HH:MM), widget: string }
           - {
               name: freeDeliveryRadiusKm,
-              label: Radius antar gratis (km),
+              label: Jangkauan antar (km),
               widget: number,
               value_type: int,
               min: 1,
-              hint: "Di luar radius ini, titik antar dikonfirmasi lewat WhatsApp (tanpa biaya tambahan).",
+              hint: "Antar maksimal sejauh ini. Lebih jauh dikonfirmasi lewat WhatsApp.",
             }
+          - name: orderRules
+            label: Aturan pre-order
+            widget: object
+            fields:
+              - {
+                  name: nasiLeadDays,
+                  label: Tenggat menu nasi (hari sebelum acara),
+                  widget: number,
+                  value_type: int,
+                  min: 1,
+                  hint: "Contoh: 3 berarti pesanan nasi paling lambat H-3.",
+                }
+              - {
+                  name: jajananLeadDays,
+                  label: Tenggat jajanan pasar (hari),
+                  widget: number,
+                  value_type: int,
+                  min: 1,
+                }
+              - {
+                  name: maxNasiPcs,
+                  label: Maksimal pcs nasi per pesanan,
+                  widget: number,
+                  value_type: int,
+                  min: 1,
+                }
           - name: kitchen
             label: Koordinat dapur
             widget: object
