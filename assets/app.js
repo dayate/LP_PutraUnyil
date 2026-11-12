@@ -7,29 +7,34 @@
 // Pengaturan situs. Blok ini dihasilkan `npm run build` dari content/site.json
 // (dikelola lewat /admin), jadi jangan diubah manual di sini.
 const SITE = /* @site:start */ {
-  "brand": "Mak Unyil Snack",
+  "brand": "Dapur Mak Unyil",
   "whatsapp": "6285156175349",
   "hours": {
-    "open": "06:00",
-    "close": "18:00"
+    "open": "07:00",
+    "close": "16:00"
   },
   "freeDeliveryRadiusKm": 10,
   "kitchen": {
     "lat": -7.752,
     "lng": 110.4915
   },
+  "orderRules": {
+    "nasiLeadDays": 3,
+    "jajananLeadDays": 1,
+    "maxNasiPcs": 200
+  },
   "payment": {
-    "cod": "Bayar di Tempat (COD)",
-    "qris": "QRIS / Transfer di muka"
+    "cod": "Tunai saat pesanan tiba (COD), DP 50% dikonfirmasi lewat WhatsApp",
+    "qris": "QRIS / transfer (bila diminta), DP 50%"
   },
   "hero": {
-    "kicker": "Masakan Rumahan • Prambanan, Klaten",
-    "title": "Cita rasa pedas yang nampol, olahan keong sawah & aneka sarapan pagi dan jajanan pasar.",
-    "subtitle": "Sate keong bumbu rica pedasnya nampol, oseng cabai hijau segar, sarapan pagi nasi uduk, nasi kuning, hingga aneka jajanan pasar. Siap menerima pesanan partai kecil untuk berbagai keperluan.",
-    "ctaPrimary": "Pesan Sekarang",
-    "ctaSecondary": "Konsultasi pesanan via WA",
-    "captionKicker": "Sajian andalan",
-    "captionTitle": "Sate keong sawah bumbu rica, dibakar fresh tiap hari"
+    "kicker": "Prambanan, Klaten · Sejak 2015",
+    "title": "Nasi untuk acara, daun pisang, dan sate keong saat musim hujan.",
+    "subtitle": "Nasi uduk, nasi kuning, dan bakmi capcay mulai Rp5.000 untuk Jumat berkah, takjil, atau hajatan. Sate keong sawah jadi andalan saat hujan — 10 tusuk Rp10.000, bumbu rica. Semua dimasak setelah dipesan, bukan stok harian.",
+    "ctaPrimary": "Lihat menu & harga",
+    "ctaSecondary": "Konsultasi pesanan",
+    "captionKicker": "Andalan musim hujan",
+    "captionTitle": "Sate keong sawah bumbu rica, 10 tusuk."
   }
 } /* @site:end */;
 
@@ -61,7 +66,7 @@ const ASSET_VERSIONS = /* @asset-versions */ {
 
 // Katalog produk. Blok di bawah dihasilkan `npm run build` dari
 // content/products.json (dikelola lewat /admin), jangan diubah manual.
-// status: 'available' (Tersedia), 'preorder' (Pre-Order), 'soldout' (Habis)
+// status: 'open' (bisa dipesan) | 'off' (tidak tersedia / di luar musim)
 const PRODUCTS = /* @products:start */ [
   {
     "id": "sate-keong",
@@ -69,9 +74,10 @@ const PRODUCTS = /* @products:start */ [
     "category": "sate",
     "price": 10000,
     "unit": "10 Tusuk",
-    "status": "available",
+    "status": "open",
     "photo": "sate-keong",
-    "desc": "Daging keong sawah pilihan yang kenyal empuk dengan balutan bumbu rica-rica pedas"
+    "desc": "Daging keong sawah berbumbu rica, 10 tusuk per kemasan. Tidak dibakar. Hanya ada saat musim hujan.",
+    "seasonal": true
   },
   {
     "id": "sate-usus",
@@ -79,29 +85,20 @@ const PRODUCTS = /* @products:start */ [
     "category": "sate",
     "price": 10000,
     "unit": "5 Tusuk",
-    "status": "available",
+    "status": "open",
     "photo": "sate-usus",
-    "desc": "Sate Usus Ayam dengan bumbu bacem khas Mak Unyil yang manis dan gurih"
+    "desc": "Usus ayam dibacem manis gurih, siap digoreng atau dipanaskan ulang."
   },
   {
     "id": "oseng-keong",
-    "name": "Oseng Keong Pedas Cabai Hijau",
+    "name": "Oseng Keong Cabai Hijau",
     "category": "sate",
     "price": 5000,
     "unit": "1 porsi",
-    "status": "available",
+    "status": "open",
     "photo": "",
-    "desc": "Dimasak oseng rempah cabai hijau pedas nampol, gurih mantap tanpa bau amis, cocok untuk lauk harian."
-  },
-  {
-    "id": "keong-fresh",
-    "name": "Daging Keong Fresh Siap Olah",
-    "category": "khusus",
-    "price": 35000,
-    "unit": "kg",
-    "status": "preorder",
-    "photo": "keong-fresh",
-    "desc": "Keong sawah diambil langsung dari alam dan telah melewati proses sortir. Daging segar yang sudah dikupas dan dicuci bersih higienis siap dimasak (Sistem Pre-Order)."
+    "desc": "Keong sawah dioseng cabai hijau sampai kuahnya menyusut. Gurih, tanpa bau amis. Musiman.",
+    "seasonal": true
   },
   {
     "id": "nasi-uduk",
@@ -109,29 +106,29 @@ const PRODUCTS = /* @products:start */ [
     "category": "nasi",
     "price": 5000,
     "unit": "pcs",
-    "status": "soldout",
+    "status": "open",
     "photo": "nasi-uduk",
-    "desc": "Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir. Sarapan pagi mulai 5000-an"
+    "desc": "Nasi santan gurih dengan telur suwir, kacang, dan tempe kering. Kemasan mika atau thinwall."
   },
   {
     "id": "nasi-kuning",
     "name": "Nasi Kuning",
     "category": "nasi",
-    "price": 10000,
+    "price": 5000,
     "unit": "pcs",
-    "status": "available",
+    "status": "open",
     "photo": "nasi-kuning",
-    "desc": "Nasi kuning dengan lauk pendamping dengan wadah thinwall ukuran 450ml"
+    "desc": "Nasi kuning berbumbu tradisional dengan telur suwir, tempe kering, dan timun. Lauk tambahan sesuai budget."
   },
   {
     "id": "bakmi-capcay",
     "name": "Bakmi Capcay",
     "category": "nasi",
-    "price": 10000,
+    "price": 5000,
     "unit": "pcs",
-    "status": "available",
+    "status": "open",
     "photo": "bakmi-capcay",
-    "desc": "Bakmi dengan capcay sayur segar pas untuk sarapan atau makan siang."
+    "desc": "Bakmi dan capcay sayur, topping menyesuaikan budget."
   },
   {
     "id": "tahu-sarang",
@@ -139,9 +136,9 @@ const PRODUCTS = /* @products:start */ [
     "category": "jajanan",
     "price": 1000,
     "unit": "pcs",
-    "status": "available",
+    "status": "open",
     "photo": "tahu-sarang",
-    "desc": "Olahan tahu lembut dicetak menyerupai sarang burung."
+    "desc": "Tahu diremet lalu dicetak menyerupai sarang burung. Rp1.000 tanpa telur, Rp1.500 dengan telur puyuh."
   },
   {
     "id": "tahu-telur",
@@ -149,9 +146,9 @@ const PRODUCTS = /* @products:start */ [
     "category": "jajanan",
     "price": 3000,
     "unit": "pcs",
-    "status": "soldout",
+    "status": "open",
     "photo": "",
-    "desc": "Kombinasi tahu yang dicetak ditambah telur ayam setangah pas dinikmati bersama cabai rawit hijau."
+    "desc": "Tahu isi telur setengah, paling pas disantap dengan cabai rawit hijau."
   },
   {
     "id": "getuk-crispy",
@@ -159,9 +156,20 @@ const PRODUCTS = /* @products:start */ [
     "category": "jajanan",
     "price": 1000,
     "unit": "pcs",
-    "status": "available",
+    "status": "open",
     "photo": "",
-    "desc": "Singkong pulen manis berbalut lapisan luar renyah crispy dengan rasa manis didalam tanpa pemanis buatan."
+    "desc": "Getuk singkong manis dengan lapisan luar renyah, tanpa pemanis buatan."
+  },
+  {
+    "id": "keong-fresh",
+    "name": "Daging Keong Fresh Siap Olah",
+    "category": "khusus",
+    "price": 35000,
+    "unit": "kg",
+    "status": "open",
+    "photo": "keong-fresh",
+    "desc": "Daging keong kupas, sudah disortir dan dicuci. Siap Anda masak sendiri. Musiman.",
+    "seasonal": true
   },
   {
     "id": "daun-pisang",
@@ -169,9 +177,9 @@ const PRODUCTS = /* @products:start */ [
     "category": "khusus",
     "price": 5000,
     "unit": "lipat",
-    "status": "preorder",
+    "status": "open",
     "photo": "daun-pisang",
-    "desc": "Daun pisang serbaguna untuk berbagai keperluan seperti bungkus lontong, nagasari, atau nasi berkat dan lain-lain."
+    "desc": "Jasa mencarikan daun pisang untuk bungkus tape, lontong, atau nasi berkat. Jenis menyesuaikan kebutuhan."
   }
 ] /* @products:end */;
 
@@ -236,9 +244,9 @@ function track(event, data) {
   }
 }
 
-// Direct WhatsApp: Tanya Stok Umum
+// Direct WhatsApp: Tanya Ketersediaan Umum
 function askGeneralStock() {
-  const msg = `Halo Mak Unyil, mau tanya stok menu apa saja yang masih tersedia untuk hari ini ya? Terima kasih!`;
+  const msg = `Halo Mak Unyil, saya mau pesan untuk acara. Bisa dibantu info menu dan tanggal yang masih bisa? Terima kasih!`;
   window.open(
     `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,
     "_blank",
@@ -246,9 +254,9 @@ function askGeneralStock() {
   );
 }
 
-// Direct WhatsApp: Tanya Stok Menu Spesifik
+// Direct WhatsApp: Tanya Ketersediaan Menu Spesifik
 function askItemStock(name) {
-  const msg = `Halo Mak Unyil, mau tanya apakah menu *${name}* masih tersedia untuk dipesan hari ini?`;
+  const msg = `Halo Mak Unyil, menu *${name}* untuk tanggal berapa masih bisa dipesan?`;
   window.open(
     `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`,
     "_blank",
@@ -277,20 +285,14 @@ function productThumb(p, sizeClass) {
   return `<img src="${assetUrl(p.image)}" alt="" width="600" height="450" class="${sizeClass} rounded object-cover border border-stone-200 shrink-0 bg-stone-100" loading="lazy" decoding="async">`;
 }
 
-function getStatusBadge(status) {
-  if (status === "available") {
-    return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
-          </span>`;
-  } else if (status === "preorder") {
-    return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pre-Order
-          </span>`;
-  } else {
-    return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Habis Hari Ini
-          </span>`;
-  }
+// Badge hanya muncul saat produk sedang tidak tersedia. Tidak ada stok harian,
+// jadi produk yang bisa dipesan tampil tanpa badge.
+function getStatusBadge(product) {
+  if (product.status !== "off") return "";
+  const label = product.seasonal ? "Di luar musim" : "Tidak tersedia";
+  return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> ${label}
+        </span>`;
 }
 
 function renderProducts(filter = "semua") {
@@ -308,10 +310,10 @@ function renderProducts(filter = "semua") {
   }
 
   filtered.forEach((p) => {
-    const isSoldOut = p.status === "soldout";
+    const isOff = p.status === "off";
     const isPlaceholder = !p.image;
     const card = document.createElement("div");
-    card.className = `border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm ${isSoldOut ? "opacity-75" : "hover:border-stone-300 hover:shadow-md"}`;
+    card.className = `border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm ${isOff ? "opacity-75" : "hover:border-stone-300 hover:shadow-md"}`;
 
     card.innerHTML = `
     <div class="flex flex-col flex-1">
@@ -336,7 +338,7 @@ function renderProducts(filter = "semua") {
           width="1200"
           height="900"
           alt="${p.name}"
-          class="w-full h-full object-cover transition-transform duration-500 ${isSoldOut ? "grayscale-[60%]" : "group-hover:scale-105"}"
+          class="w-full h-full object-cover transition-transform duration-500 ${isOff ? "grayscale-[60%]" : "group-hover:scale-105"}"
           loading="lazy"
           decoding="async"
         >
@@ -348,9 +350,9 @@ function renderProducts(filter = "semua") {
           ${p.unit}
         </span>
 
-        <!-- Badge Status Stok di Atas Foto -->
+        <!-- Badge Ketersediaan di Atas Foto -->
         <div class="absolute top-3 left-3">
-          ${getStatusBadge(p.status)}
+          ${getStatusBadge(p)}
         </div>
       </div>
 
@@ -367,11 +369,11 @@ function renderProducts(filter = "semua") {
       </div>
 
       <div class="flex items-center gap-2 shrink-0">
-        <!-- Tombol Tanya Stok Per Item: Selaras dengan tema, hover hijau WhatsApp -->
+        <!-- Tombol Tanya Ketersediaan Per Item: Selaras dengan tema, hover hijau WhatsApp -->
         <button
           onclick="askItemStock('${p.name}')"
           aria-label="Tanya ketersediaan ${p.name} via WhatsApp"
-          title="Tanya stok menu ini via WhatsApp"
+          title="Tanya ketersediaan menu ini via WhatsApp"
           class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
         >
           <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
@@ -379,12 +381,12 @@ function renderProducts(filter = "semua") {
           </svg>
         </button>
 
-        <!-- Tombol Tambah / Habis -->
+        <!-- Tombol Tambah / Tutup -->
         ${
-          isSoldOut
+          isOff
             ? `
           <button disabled class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-100 text-stone-400 border border-stone-200 rounded cursor-not-allowed shrink-0">
-            Habis
+            Tutup
           </button>
         `
             : `
@@ -434,8 +436,12 @@ function displayUnit(product) {
 function addToCart(id) {
   const item = PRODUCTS.find((p) => p.id === id);
   if (!item) return;
-  if (item.status === "soldout") {
-    alert("Maaf, menu ini sedang habis untuk hari ini.");
+  if (item.status === "off") {
+    alert(
+      item.seasonal
+        ? "Menu ini hanya tersedia saat musim hujan. Hubungi dapur lewat WhatsApp untuk memastikan."
+        : "Menu ini sedang tidak tersedia. Hubungi dapur lewat WhatsApp untuk memastikan.",
+    );
     return;
   }
   const min = minQtyOf(item);
@@ -527,7 +533,7 @@ function getShipping() {
   if (!selectedLocation) {
     return {
       km: null,
-      label: "Ongkir gratis untuk area sekitar. Titik antar bersifat opsional.",
+      label: "Antar gratis di area sekitar. Titik antar bersifat opsional.",
     };
   }
   const km = haversineKm(KITCHEN, {
@@ -548,8 +554,39 @@ function getShipping() {
   }
   return {
     km: km,
-    label: `± ${km.toFixed(1)} km dari dapur — masih area layanan, ongkir gratis.`,
+    label: `± ${km.toFixed(1)} km dari dapur — masih dalam jangkauan antar.`,
   };
+}
+
+const RULES = SITE.orderRules || {
+  nasiLeadDays: 3,
+  jajananLeadDays: 1,
+  maxNasiPcs: 200,
+};
+const DP_RATE = 0.5; // DP minimal 50% untuk mengunci jadwal
+
+// Jumlah pcs menu nasi di keranjang (dibatasi maksimal 200 pcs).
+function cartNasiPcs() {
+  let pcs = 0;
+  Object.keys(cart).forEach((id) => {
+    const item = PRODUCTS.find((p) => p.id === id);
+    if (item && item.category === "nasi") pcs += cart[id];
+  });
+  return pcs;
+}
+
+// Tenggat pesanan mengikuti isi keranjang: ada nasi -> H-3, selain itu H-1.
+function cartLeadDays() {
+  let days = RULES.jajananLeadDays;
+  Object.keys(cart).forEach((id) => {
+    const item = PRODUCTS.find((p) => p.id === id);
+    if (!item) return;
+    days = Math.max(
+      days,
+      item.category === "nasi" ? RULES.nasiLeadDays : RULES.jajananLeadDays,
+    );
+  });
+  return days;
 }
 
 function cartTotals() {
@@ -562,11 +599,14 @@ function cartTotals() {
     subtotal += item.price * cart[id];
   });
   const ship = getShipping();
+  const dp = Math.round((subtotal * DP_RATE) / 500) * 500;
   return {
     qty: qty,
     subtotal: subtotal,
     ship: ship,
     total: subtotal,
+    dp: dp,
+    remaining: subtotal - dp,
   };
 }
 
@@ -576,11 +616,17 @@ function updateTotals() {
   const shipEl = document.getElementById("cart-shipping");
   const noteEl = document.getElementById("cart-shipping-note");
   const totalEl = document.getElementById("cart-total");
+  const dpEl = document.getElementById("cart-dp");
+  const remainingEl = document.getElementById("cart-remaining");
 
   if (subEl) subEl.innerText = formatRupiah(t.subtotal);
-  if (shipEl) shipEl.innerText = "Gratis";
-  if (noteEl) noteEl.innerText = t.ship.label;
+  if (shipEl) shipEl.innerText = `Gratis ≤ ${SITE.freeDeliveryRadiusKm} km`;
+  if (noteEl) {
+    noteEl.innerText = `Antar maksimal ${SITE.freeDeliveryRadiusKm} km dari dapur. DP 50% dikonfirmasi lewat WhatsApp.`;
+  }
   if (totalEl) totalEl.innerText = formatRupiah(t.total);
+  if (dpEl) dpEl.innerText = formatRupiah(t.dp);
+  if (remainingEl) remainingEl.innerText = formatRupiah(t.remaining);
 }
 
 // --- Pemberitahuan singkat di dalam keranjang ---
@@ -633,7 +679,7 @@ function loadState() {
       const item = PRODUCTS.find((p) => p.id === id);
       const qty = Math.floor(Number(data.cart[id]));
       if (!item || !Number.isFinite(qty) || qty < 1) return;
-      if (item.status === "soldout") {
+      if (item.status === "off") {
         dropped.push(item.name);
         return;
       }
@@ -681,7 +727,7 @@ function loadState() {
   if (dropped.length) {
     setTimeout(() => {
       showCartNotice(
-        `Menu yang sudah habis dihapus dari keranjang: ${dropped.join(", ")}.`,
+        `Menu yang sedang tidak tersedia dihapus dari keranjang: ${dropped.join(", ")}.`,
       );
     }, 600);
   }
@@ -790,6 +836,13 @@ function updateCartUI() {
     container.appendChild(addSection);
   }
 
+  const nasiPcs = cartNasiPcs();
+  if (nasiPcs > RULES.maxNasiPcs) {
+    showCartNotice(
+      `Menu nasi sudah ${nasiPcs} pcs. Maksimal ${RULES.maxNasiPcs} pcs per pesanan — hubungi dapur untuk jumlah lebih besar.`,
+    );
+  }
+
   badge.innerText = totalQty;
   badge.setAttribute("aria-label", totalQty + " item di keranjang");
   totalEl.innerText = formatRupiah(totalPrice);
@@ -876,20 +929,37 @@ function updateOrderTimeEcho() {
 }
 
 // Schedule Modal Handler
+function minOrderDateWib() {
+  // Tenggat pre-order: nasi H-3, jajanan H-1. Dihitung dari tanggal WIB.
+  const days = cartLeadDays();
+  const d = new Date(Date.now() + 7 * 60 * 60 * 1000 + days * 24 * 60 * 60 * 1000);
+  return d.toISOString().split("T")[0];
+}
+
 function openScheduleModal() {
   const dateInput = document.getElementById("order-date");
   const timeInput = document.getElementById("order-time");
 
-  // Tanggal hari ini menurut WIB (UTC+7), bukan UTC
-  const todayWib = new Date(Date.now() + 7 * 60 * 60 * 1000)
-    .toISOString()
-    .split("T")[0];
+  const minDate = minOrderDateWib();
+  const hint = document.getElementById("order-date-hint");
 
-  dateInput.min = todayWib;
-  if (!dateInput.value) dateInput.value = todayWib;
+  dateInput.min = minDate;
+  if (!dateInput.value || dateInput.value < minDate) dateInput.value = minDate;
+  if (hint) {
+    const pretty = new Date(`${minDate}T00:00:00`).toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    });
+    const reason =
+      cartNasiPcs() > 0
+        ? `ada menu nasi (H-${RULES.nasiLeadDays})`
+        : `jadwal jajanan/jasa (H-${RULES.jajananLeadDays})`;
+    hint.textContent = `Paling cepat ${pretty} — ${reason}.`;
+  }
 
   // Field jam kembali memakai input type="time" native. Atribut min/max hanya
-  // membatasi picker, bukan nilai yang diketik manual, jadi rentang 06:00-18:00
+  // membatasi picker, bukan nilai yang diketik manual, jadi rentang jam buka-tutup
   // tetap divalidasi di saveSchedule().
   if (!timeInput.value) timeInput.value = "11:00";
   updateOrderTimeEcho();
@@ -911,6 +981,14 @@ function saveSchedule() {
     return;
   }
 
+  const minDate = minOrderDateWib();
+  if (dateVal < minDate) {
+    alert(
+      `Pesanan paling cepat ${minDate}. Menu nasi butuh H-${RULES.nasiLeadDays}, jajanan pasar H-${RULES.jajananLeadDays}.`,
+    );
+    return;
+  }
+
   const normalizedTime = normalizeOrderTime(timeVal);
   if (!normalizedTime) {
     alert("Pilih jam pengantaran dulu (format 24 jam, contoh 14:30).");
@@ -919,7 +997,9 @@ function saveSchedule() {
 
   const minutes = timeToMinutes(normalizedTime);
   if (minutes < KITCHEN_OPEN_MIN || minutes > KITCHEN_CLOSE_MIN) {
-    alert("Jam pengantaran hanya tersedia 06:00–18:00 WIB.");
+    alert(
+      `Jam pengantaran hanya tersedia ${SITE.hours.open}-${SITE.hours.close} WIB.`,
+    );
     return;
   }
 
@@ -1404,8 +1484,8 @@ function setPaymentMethod(method, persist) {
   if (hint) {
     hint.textContent =
       selectedPayment === "qris"
-        ? "Kode QRIS dikirim lewat WhatsApp setelah pesanan dikonfirmasi."
-        : "Bayar tunai saat pesanan diterima.";
+        ? "QRIS hanya disiapkan bila diminta. DP 50% dikonfirmasi lewat WhatsApp."
+        : "DP 50% dibayar tunai untuk mengunci jadwal, sisanya saat pesanan tiba.";
   }
 
   if (persist !== false) {
@@ -1455,14 +1535,32 @@ function checkoutWhatsApp() {
     return;
   }
 
+  // Nasi dibatasi partai kecil: maksimal 200 pcs per pesanan.
+  const nasiPcs = cartNasiPcs();
+  if (nasiPcs > RULES.maxNasiPcs) {
+    showCartNotice(
+      `Menu nasi maksimal ${RULES.maxNasiPcs} pcs per pesanan (sekarang ${nasiPcs} pcs). Kurangi dulu atau hubungi dapur lewat WhatsApp.`,
+    );
+    return;
+  }
+
+  // Tidak ada pesanan hari H: tanggal wajib dipilih dan minimal sesuai tenggat.
+  if (!selectedSchedule) {
+    showCartNotice(
+      `Pilih tanggal dulu ya. Nasi minimal H-${RULES.nasiLeadDays}, jajanan pasar H-${RULES.jajananLeadDays}.`,
+    );
+    openScheduleModal();
+    return;
+  }
+
   const name = document.getElementById("cust-name").value.trim() || "Pelanggan";
   const note = document.getElementById("cust-note").value.trim() || "-";
-  const schedule = selectedSchedule || "Kirim segera / hari ini";
+  const schedule = selectedSchedule;
   const ship = getShipping();
   const totals = cartTotals();
 
   const lines = [];
-  lines.push("Halo Mak Unyil, saya mau pesan makanan:");
+  lines.push("Halo Mak Unyil, saya mau pesan:");
   lines.push("");
   lines.push(`*Nama:* ${name}`);
   lines.push(`*Jadwal:* ${schedule}`);
@@ -1492,7 +1590,7 @@ function checkoutWhatsApp() {
 
   lines.push("");
   lines.push(`*Subtotal:* ${formatRupiah(totals.subtotal)}`);
-  lines.push("*Ongkir:* Gratis (area sekitar)");
+  lines.push(`*Antar:* Gratis s.d. ${FREE_DELIVERY_RADIUS_KM} km dari dapur`);
 
   if (ship.km != null && ship.km > FREE_DELIVERY_RADIUS_KM) {
     lines.push(
@@ -1501,14 +1599,18 @@ function checkoutWhatsApp() {
   }
 
   lines.push(`*Total:* ${formatRupiah(totals.total)}`);
+  lines.push(`*DP 50%:* ${formatRupiah(totals.dp)}`);
+  lines.push(`*Sisa saat pesanan tiba:* ${formatRupiah(totals.remaining)}`);
 
   if (selectedPayment === "qris") {
     lines.push("");
-    lines.push("Mohon dikirim kode QRIS-nya ya Mak.");
+    lines.push("Saya minta pembayaran QRIS/transfer ya Mak.");
   }
 
   lines.push("");
-  lines.push("Mohon konfirmasi ketersediaan menunya ya Mak. Terima kasih!");
+  lines.push(
+    "Mohon konfirmasi tanggal dan ketersediaan menunya. Terima kasih!",
+  );
 
   track("checkout_click", {
     items: itemIds.length,
@@ -1566,9 +1668,10 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// --- Stok dari stock.json (opsional, tanpa infrastructure tambahan) ---
-// Format: { "updated": "2026-11-11T06:00:00+07:00",
-//           "items": { "sate-keong": "available", ... } }
+// --- Ketersediaan dari stock.json (opsional, tanpa infrastructure tambahan) ---
+// Format: { "updated": "2026-11-12T06:00:00+07:00",
+//           "items": [{ "id": "sate-keong", "status": "off" }, ...] }
+// Nilai: "open" (bisa dipesan) | "off" (tidak tersedia / di luar musim).
 // Jika berkas tidak ada / gagal diambil, status bawaan di PRODUCTS dipakai.
 async function applyStockOverrides() {
   try {
@@ -1582,8 +1685,8 @@ async function applyStockOverrides() {
     if (!res.ok) return;
 
     const data = await res.json();
-    // Dua format diterima: objek peta { "sate-keong": "soldout" } (format lama)
-    // dan daftar [{ id, status }] (format yang diedit lewat /admin).
+    // Terima dua format: peta { "sate-keong": "off" } maupun daftar
+    // [{ id, status }] (format yang diedit lewat /admin).
     const raw = data && data.items ? data.items : data;
     const items = Array.isArray(raw)
       ? raw.reduce((acc, row) => {
@@ -1593,7 +1696,7 @@ async function applyStockOverrides() {
       : raw;
     if (!items || typeof items !== "object") return;
 
-    const valid = ["available", "preorder", "soldout"];
+    const valid = ["open", "off"];
     let changed = 0;
 
     PRODUCTS.forEach((product) => {
@@ -1609,7 +1712,7 @@ async function applyStockOverrides() {
       const when = new Date(data.updated);
       if (!Number.isNaN(when.getTime())) {
         note.textContent =
-          "Stok diperbarui " +
+          "Ketersediaan diperbarui " +
           when.toLocaleString("id-ID", {
             day: "numeric",
             month: "short",
@@ -1642,7 +1745,7 @@ function bindPersistedFields() {
 }
 
 // Tombol WA melayang: muncul setelah pengunjung melewati hero,
-// supaya tidak menutupi tombol "Tanya Stok" di layar pertama.
+// supaya tidak menutupi tombol "Konsultasi Pesanan" di layar pertama.
 function initWaFab() {
   const fab = document.getElementById("wa-fab");
   if (!fab) return;

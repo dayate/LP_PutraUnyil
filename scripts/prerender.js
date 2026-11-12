@@ -42,19 +42,13 @@ function jsAttr(s) {
     .replace(/'/g, "\\'");
 }
 
-function statusBadge(status) {
-  if (status === "available") {
-    return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Tersedia
-          </span>`;
-  }
-  if (status === "preorder") {
-    return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Pre-Order
-          </span>`;
-  }
-  return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-500 border border-stone-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Habis Hari Ini
+// Tidak ada stok harian: kartu tanpa badge saat bisa dipesan, dan badge hanya
+// muncul kalau produk sedang tidak tersedia (mis. keong di luar musim).
+function statusBadge(p) {
+  if (p.status !== "off") return "";
+  const label = p.seasonal ? "Di luar musim" : "Tidak tersedia";
+  return `<span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-stone-100 text-stone-600 border border-stone-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> ${label}
           </span>`;
 }
 
@@ -63,9 +57,9 @@ const WA_PATH =
 
 // --- Kartu katalog ---------------------------------------------------------
 function card(p) {
-  const isSoldOut = p.status === "soldout";
+  const isOff = p.status === "off";
   return `
-    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm ${isSoldOut ? "opacity-75" : "hover:border-stone-300 hover:shadow-md"}">
+    <div class="border border-stone-200 bg-white rounded-lg overflow-hidden flex flex-col transition group shadow-sm ${isOff ? "opacity-75" : "hover:border-stone-300 hover:shadow-md"}">
     <div class="flex flex-col flex-1">
       <div class="h-44 w-full overflow-hidden bg-stone-100 relative">
         ${
@@ -77,7 +71,7 @@ function card(p) {
           width="1200"
           height="900"
           alt="${esc(p.name)}"
-          class="w-full h-full object-cover transition-transform duration-500 ${isSoldOut ? "grayscale-[60%]" : "group-hover:scale-105"}"
+          class="w-full h-full object-cover transition-transform duration-500 ${isOff ? "grayscale-[60%]" : "group-hover:scale-105"}"
           loading="lazy"
           decoding="async"
         >`
@@ -94,7 +88,7 @@ function card(p) {
           ${esc(p.unit)}
         </span>
         <div class="absolute top-3 left-3">
-          ${statusBadge(p.status)}
+          ${statusBadge(p)}
         </div>
       </div>
       <div class="p-4 sm:p-5 flex-1 flex flex-col">
@@ -111,7 +105,7 @@ function card(p) {
         <button
           onclick="askItemStock('${jsAttr(p.name)}')"
           aria-label="Tanya ketersediaan ${esc(p.name)} via WhatsApp"
-          title="Tanya stok menu ini via WhatsApp"
+          title="Tanya ketersediaan menu ini via WhatsApp"
           class="w-10 h-10 flex items-center justify-center rounded border border-stone-300 hover:border-emerald-600 bg-white hover:bg-emerald-50 text-stone-500 hover:text-emerald-700 transition shrink-0"
         >
           <svg class="w-[18px] h-[18px] fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
@@ -119,9 +113,9 @@ function card(p) {
           </svg>
         </button>
         ${
-          isSoldOut
+          isOff
             ? `<button disabled class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-100 text-stone-400 border border-stone-200 rounded cursor-not-allowed shrink-0">
-            Habis
+            Tutup
           </button>`
             : `<button onclick="addToCart('${p.id}')" class="h-10 text-xs uppercase font-bold tracking-wider px-4 bg-stone-900 text-white hover:bg-stone-700 rounded transition active:scale-95 shrink-0">
             + Tambah

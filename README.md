@@ -1,6 +1,6 @@
 # Panduan Deploy & Operasional Landing Page Mak Unyil (100% Gratis di Cloudflare)
 
-Landing page statis modern berperforma tinggi untuk **Mak Unyil Kitchen** (Prambanan, Klaten).
+Landing page statis modern berperforma tinggi untuk **Dapur Mak Unyil** (Prambanan, Klaten).
 Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% Free-Tier Cloudflare** (tanpa biaya langganan, tanpa server berbayar, tanpa credit card lock).
 
 ---
@@ -13,7 +13,7 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 5. [Metode Deploy 2: Cloudflare Workers (Static Assets Modern)](#metode-deploy-2-cloudflare-workers-static-assets-modern)
 6. [Konfigurasi Custom Domain & SSL Gratis](#konfigurasi-custom-domain--ssl-gratis)
 7. [Panel Admin: Edit Konten Tanpa Coding (`/admin`)](#panel-admin-edit-konten-tanpa-coding-admin)
-8. [Manajemen Stok Tanpa Coding (`stock.json`)](#manajemen-stok-tanpa-coding-stockjson)
+8. [Mengatur Ketersediaan Menu (`stock.json`)](#mengatur-ketersediaan-menu-stockjson)
 9. [Setup Web Analytics 100% Gratis (Cookieless)](#setup-web-analytics-100-gratis-cookieless)
 10. [Batas Kuota Cloudflare Free Tier & Bukti Bebas Biaya](#batas-kuota-cloudflare-free-tier--bukti-bebas-biaya)
 11. [Struktur Berkas Proyek](#struktur-berkas-proyek)
@@ -180,8 +180,8 @@ Semua isi halaman dikelola dari satu panel di `https://store.putraunyil.biz.id/a
 |---|---|---|
 | **Produk** | `content/products.json` | Nama, kategori, harga, satuan, deskripsi, foto, status bawaan |
 | **Galeri** | `content/gallery.json` | Foto, judul, label, keterangan lightbox |
-| **Stok Harian** | `stock.json` | Status per menu (langsung aktif tanpa deploy) |
-| **Pengaturan Situs** | `content/site.json` | WhatsApp, jam buka, radius antar, koordinat dapur, teks hero |
+| **Ketersediaan** | `stock.json` | Menutup menu yang sedang tidak tersedia (butuh deploy seperti koleksi lain) |
+| **Pengaturan Situs** | `content/site.json` | WhatsApp, jam buka, jangkauan antar, koordinat dapur, aturan pre-order, teks hero |
 
 ### Login
 1. **OAuth (disarankan).** Deploy `github.com/sveltia/sveltia-cms-auth` ke Cloudflare
@@ -204,7 +204,9 @@ Tidak ada password di repo. Hanya akun GitHub dengan akses tulis ke
 
 ### Setelah menyimpan di admin
 Setiap simpan = satu commit ke `main` → Cloudflare Pages build ulang otomatis (±1-2 menit).
-Perubahan **stok** dikecualikan: `stock.json` di-fetch runtime, jadi langsung terlihat.
+Tidak ada pembaruan realtime: pengunjung melihat perubahan setelah build selesai dan
+halaman dimuat ulang. `stock.json` dibuat tanpa cache (`must-revalidate`), tetapi tetap
+baru tersedia setelah build yang memuatnya selesai.
 
 ### Keamanan panel
 - `/admin` ber-`noindex` + `X-Robots-Tag: noindex` dan diblokir di `robots.txt`.
@@ -213,39 +215,48 @@ Perubahan **stok** dikecualikan: `stock.json` di-fetch runtime, jadi langsung te
 
 ---
 
-## Manajemen Stok Tanpa Coding (`stock.json`)
+## Mengatur Ketersediaan Menu (`stock.json`)
 
-Status sajian (Tersedia, Pre-Order, atau Habis) dapat diperbarui kapan saja tanpa mengubah file HTML atau baris kode JavaScript — lewat menu **Stok Harian** di `/admin`, atau langsung mengedit berkas:
+Dapur Mak Unyil **tidak menyimpan stok harian** — semua menu dibuat setelah dipesan.
+Karena itu hanya ada dua status: `open` (bisa dipesan) dan `off` (tidak tersedia / di luar
+musim). Status diubah lewat menu **Ketersediaan Menu** di `/admin`, atau langsung di berkas:
 
 ```json
 {
-  "updated": "2026-11-11T06:00:00+07:00",
-  "note": "Status stok harian. Nilai: available | preorder | soldout.",
+  "updated": "2026-11-12T06:00:00+07:00",
+  "note": "Ketersediaan, bukan stok harian. Nilai: open | off.",
   "items": [
-    { "id": "sate-keong", "status": "soldout" },
-    { "id": "sate-usus", "status": "available" },
-    { "id": "oseng-keong", "status": "soldout" },
-    { "id": "keong-fresh", "status": "preorder" },
-    { "id": "nasi-uduk", "status": "preorder" },
-    { "id": "nasi-kuning", "status": "preorder" },
-    { "id": "bakmi-capcay", "status": "preorder" },
-    { "id": "tahu-sarang", "status": "available" },
-    { "id": "tahu-telur", "status": "soldout" },
-    { "id": "getuk-crispy", "status": "available" },
-    { "id": "daun-pisang", "status": "preorder" }
+    { "id": "sate-keong", "status": "open" },
+    { "id": "sate-usus", "status": "open" },
+    { "id": "oseng-keong", "status": "open" },
+    { "id": "keong-fresh", "status": "open" },
+    { "id": "nasi-uduk", "status": "open" },
+    { "id": "nasi-kuning", "status": "open" },
+    { "id": "bakmi-capcay", "status": "open" },
+    { "id": "tahu-sarang", "status": "open" },
+    { "id": "tahu-telur", "status": "open" },
+    { "id": "getuk-crispy", "status": "open" },
+    { "id": "daun-pisang", "status": "open" }
   ]
 }
 ```
 
 `id` harus sama dengan `id` di menu Produk; salah ketik = status diabaikan (status bawaan
-dari `content/products.json` yang dipakai). Format lama berbentuk objek
-(`"items": { "sate-keong": "soldout" }`) masih diterima `assets/app.js` agar tidak ada
-yang rusak bila file ditulis manual.
+dari `content/products.json` yang dipakai). Produk dengan `"seasonal": true` (keong) memakai
+label **Di luar musim** saat `off`; produk lain memakai **Tidak tersedia**.
 
-### Cara Memperbarui Stok di Produksi:
-- Buka `/admin` → **Stok Harian**, atau edit `stock.json` langsung via antarmuka GitHub.
-- Browser pengunjung mem-fetch `stock.json` dengan header `must-revalidate` (tidak ter-cache stale).
-- Label status dan tombol pemesanan otomatis menyesuaikan secara instan.
+### Cara Memperbarui Ketersediaan di Produksi
+- Buka `/admin` → **Ketersediaan Menu**, atau edit `stock.json` via antarmuka GitHub.
+- Simpan = commit → build ±1-2 menit. Halaman mem-fetch `stock.json` dengan
+  `must-revalidate`, jadi tidak ada versi basi yang tersangkut cache.
+- Tombol pesan otomatis berubah jadi nonaktif untuk menu berstatus `off`.
+
+### Aturan pre-order (`content/site.json` → `orderRules`)
+- `nasiLeadDays` (default 3): tanggal paling cepat untuk pesanan nasi, H-3.
+- `jajananLeadDays` (default 1): jajanan pasar H-1.
+- `maxNasiPcs` (default 200): batas nasi per pesanan; keranjang memberi peringatan bila lewat.
+- Pengaturan ini juga menjadi `min` pada pemilih tanggal dan dasar validasi saat checkout.
+- DP 50% dihitung otomatis di keranjang dan disertakan pada pesan WhatsApp.
 
 ---
 
@@ -292,7 +303,7 @@ LP_store/
 │   └── _middleware.js         # Pasang satu header CSP per path (publik vs /admin)
 ├── 404.html                   # Halaman fallback 404 mandiri tanpa dependensi luar
 ├── index.html                 # Markup utama; katalog & galeri dicetak build dari content/
-├── stock.json                 # Status stok runtime (diedit lewat /admin)
+├── stock.json                 # Ketersediaan menu (diedit lewat /admin)
 ├── package.json               # Skrip npm build
 ├── tailwind.config.js         # Token warna, font, dan scanning kelas
 ├── robots.txt                 # Blokir /admin, /images/uploads, /images/_source

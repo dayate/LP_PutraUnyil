@@ -19,7 +19,9 @@ const IMAGES_DIR = path.join(ROOT, "images");
 const UPLOADS_DIR = path.join(IMAGES_DIR, "uploads");
 
 const CATEGORIES = ["sate", "nasi", "jajanan", "khusus"];
-const STATUSES = ["available", "preorder", "soldout"];
+// Toko ini tidak menyimpan stok harian: semua produk dibuat setelah dipesan.
+// "open" = bisa dipesan, "off" = sedang tidak tersedia (mis. keong di luar musim).
+const STATUSES = ["open", "off"];
 
 function fail(message) {
   console.error("\nbuild konten GAGAL: " + message + "\n");
@@ -82,8 +84,9 @@ function photoExists(slug) {
 
 function loadSite() {
   const raw = readJson("site.json");
+  const rules = raw.orderRules || {};
   const site = {
-    brand: text(raw.brand) || "Mak Unyil Snack",
+    brand: text(raw.brand) || "Dapur Mak Unyil",
     whatsapp: text(raw.whatsapp).replace(/[^0-9]/g, ""),
     hours: {
       open: text(raw.hours && raw.hours.open),
@@ -94,9 +97,20 @@ function loadSite() {
       lat: Number(raw.kitchen && raw.kitchen.lat),
       lng: Number(raw.kitchen && raw.kitchen.lng),
     },
+    orderRules: {
+      nasiLeadDays: Number.isFinite(Number(rules.nasiLeadDays))
+        ? Number(rules.nasiLeadDays)
+        : 3,
+      jajananLeadDays: Number.isFinite(Number(rules.jajananLeadDays))
+        ? Number(rules.jajananLeadDays)
+        : 1,
+      maxNasiPcs: Number.isFinite(Number(rules.maxNasiPcs))
+        ? Number(rules.maxNasiPcs)
+        : 200,
+    },
     payment: {
-      cod: text(raw.payment && raw.payment.cod) || "Bayar di Tempat (COD)",
-      qris: text(raw.payment && raw.payment.qris) || "QRIS / Transfer di muka",
+      cod: text(raw.payment && raw.payment.cod) || "Tunai saat pesanan tiba (COD)",
+      qris: text(raw.payment && raw.payment.qris) || "QRIS / transfer (bila diminta)",
     },
     hero: {
       kicker: text(raw.hero && raw.hero.kicker),
@@ -154,7 +168,7 @@ function loadProducts() {
       fail(`${where}: "category" harus salah satu dari ${CATEGORIES.join(", ")} (sekarang "${item.category}")`);
     }
 
-    const status = text(item.status) || "available";
+    const status = text(item.status) || "open";
     if (!STATUSES.includes(status)) {
       fail(`${where}: "status" harus salah satu dari ${STATUSES.join(", ")} (sekarang "${item.status}")`);
     }
@@ -179,6 +193,7 @@ function loadProducts() {
     }
 
     const out = { id, name, category, price, unit, status, photo, desc };
+    if (item.seasonal === true) out.seasonal = true;
     const minQty = Number(item.minQty);
     if (Number.isFinite(minQty) && minQty > 1) out.minQty = Math.trunc(minQty);
     return out;
