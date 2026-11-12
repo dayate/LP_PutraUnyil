@@ -1,0 +1,114 @@
+{
+  "products": [
+    {
+      "id": "sate-keong",
+      "name": "Sate Keong Sawah",
+      "category": "sate",
+      "price": 10000,
+      "unit": "10 Tusuk",
+      "status": "available",
+      "photo": "/images/sate-keong-1200.webp",
+      "desc": "Daging keong sawah pilihan yang kenyal empuk dengan balutan bumbu rica-rica pedas"
+    },
+    {
+      "id": "sate-usus",
+      "name": "Sate Usus",
+      "category": "sate",
+      "price": 10000,
+      "unit": "5 Tusuk",
+      "status": "available",
+      "photo": "/images/sate-usus-1200.webp",
+      "desc": "Sate Usus Ayam dengan bumbu bacem khas Mak Unyil yang manis dan gurih"
+    },
+    {
+      "id": "oseng-keong",
+      "name": "Oseng Keong Pedas Cabai Hijau",
+      "category": "sate",
+      "price": 5000,
+      "unit": "1 porsi",
+      "status": "available",
+      "photo": "",
+      "desc": "Dimasak oseng rempah cabai hijau pedas nampol, gurih mantap tanpa bau amis, cocok untuk lauk harian."
+    },
+    {
+      "id": "keong-fresh",
+      "name": "Daging Keong Fresh Siap Olah",
+      "category": "khusus",
+      "price": 35000,
+      "unit": "kg",
+      "status": "preorder",
+      "photo": "/images/keong-fresh-1200.webp",
+      "desc": "Keong sawah diambil langsung dari alam dan telah melewati proses sortir. Daging segar yang sudah dikupas dan dicuci bersih higienis siap dimasak (Sistem Pre-Order)."
+    },
+    {
+      "id": "nasi-uduk",
+      "name": "Nasi Uduk",
+      "category": "nasi",
+      "price": 5000,
+      "unit": "pcs",
+      "status": "soldout",
+      "photo": "/images/nasi-uduk-1200.webp",
+      "desc": "Nasi uduk wangi santan gurih dengan orek tempe, bihun kecap, telur suwir. Sarapan pagi mulai 5000-an"
+    },
+    {
+      "id": "nasi-kuning",
+      "name": "Nasi Kuning",
+      "category": "nasi",
+      "price": 10000,
+      "unit": "pcs",
+      "status": "available",
+      "photo": "/images/nasi-kuning-1200.webp",
+      "desc": "Nasi kuning dengan lauk pendamping dengan wadah thinwall ukuran 450ml"
+    },
+    {
+      "id": "bakmi-capcay",
+      "name": "Bakmi Capcay",
+      "category": "nasi",
+      "price": 10000,
+      "unit": "pcs",
+      "status": "available",
+      "photo": "/images/bakmi-capcay-1200.webp",
+      "desc": "Bakmi dengan capcay sayur segar pas untuk sarapan atau makan siang."
+    },
+    {
+      "id": "tahu-sarang",
+      "name": "Tahu Sarang Burung",
+      "category": "jajanan",
+      "price": 1000,
+      "unit": "pcs",
+      "status": "available",
+      "photo": "/images/tahu-sarang-1200.webp",
+      "desc": "Olahan tahu lembut dicetak menyerupai sarang burung."
+    },
+    {
+      "id": "tahu-telur",
+      "name": "Tahu Telur Setengah",
+      "category": "jajanan",
+      "price": 3000,
+      "unit": "pcs",
+      "status": "soldout",
+      "photo": "",
+      "desc": "Kombinasi tahu yang dicetak ditambah telur ayam setangah pas dinikmati bersama cabai rawit hijau."
+    },
+    {
+      "id": "getuk-crispy",
+      "name": "Getuk Crispy",
+      "category": "jajanan",
+      "price": 1000,
+      "unit": "pcs",
+      "status": "available",
+      "photo": "",
+      "desc": "Singkong pulen manis berbalut lapisan luar renyah crispy dengan rasa manis didalam tanpa pemanis buatan."
+    },
+    {
+      "id": "daun-pisang",
+      "name": "Daun Pisang",
+      "category": "khusus",
+      "price": 5000,
+      "unit": "lipat",
+      "status": "preorder",
+      "photo": "/images/daun-pisang-1200.webp",
+      "desc": "Daun pisang serbaguna untuk berbagai keperluan seperti bungkus lontong, nagasari, atau nasi berkat dan lain-lain."
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 Disallow: /images/_source/
+Disallow: /images/uploads/
 
 Sitemap: https://store.putraunyil.biz.id/sitemap.xml

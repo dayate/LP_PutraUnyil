@@ -1,0 +1,246 @@
+# ==========================================================================
+#  Admin Mak Unyil Snack — Sveltia CMS
+#
+#  Cara login:
+#   1. OAuth (disarankan): deploy github.com/sveltia/sveltia-cms-auth ke
+#      Cloudflare Workers, lalu isi `base_url` di bawah dengan URL Worker itu.
+#      Ganti "sveltia-cms-auth.dayate" bila subdomain Worker Anda berbeda.
+#   2. Token: di halaman login pilih "Sign in with token", tempel GitHub
+#      Personal Access Token (scope: repo). Berguna sebelum Worker siap.
+#
+#  Akun yang bisa masuk hanya akun GitHub yang punya akses tulis ke repo
+#  dayate/LP_PutraUnyil. Tidak ada password yang disimpan di repo ini.
+# ==========================================================================
+backend:
+  name: github
+  repo: dayate/LP_PutraUnyil
+  branch: main
+  base_url: https://sveltia-cms-auth.dayate.workers.dev
+  commit_messages:
+    create: 'konten: tambah {{collection}} "{{slug}}" lewat admin'
+    update: 'konten: ubah {{collection}} "{{slug}}" lewat admin'
+    delete: 'konten: hapus {{collection}} "{{slug}}" lewat admin'
+    uploadMedia: 'konten: unggah foto {{path}}'
+    deleteMedia: 'konten: hapus foto {{path}}'
+
+site_url: https://store.putraunyil.biz.id
+display_url: https://store.putraunyil.biz.id
+logo_url: https://store.putraunyil.biz.id/favicon-192x192.png
+
+# Foto asli yang diunggah disimpan di sini (ikut git). Saat build,
+# scripts/build-images.js membuat dua ukuran WebP di images/.
+media_folder: images/uploads
+public_folder: /images/uploads
+
+collections:
+  # ------------------------------------------------------------------ Produk
+  - name: produk
+    label: Produk
+    label_singular: Produk
+    description: >-
+      Daftar menu di halaman depan. Setelah disimpan, situs memerlukan
+      ±1-2 menit untuk ikut ter-update.
+    files:
+      - name: daftar-produk
+        label: Daftar Produk
+        file: content/products.json
+        fields:
+          - name: products
+            label: Menu
+            label_singular: Menu
+            widget: list
+            summary: "{{fields.name}} — Rp {{fields.price}} ({{fields.unit}})"
+            fields:
+              - {
+                  name: id,
+                  label: ID,
+                  widget: string,
+                  hint: "Huruf kecil, angka, tanda minus. Contoh: sate-keong. Jangan diubah setelah dipakai.",
+                }
+              - { name: name, label: Nama menu, widget: string }
+              - name: category
+                label: Kategori
+                widget: select
+                options:
+                  - { label: Sate, value: sate }
+                  - { label: Nasi & Bakmi, value: nasi }
+                  - { label: Jajanan Pasar, value: jajanan }
+                  - { label: Pre-Order Khusus, value: khusus }
+              - {
+                  name: price,
+                  label: Harga (Rp),
+                  widget: number,
+                  value_type: int,
+                  min: 0,
+                }
+              - {
+                  name: unit,
+                  label: Satuan,
+                  widget: string,
+                  hint: 'Contoh: "pcs", "1 porsi", "10 Tusuk".',
+                }
+              - name: status
+                label: Status bawaan
+                widget: select
+                hint: "Status harian tetap diatur di menu Stok."
+                options:
+                  - { label: Tersedia, value: available }
+                  - { label: Pre-Order, value: preorder }
+                  - { label: Habis, value: soldout }
+              - name: photo
+                label: Foto
+                widget: image
+                required: false
+                hint: "Kosongkan bila foto belum ada — kartu memakai tile netral. Unggah JPG/PNG (maks ±3 MB)."
+                media_library:
+                  config:
+                    multiple: false
+              - { name: desc, label: Deskripsi, widget: text }
+              - {
+                  name: minQty,
+                  label: Minimal pesan (opsional),
+                  widget: number,
+                  value_type: int,
+                  min: 1,
+                  required: false,
+                  hint: "Isi bila menu ini punya batas minimal, mis. 15 untuk paket nasi box.",
+                }
+
+  # ------------------------------------------------------------------ Galeri
+  - name: galeri
+    label: Galeri
+    label_singular: Foto Galeri
+    files:
+      - name: slide-galeri
+        label: Slide Galeri
+        file: content/gallery.json
+        fields:
+          - name: slides
+            label: Slide
+            label_singular: Slide
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {
+                  name: id,
+                  label: ID,
+                  widget: string,
+                  required: false,
+                  hint: "Opsional, hanya untuk membedakan slide.",
+                }
+              - name: photo
+                label: Foto
+                widget: image
+                hint: "Foto besar yang dibuka saat slide diklik."
+              - { name: title, label: Judul, widget: string }
+              - {
+                  name: kicker,
+                  label: Label kecil,
+                  widget: string,
+                  default: Produk,
+                  hint: "Teks kecil di atas judul, contoh: Produk.",
+                }
+              - {
+                  name: caption,
+                  label: Keterangan,
+                  widget: text,
+                  required: false,
+                  hint: "Muncul di bawah foto saat diperbesar.",
+                }
+              - {
+                  name: alt,
+                  label: Teks alternatif,
+                  widget: string,
+                  required: false,
+                  hint: "Untuk pembaca layar. Kosongkan = memakai judul.",
+                }
+
+  # -------------------------------------------------------------------- Stok
+  - name: stok
+    label: Stok Harian
+    label_singular: Stok
+    description: "Perubahan di sini langsung terlihat tanpa menunggu deploy ulang."
+    files:
+      - name: stok-harian
+        label: Status Stok
+        file: stock.json
+        fields:
+          - {
+              name: updated,
+              label: Waktu pembaruan,
+              widget: datetime,
+              required: false,
+              hint: "Opsional, ditampilkan di halaman depan.",
+            }
+          - { name: note, label: Catatan internal, widget: string, required: false }
+          - name: items
+            label: Status per menu
+            widget: list
+            summary: "{{fields.id}} — {{fields.status}}"
+            fields:
+              - {
+                  name: id,
+                  label: ID menu,
+                  widget: string,
+                  hint: "Harus sama dengan ID di menu Produk. Salah ketik = status diabaikan.",
+                }
+              - name: status
+                label: Status
+                widget: select
+                options:
+                  - { label: Tersedia, value: available }
+                  - { label: Pre-Order, value: preorder }
+                  - { label: Habis, value: soldout }
+
+  # -------------------------------------------------------------- Pengaturan
+  - name: pengaturan
+    label: Pengaturan Situs
+    files:
+      - name: situs
+        label: Identitas & Operasional
+        file: content/site.json
+        fields:
+          - { name: brand, label: Nama toko, widget: string }
+          - {
+              name: whatsapp,
+              label: Nomor WhatsApp,
+              widget: string,
+              hint: "Format internasional tanpa tanda plus dan tanpa spasi. Contoh: 6285156175349",
+            }
+          - name: hours
+            label: Jam operasional
+            widget: object
+            fields:
+              - { name: open, label: Buka (HH:MM), widget: string }
+              - { name: close, label: Tutup (HH:MM), widget: string }
+          - {
+              name: freeDeliveryRadiusKm,
+              label: Radius antar gratis (km),
+              widget: number,
+              value_type: int,
+              min: 1,
+              hint: "Di luar radius ini, titik antar dikonfirmasi lewat WhatsApp (tanpa biaya tambahan).",
+            }
+          - name: kitchen
+            label: Koordinat dapur
+            widget: object
+            fields:
+              - { name: lat, label: Latitude, widget: number, value_type: float }
+              - { name: lng, label: Longitude, widget: number, value_type: float }
+          - name: payment
+            label: Label metode bayar
+            widget: object
+            fields:
+              - { name: cod, label: Bayar di tempat, widget: string }
+              - { name: qris, label: QRIS / transfer, widget: string }
+          - name: hero
+            label: Teks halaman depan
+            widget: object
+            fields:
+              - { name: kicker, label: Label kecil di atas judul, widget: string }
+              - { name: title, label: Judul utama (H1), widget: text }
+              - { name: subtitle, label: Paragraf pembuka, widget: text }
+              - { name: ctaPrimary, label: Tombol utama, widget: string }
+              - { name: ctaSecondary, label: Tombol WhatsApp, widget: string }
+              - { name: captionKicker, label: Label foto utama, widget: string }
+              - { name: captionTitle, label: Keterangan foto utama, widget: string }

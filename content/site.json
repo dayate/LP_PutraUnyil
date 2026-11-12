@@ -1,0 +1,26 @@
+{
+  "brand": "Mak Unyil Snack",
+  "whatsapp": "6285156175349",
+  "hours": {
+    "open": "06:00",
+    "close": "18:00"
+  },
+  "freeDeliveryRadiusKm": 10,
+  "kitchen": {
+    "lat": -7.752,
+    "lng": 110.4915
+  },
+  "payment": {
+    "cod": "Bayar di Tempat (COD)",
+    "qris": "QRIS / Transfer di muka"
+  },
+  "hero": {
+    "kicker": "Masakan Rumahan • Prambanan, Klaten",
+    "title": "Cita rasa pedas yang nampol, olahan keong sawah & aneka sarapan pagi dan jajanan pasar.",
+    "subtitle": "Sate keong bumbu rica pedasnya nampol, oseng cabai hijau segar, sarapan pagi nasi uduk, nasi kuning, hingga aneka jajanan pasar. Siap menerima pesanan partai kecil untuk berbagai keperluan.",
+    "ctaPrimary": "Pesan Sekarang",
+    "ctaSecondary": "Konsultasi pesanan via WA",
+    "captionKicker": "Sajian andalan",
+    "captionTitle": "Sate keong sawah bumbu rica, dibakar fresh tiap hari"
+  }
+}

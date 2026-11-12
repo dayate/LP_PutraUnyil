@@ -12,10 +12,11 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 4. [Metode Deploy 1: Cloudflare Pages (Sangat Direkomendasikan)](#metode-deploy-1-cloudflare-pages-sangat-direkomendasikan)
 5. [Metode Deploy 2: Cloudflare Workers (Static Assets Modern)](#metode-deploy-2-cloudflare-workers-static-assets-modern)
 6. [Konfigurasi Custom Domain & SSL Gratis](#konfigurasi-custom-domain--ssl-gratis)
-7. [Manajemen Stok Tanpa Coding (`stock.json`)](#manajemen-stok-tanpa-coding-stockjson)
-8. [Setup Web Analytics 100% Gratis (Cookieless)](#setup-web-analytics-100-gratis-cookieless)
-9. [Batas Kuota Cloudflare Free Tier & Bukti Bebas Biaya](#batas-kuota-cloudflare-free-tier--bukti-bebas-biaya)
-10. [Struktur Berkas Proyek](#struktur-berkas-proyek)
+7. [Panel Admin: Edit Konten Tanpa Coding (`/admin`)](#panel-admin-edit-konten-tanpa-coding-admin)
+8. [Manajemen Stok Tanpa Coding (`stock.json`)](#manajemen-stok-tanpa-coding-stockjson)
+9. [Setup Web Analytics 100% Gratis (Cookieless)](#setup-web-analytics-100-gratis-cookieless)
+10. [Batas Kuota Cloudflare Free Tier & Bukti Bebas Biaya](#batas-kuota-cloudflare-free-tier--bukti-bebas-biaya)
+11. [Struktur Berkas Proyek](#struktur-berkas-proyek)
 
 ---
 
@@ -53,30 +54,30 @@ Semua style Tailwind dikompilasi ke `assets/site.css` menggunakan file konfigura
 npm install
 ```
 
-### 2. Kompilasi Style untuk Produksi (Minified)
-Jalankan perintah ini setiap kali Anda mengubah markup kelas di `index.html`, `404.html`, atau `assets/app.js`:
+### 2. Build Produksi (satu perintah)
+Jalankan perintah ini setiap kali Anda mengubah markup, konten, atau foto:
 ```bash
 npm run build
 ```
-Build ini melakukan tiga hal: meminifikasi Tailwind ke `assets/site.css`, menjalankan
-`scripts/cache-bust.js`, lalu mencetak ulang kartu katalog ke `index.html`. `cache-bust.js`
-menempelkan `?v=<hash isi>` pada setiap referensi `/assets/` & `/images/` di `index.html` &
-`404.html` — **termasuk setiap URL di dalam `srcset` / `imagesrcset`**. **Jangan hapus query
-versi itu** — tanpa hash, CDN akan menyajikan CSS/JS/foto lama selama 7 hari (HTML baru + aset
-lama = tampilan seolah tidak sinkron). Build akan gagal dengan pesan `cache-bust: GAGAL` bila
-ada URL aset yang lolos tanpa `?v=`, jadi regresi seperti ini tidak akan lolos ke produksi.
+Urutan kerjanya:
 
-### 3. Optimasi Gambar Produk
-Foto produk mentah (JPG) diletakkan di `images/_source/`. Konversi ke WebP
-dua ukuran (600w untuk kartu, 1200w untuk galeri/Retina) memakai `ffmpeg`:
-```bash
-# Sesuaikan peta nama berkas di dalam skrip bila menambah produk baru
-node scripts/convert-photos.js
-```
-Untuk memangkas berat gambar besar yang sudah ada di `images/`:
-```bash
-node scripts/optimize-images.js
-```
+| Tahap | Skrip | Yang dilakukan |
+|---|---|---|
+| 1 | `scripts/build-content.js` | Menyuntik `content/site.json` & `content/products.json` ke `assets/app.js` (`const SITE`, `const PRODUCTS`) dan memperbarui teks hero, nomor WhatsApp, serta jam operasional di `index.html` |
+| 2 | `scripts/build-images.js` | Membuat WebP 600w & 1200w (`images/<slug>-600.webp`, `-1200.webp`) dari setiap foto di `images/uploads/` memakai `sharp` |
+| 3 | `tailwindcss` | Meminifikasi style ke `assets/site.css` |
+| 4 | `scripts/prerender.js` | Mencetak 11 kartu produk & 6 slide galeri langsung ke `index.html` (CLS tetap 0 karena grid sudah terisi sejak HTML pertama) |
+| 5 | `scripts/cache-bust.js` | Menempelkan `?v=<hash isi>` pada setiap referensi `/assets/` & `/images/`, **termasuk URL di dalam `srcset`** |
+
+Build **gagal dengan pesan jelas** bila ada konten tidak valid (harga kosong, kategori salah, foto galeri hilang) atau ada URL aset yang lolos tanpa `?v=`. Jadi halaman rusak tidak akan pernah ter-deploy.
+
+**Jangan hapus query `?v=`** — tanpa hash, CDN akan menyajikan CSS/JS/foto lama selama 7 hari (HTML baru + aset lama = tampilan seolah tidak sinkron).
+
+### 3. Foto Produk
+- **Cara normal:** unggah satu foto asli lewat `/admin` → tersimpan di `images/uploads/` → build membuat dua ukuran WebP otomatis.
+- Nama berkas menentukan nama produk di URL: `Sate Keong.JPG` → `images/sate-keong-600.webp`.
+- `images/_source/` hanya arsip foto master kamera (diabaikan git, tidak diproses build).
+- Foto kosong **tidak** memakai gambar placeholder: kartu menampilkan tile netral CSS dengan teks "Foto menyusul".
 
 ### 4. Mode Pengawasan (Live Reload CSS saat Edit)
 ```bash
@@ -170,35 +171,73 @@ Untuk menghubungkan domain custom (misalnya `store.putraunyil.biz.id`):
 
 ---
 
+## Panel Admin: Edit Konten Tanpa Coding (`/admin`)
+
+Semua isi halaman dikelola dari satu panel di `https://store.putraunyil.biz.id/admin`
+(Sveltia CMS, di-host sendiri di `admin/vendor/` — bukan CDN, jadi CSP tetap ketat).
+
+| Menu | Berkas | Yang bisa diubah |
+|---|---|---|
+| **Produk** | `content/products.json` | Nama, kategori, harga, satuan, deskripsi, foto, status bawaan |
+| **Galeri** | `content/gallery.json` | Foto, judul, label, keterangan lightbox |
+| **Stok Harian** | `stock.json` | Status per menu (langsung aktif tanpa deploy) |
+| **Pengaturan Situs** | `content/site.json` | WhatsApp, jam buka, radius antar, koordinat dapur, teks hero |
+
+### Login
+1. **OAuth (disarankan).** Deploy `github.com/sveltia/sveltia-cms-auth` ke Cloudflare
+   Workers, lalu `base_url` di `admin/config.yml` diarahkan ke Worker Anda.
+   Default di repo: `https://sveltia-cms-auth.dayate.workers.dev` — **ganti subdomainnya
+   bila Worker Anda berbeda**, dan tambahkan host itu ke `connect-src` di `_headers`.
+2. **Token.** Di halaman login pilih *Sign in with token*, tempel GitHub Personal Access
+   Token (scope `repo`). Berguna sebelum Worker siap; token tidak disimpan di repo.
+
+Tidak ada password di repo. Hanya akun GitHub dengan akses tulis ke
+`dayate/LP_PutraUnyil` yang bisa masuk.
+
+### Setelah menyimpan di admin
+Setiap simpan = satu commit ke `main` → Cloudflare Pages build ulang otomatis (±1-2 menit).
+Perubahan **stok** dikecualikan: `stock.json` di-fetch runtime, jadi langsung terlihat.
+
+### Keamanan panel
+- `/admin` ber-`noindex` + `X-Robots-Tag: noindex` dan diblokir di `robots.txt`.
+- CSP khusus `/admin/*` hanya mengizinkan `self`, GitHub API, dan Worker OAuth.
+- `images/uploads/` (foto asli) tidak diindeks mesin pencari.
+
+---
+
 ## Manajemen Stok Tanpa Coding (`stock.json`)
 
-Status sajian (Tersedia, Pre-Order, atau Habis) dapat diperbarui kapan saja tanpa mengubah file HTML atau baris kode JavaScript.
+Status sajian (Tersedia, Pre-Order, atau Habis) dapat diperbarui kapan saja tanpa mengubah file HTML atau baris kode JavaScript — lewat menu **Stok Harian** di `/admin`, atau langsung mengedit berkas:
 
-Buka file `stock.json`:
 ```json
 {
   "updated": "2026-11-11T06:00:00+07:00",
-  "note": "Ubah status di sini tanpa menyentuh HTML. Nilai: available | preorder | soldout.",
-  "items": {
-    "sate-keong": "available",
-    "sate-usus": "available",
-    "oseng-keong": "available",
-    "keong-fresh": "preorder",
-    "nasi-uduk": "soldout",
-    "nasi-kuning": "available",
-    "bakmi-capcay": "available",
-    "tahu-sarang": "available",
-    "tahu-telur": "soldout",
-    "getuk-crispy": "available",
-    "daun-pisang": "preorder"
-  }
+  "note": "Status stok harian. Nilai: available | preorder | soldout.",
+  "items": [
+    { "id": "sate-keong", "status": "soldout" },
+    { "id": "sate-usus", "status": "available" },
+    { "id": "oseng-keong", "status": "soldout" },
+    { "id": "keong-fresh", "status": "preorder" },
+    { "id": "nasi-uduk", "status": "preorder" },
+    { "id": "nasi-kuning", "status": "preorder" },
+    { "id": "bakmi-capcay", "status": "preorder" },
+    { "id": "tahu-sarang", "status": "available" },
+    { "id": "tahu-telur", "status": "soldout" },
+    { "id": "getuk-crispy", "status": "available" },
+    { "id": "daun-pisang", "status": "preorder" }
+  ]
 }
 ```
 
+`id` harus sama dengan `id` di menu Produk; salah ketik = status diabaikan (status bawaan
+dari `content/products.json` yang dipakai). Format lama berbentuk objek
+(`"items": { "sate-keong": "soldout" }`) masih diterima `assets/app.js` agar tidak ada
+yang rusak bila file ditulis manual.
+
 ### Cara Memperbarui Stok di Produksi:
-- Cukup edit berkas `stock.json` langsung via antarmuka GitHub (klik icon pensil) atau commit git.
-- Browser pengunjung akan mem-fetch `stock.json` dengan header `must-revalidate` (tidak ter-cache stale).
-- Label status dan tombol pemesanan akan otomatis menyesuaikan secara instan.
+- Buka `/admin` → **Stok Harian**, atau edit `stock.json` langsung via antarmuka GitHub.
+- Browser pengunjung mem-fetch `stock.json` dengan header `must-revalidate` (tidak ter-cache stale).
+- Label status dan tombol pemesanan otomatis menyesuaikan secara instan.
 
 ---
 
@@ -240,21 +279,36 @@ Tidak ada kartu kredit yang diperlukan untuk mengaktifkan Cloudflare Pages.
 
 ```text
 LP_store/
-├── _headers                   # Aturan CSP ketat & caching Cloudflare edge
+├── _headers                   # CSP ketat & caching edge (aturan terpisah untuk /admin/*)
 ├── 404.html                   # Halaman fallback 404 mandiri tanpa dependensi luar
-├── index.html                 # Markup utama semantik, SEO JSON-LD & Open Graph
-├── stock.json                 # Konfigurasi stok runtime dinamis
-├── package.json               # Skrip npm build tailwind
-├── tailwind.config.js         # Konfigurasi token warna, font, dan scanning kelas
-├── .gitignore                 # Mencegah upload node_modules & file sumber mentah
+├── index.html                 # Markup utama; katalog & galeri dicetak build dari content/
+├── stock.json                 # Status stok runtime (diedit lewat /admin)
+├── package.json               # Skrip npm build
+├── tailwind.config.js         # Token warna, font, dan scanning kelas
+├── robots.txt                 # Blokir /admin, /images/uploads, /images/_source
+├── sitemap.xml
+├── content/                   # SUMBER KEBENARAN konten (dikelola Sveltia CMS)
+│   ├── products.json          # 11 menu: harga, kategori, status, foto, deskripsi
+│   ├── gallery.json           # 6 slide galeri
+│   └── site.json              # WhatsApp, jam buka, radius antar, koordinat, teks hero
+├── admin/
+│   ├── index.html             # Panel Sveltia CMS (noindex)
+│   ├── config.yml             # Definisi koleksi + backend GitHub
+│   └── vendor/                # Bundle Sveltia CMS lokal (2.9 MB, tanpa CDN)
+├── scripts/
+│   ├── lib/content.js         # Pembaca + validator content/*.json
+│   ├── build-content.js       # Suntik konten ke app.js & index.html
+│   ├── build-images.js        # WebP 600w/1200w dari images/uploads (sharp)
+│   ├── prerender.js           # Cetak kartu produk & slide galeri ke HTML
+│   └── cache-bust.js          # ?v=<hash> untuk assets/ & images/ + penjaga regresi
 ├── assets/
-│   ├── app.js                 # Logika bisnis: keranjang, jarak haversine, WhatsApp generator
-│   ├── site.css               # CSS terkompilasi Tailwind (~25 KB minified / ~5 KB gzip)
-│   └── 404.css                # Style khusus halaman 404
+│   ├── app.js                 # Keranjang, haversine, WhatsApp generator, checkout
+│   ├── site.css               # CSS Tailwind terkompilasi
+│   └── 404.css                # Style halaman 404
 ├── fonts/                     # Font lokal WOFF2 (Plus Jakarta Sans & Playfair Display)
-│   └── fonts.css
 ├── vendor/
-│   └── leaflet/               # Leaflet 1.9.4 CSS + JS + Icon lokal (tanpa unpkg)
-└── images/                    # Asset foto kompresi WebP (600w & 1200w responsive)
-    └── _source/               # (Diabaikan oleh git) Arsip foto master kamera
+│   └── leaflet/               # Leaflet 1.9.4 CSS + JS + ikon lokal (dimuat saat peta dibuka)
+└── images/                    # WebP 600w & 1200w untuk kartu, galeri, lightbox
+    ├── uploads/               # Foto asli hasil unggahan /admin (sumber build-images)
+    └── _source/               # (git-ignored) arsip foto master kamera
 ```
