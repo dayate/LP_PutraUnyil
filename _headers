@@ -65,5 +65,3 @@
   X-Robots-Tag: noindex, nofollow
   Cache-Control: public, max-age=0, must-revalidate
 
-/admin/vendor/*
-  Cache-Control: public, max-age=604800

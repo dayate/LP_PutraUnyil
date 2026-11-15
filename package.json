@@ -1,5 +1,5 @@
 {
-  "name": "lp-store-mak-unyil",
+  "name": "mak-unyil-store",
   "version": "1.0.0",
   "private": true,
   "description": "Landing page statis Mak Unyil — build CSS Tailwind lokal, tanpa CDN.",
@@ -7,7 +7,9 @@
     "build": "node scripts/build-content.js && node scripts/build-images.js && tailwindcss -i src/tailwind.css -o assets/site.css --minify && node scripts/prerender.js && node scripts/cache-bust.js",
     "content": "node scripts/build-content.js",
     "images": "node scripts/build-images.js",
-    "watch": "tailwindcss -i src/tailwind.css -o assets/site.css --watch"
+    "watch": "tailwindcss -i src/tailwind.css -o assets/site.css --watch",
+    "sync:r2": "node scripts/sync-r2.js",
+    "publish": "npm run sync:r2 && npm run build && npx wrangler pages deploy . --project-name=mak-unyil-store"
   },
   "devDependencies": {
     "sharp": "^0.35.5",
