@@ -57,9 +57,9 @@
   Cache-Control: public, max-age=604800
 
 # ---------------------------------------------------------------------------
-# Panel admin (/admin) — Sveltia CMS, di-host sendiri.
-# Halaman ini tidak untuk pengunjung: noindex. CSP-nya (yang mengizinkan
-# GitHub API + Worker OAuth) dipasang oleh functions/_middleware.js.
+# Panel admin (/admin) — dashboard sendiri, konten di R2.
+# Halaman ini tidak untuk pengunjung: noindex. CSP-nya (longgar untuk inline
+# script dashboard, ketat untuk situs publik) dipasang functions/_middleware.js.
 # ---------------------------------------------------------------------------
 /admin/*
   X-Robots-Tag: noindex, nofollow
