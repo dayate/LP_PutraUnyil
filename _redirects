@@ -1,0 +1,4 @@
+# Panel admin sudah dihapus. Semua path admin dialihkan ke beranda.
+/admin / 301
+/admin/ / 301
+/admin/* / 301
