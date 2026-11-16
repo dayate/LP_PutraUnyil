@@ -12,7 +12,7 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 4. [Metode Deploy 1: Cloudflare Pages (Sangat Direkomendasikan)](#metode-deploy-1-cloudflare-pages-sangat-direkomendasikan)
 5. [Metode Deploy 2: Cloudflare Workers (Static Assets Modern)](#metode-deploy-2-cloudflare-workers-static-assets-modern)
 6. [Konfigurasi Custom Domain & SSL Gratis](#konfigurasi-custom-domain--ssl-gratis)
-7. [Mengedit Konten (Tanpa Panel Admin)](#mengedit-konten-tanpa-panel-admin)
+7. [Mengedit Konten](#mengedit-konten)
 8. [Mengatur Ketersediaan Menu (`stock.json`)](#mengatur-ketersediaan-menu-stockjson)
 9. [Setup Web Analytics 100% Gratis (Cookieless)](#setup-web-analytics-100-gratis-cookieless)
 10. [Batas Kuota Cloudflare Free Tier & Bukti Bebas Biaya](#batas-kuota-cloudflare-free-tier--bukti-bebas-biaya)
@@ -171,9 +171,9 @@ Untuk menghubungkan domain custom (misalnya `store.putraunyil.biz.id`):
 
 ---
 
-## Mengedit Konten (Tanpa Panel Admin)
+## Mengedit Konten
 
-Situs ini statis murni: tidak ada panel admin, tidak ada login, tidak ada API, dan tidak
+Situs ini statis murni: tidak ada login, tidak ada API, dan tidak
 ada Cloudflare Functions. Seluruh isi halaman dibaca build dari berkas JSON di `content/`,
 lalu diedit langsung di repo (GitHub web editor, GitHub Desktop, atau editor lokal).
 

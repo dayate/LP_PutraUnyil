@@ -10,3 +10,6 @@ images/_source/
 Thumbs.db
 
 .secrets/
+
+# State CLI Cloudflare (lokal, tidak ikut repo)
+.wrangler/
