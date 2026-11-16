@@ -1,6 +1,6 @@
 {
   "updated": "2026-11-12T06:00:00+07:00",
-  "note": "Ketersediaan, bukan stok harian. Semua produk dibuat setelah dipesan. Nilai: open (bisa dipesan) | off (tidak tersedia / di luar musim). Ubah lewat /admin (menu Stok Harian) atau langsung di sini.",
+  "note": "Ketersediaan, bukan stok harian. Semua produk dibuat setelah dipesan. Nilai: open (bisa dipesan) | off (tidak tersedia / di luar musim). Edit berkas ini langsung; tidak ada panel admin.",
   "items": [
     { "id": "sate-keong", "status": "open" },
     { "id": "sate-usus", "status": "open" },

@@ -2,7 +2,7 @@
    Menyalin konten dari content/*.json ke tempat yang dipakai halaman.
 
    Kenapa perlu langkah ini: situs harus tetap statis (tanpa fetch runtime),
-   tetapi pemilik toko mengedit lewat /admin. Jadi saat build, data JSON
+   tetapi pemilik toko mengedit content/*.json langsung. Jadi saat build, data JSON
    disuntikkan ke:
 
      1. assets/app.js     -> `const SITE`, `const PRODUCTS`

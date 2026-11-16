@@ -218,7 +218,7 @@ function loadGallery() {
     if (!photo) fail(`${where}: "photo" wajib diisi (nama berkas foto)`);
     if (!photoExists(photo)) {
       fail(
-        `${where}: foto "${photo}" tidak ditemukan. Unggah lewat /admin atau letakkan ` +
+        `${where}: foto "${photo}" tidak ditemukan. Letakkan berkasnya di images/uploads/ ` +
           `images/uploads/${photo}.jpg lalu jalankan npm run build.`,
       );
     }

@@ -12,7 +12,7 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 4. [Metode Deploy 1: Cloudflare Pages (Sangat Direkomendasikan)](#metode-deploy-1-cloudflare-pages-sangat-direkomendasikan)
 5. [Metode Deploy 2: Cloudflare Workers (Static Assets Modern)](#metode-deploy-2-cloudflare-workers-static-assets-modern)
 6. [Konfigurasi Custom Domain & SSL Gratis](#konfigurasi-custom-domain--ssl-gratis)
-7. [Panel Admin: Edit Konten Tanpa Coding (`/admin`)](#panel-admin-edit-konten-tanpa-coding-admin)
+7. [Mengedit Konten (Tanpa Panel Admin)](#mengedit-konten-tanpa-panel-admin)
 8. [Mengatur Ketersediaan Menu (`stock.json`)](#mengatur-ketersediaan-menu-stockjson)
 9. [Setup Web Analytics 100% Gratis (Cookieless)](#setup-web-analytics-100-gratis-cookieless)
 10. [Batas Kuota Cloudflare Free Tier & Bukti Bebas Biaya](#batas-kuota-cloudflare-free-tier--bukti-bebas-biaya)
@@ -23,7 +23,7 @@ Dirancang dengan arsitektur **Zero-CDN**, **Zero-Database Server**, dan **100% F
 ## Arsitektur & Spesifikasi
 
 - **Single Origin / Zero External CDN:** Seluruh pustaka CSS (Tailwind v3.4 hasil kompilasi), JavaScript (Leaflet v1.9.4 & logika aplikasi), dan Web Fonts (Plus Jakarta Sans & Playfair Display format WOFF2) di-host secara lokal dari repositori ini. Menjamin loading kilat (<200 KB gzip awal) dan keamanan tinggi.
-- **Strict Content Security Policy (CSP):** Dipasang per-path oleh `functions/_middleware.js` (satu header per respons), memblokir script injection berbahaya dan membatasi koneksi hanya ke endpoint yang dibutuhkan (Esri Maps Tiles, Photon Geocoding, Google Maps Embed). Halaman publik dan panel admin punya kebijakan terpisah — lihat catatan penting di `_headers`.
+- **Strict Content Security Policy (CSP):** Dipasang statis di `_headers` (bukan Functions), memblokir script injection dan membatasi koneksi hanya ke endpoint yang dibutuhkan (Esri Maps Tiles, Photon Geocoding, Google Maps Embed, Cloudflare Web Analytics).
 - **Peta dimuat on-demand:** Leaflet (±45 KB gzip CSS + JS) tidak dimuat saat halaman dibuka. `loadLeaflet()` di `assets/app.js` baru menyuntikkan asetnya ketika modal "Tentukan Titik Pengantaran" dibuka, lengkap dengan indikator loading, deteksi tile gagal, dan tautan cadangan ke Google Maps. Pencarian lokasi memakai **Photon** (`photon.komoot.io`) yang mengizinkan search-as-you-type — berbeda dari Nominatim OSM yang melarang autocomplete.
 - **Client-Side Cart & Checkout State:** Keranjang belanja otomatis tersimpan di `localStorage` (`makunyil_state_v1`). Menyimpan daftar menu, pilihan pembayaran (COD / QRIS), jadwal, nama, dan koordinat maps.
 - **Ongkir Gratis:** Dapur hanya melayani area sekitar, jadi **tidak ada biaya pengantaran**. Jarak garis lurus (haversine) dari dapur Mak Unyil (`-7.752, 110.4915`) tetap dihitung untuk info kurir dan peringatan area:
@@ -74,7 +74,7 @@ Build **gagal dengan pesan jelas** bila ada konten tidak valid (harga kosong, ka
 **Jangan hapus query `?v=`** — tanpa hash, CDN akan menyajikan CSS/JS/foto lama selama 7 hari (HTML baru + aset lama = tampilan seolah tidak sinkron).
 
 ### 3. Foto Produk
-- **Cara normal:** unggah satu foto asli lewat `/admin` → tersimpan di `images/uploads/` → build membuat dua ukuran WebP otomatis.
+- **Cara normal:** taruh satu foto asli di `images/uploads/` (nama berkas = nama berkas jadi), lalu `npm run build` membuat dua ukuran WebP otomatis.
 - Nama berkas menentukan nama produk di URL: `Sate Keong.JPG` → `images/sate-keong-600.webp`.
 - `images/_source/` hanya arsip foto master kamera (diabaikan git, tidak diproses build).
 - Foto kosong **tidak** memakai gambar placeholder: kartu menampilkan tile netral CSS dengan teks "Foto menyusul".
@@ -171,47 +171,32 @@ Untuk menghubungkan domain custom (misalnya `store.putraunyil.biz.id`):
 
 ---
 
-## Panel Admin: Edit Konten Tanpa Coding (`/admin`)
+## Mengedit Konten (Tanpa Panel Admin)
 
-Semua isi halaman dikelola dari satu panel di `https://store.putraunyil.biz.id/admin`
-(Sveltia CMS, di-host sendiri di `admin/vendor/` — bukan CDN, jadi CSP tetap ketat).
+Situs ini statis murni: tidak ada panel admin, tidak ada login, tidak ada API, dan tidak
+ada Cloudflare Functions. Seluruh isi halaman dibaca build dari berkas JSON di `content/`,
+lalu diedit langsung di repo (GitHub web editor, GitHub Desktop, atau editor lokal).
 
-| Menu | Berkas | Yang bisa diubah |
-|---|---|---|
-| **Produk** | `content/products.json` | Nama, kategori, harga, satuan, deskripsi, foto, status bawaan |
-| **Galeri** | `content/gallery.json` | Foto, judul, label, keterangan lightbox |
-| **Ketersediaan** | `stock.json` | Menutup menu yang sedang tidak tersedia (butuh deploy seperti koleksi lain) |
-| **Pengaturan Situs** | `content/site.json` | WhatsApp, jam buka, jangkauan antar, koordinat dapur, aturan pre-order, teks hero |
+| Berkas | Yang bisa diubah |
+|---|---|
+| `content/products.json` | Nama, kategori, harga, satuan, deskripsi, foto, status bawaan |
+| `content/gallery.json` | Foto, judul, label, keterangan lightbox |
+| `content/site.json` | WhatsApp, jam buka, jangkauan antar, koordinat dapur, aturan pre-order, teks hero |
+| `stock.json` | Ketersediaan menu (`open` / `off`) |
 
-### Login
-1. **OAuth (disarankan).** Deploy `github.com/sveltia/sveltia-cms-auth` ke Cloudflare
-   Workers, lalu `base_url` di `admin/config.yml` diarahkan ke Worker Anda.
-   Default di repo: `https://sveltia-cms-auth.dayate.workers.dev` — **ganti subdomainnya
-   bila Worker Anda berbeda**, dan tambahkan host itu ke `connect-src` pada `ADMIN_CSP`
-   di `functions/_middleware.js` (bukan di `_headers`).
-2. **Token.** Di halaman login pilih *Sign In Using Access Token*, tempel GitHub Personal
-   Access Token (scope `repo`). Berguna sebelum Worker siap; token tidak disimpan di repo.
+Alur kerja:
 
-> **Penting soal CSP:** Cloudflare Pages menerapkan **semua** baris `_headers` yang cocok,
-> jadi menaruh CSP di `/*` dan `/admin/*` sekaligus membuat browser menegakkan irisan
-> keduanya — `api.github.com` ikut terblokir dan login gagal dengan pesan `Failed to fetch`.
-> Karena itu CSP **hanya** dipasang di `functions/_middleware.js`. Jangan menambahkan
-> `Content-Security-Policy` ke `_headers` lagi.
+1. Edit berkas JSON yang bersangkutan.
+2. Jalankan `npm run build` di lokal untuk memvalidasi isi sekaligus mencetak ulang HTML.
+3. Commit + push ke `main`.
+4. Cloudflare Pages build ulang otomatis (sekitar 1-2 menit).
 
+Build gagal dengan pesan jelas bila JSON tidak valid (harga kosong, kategori salah, foto
+galeri hilang), jadi konten rusak tidak akan pernah ter-deploy.
 
-Tidak ada password di repo. Hanya akun GitHub dengan akses tulis ke
-`dayate/LP_PutraUnyil` yang bisa masuk.
-
-### Setelah menyimpan di admin
-Setiap simpan = satu commit ke `main` → Cloudflare Pages build ulang otomatis (±1-2 menit).
-Tidak ada pembaruan realtime: pengunjung melihat perubahan setelah build selesai dan
-halaman dimuat ulang. `stock.json` dibuat tanpa cache (`must-revalidate`), tetapi tetap
-baru tersedia setelah build yang memuatnya selesai.
-
-### Keamanan panel
-- `/admin` ber-`noindex` + `X-Robots-Tag: noindex` dan diblokir di `robots.txt`.
-- CSP `/admin/*` (dari `functions/_middleware.js`) hanya mengizinkan `self`, GitHub API, unpkg/jsdelivr, dan Worker OAuth.
-- `images/uploads/` (foto asli) tidak diindeks mesin pencari.
+> **CSP:** seluruh header keamanan, termasuk `Content-Security-Policy`, dipasang statis di
+> `_headers`. Tidak ada Functions/middleware yang menyisipkan header, jadi jangan menambah
+> `Content-Security-Policy` di berkas lain.
 
 ---
 
@@ -219,7 +204,7 @@ baru tersedia setelah build yang memuatnya selesai.
 
 Dapur Mak Unyil **tidak menyimpan stok harian** — semua menu dibuat setelah dipesan.
 Karena itu hanya ada dua status: `open` (bisa dipesan) dan `off` (tidak tersedia / di luar
-musim). Status diubah lewat menu **Ketersediaan Menu** di `/admin`, atau langsung di berkas:
+musim). Status diubah langsung di berkas:
 
 ```json
 {
@@ -246,7 +231,7 @@ dari `content/products.json` yang dipakai). Produk dengan `"seasonal": true` (ke
 label **Di luar musim** saat `off`; produk lain memakai **Tidak tersedia**.
 
 ### Cara Memperbarui Ketersediaan di Produksi
-- Buka `/admin` → **Ketersediaan Menu**, atau edit `stock.json` via antarmuka GitHub.
+- Edit `stock.json` di repo (langsung atau lewat antarmuka GitHub), lalu commit.
 - Simpan = commit → build ±1-2 menit. Halaman mem-fetch `stock.json` dengan
   `must-revalidate`, jadi tidak ada versi basi yang tersangkut cache.
 - Tombol pesan otomatis berubah jadi nonaktif untuk menu berstatus `off`.
@@ -298,38 +283,32 @@ Tidak ada kartu kredit yang diperlukan untuk mengaktifkan Cloudflare Pages.
 
 ```text
 LP_store/
-├── _headers                   # Caching edge + noindex /admin (TANPA CSP — lihat functions/)
-├── functions/
-│   └── _middleware.js         # Pasang satu header CSP per path (publik vs /admin)
-├── 404.html                   # Halaman fallback 404 mandiri tanpa dependensi luar
-├── index.html                 # Markup utama; katalog & galeri dicetak build dari content/
-├── stock.json                 # Ketersediaan menu (diedit lewat /admin)
-├── package.json               # Skrip npm build
-├── tailwind.config.js         # Token warna, font, dan scanning kelas
-├── robots.txt                 # Blokir /admin, /images/uploads, /images/_source
-├── sitemap.xml
-├── content/                   # SUMBER KEBENARAN konten (dikelola Sveltia CMS)
-│   ├── products.json          # 11 menu: harga, kategori, status, foto, deskripsi
-│   ├── gallery.json           # 6 slide galeri
-│   └── site.json              # WhatsApp, jam buka, radius antar, koordinat, teks hero
-├── admin/
-│   ├── index.html             # Panel Sveltia CMS (noindex)
-│   ├── config.yml             # Definisi koleksi + backend GitHub
-│   └── vendor/                # Bundle Sveltia CMS lokal (2.9 MB, tanpa CDN)
-├── scripts/
-│   ├── lib/content.js         # Pembaca + validator content/*.json
-│   ├── build-content.js       # Suntik konten ke app.js & index.html
-│   ├── build-images.js        # WebP 600w/1200w dari images/uploads (sharp)
-│   ├── prerender.js           # Cetak kartu produk & slide galeri ke HTML
-│   └── cache-bust.js          # ?v=<hash> untuk assets/ & images/ + penjaga regresi
-├── assets/
-│   ├── app.js                 # Keranjang, haversine, WhatsApp generator, checkout
-│   ├── site.css               # CSS Tailwind terkompilasi
-│   └── 404.css                # Style halaman 404
-├── fonts/                     # Font lokal WOFF2 (Plus Jakarta Sans & Playfair Display)
-├── vendor/
-│   └── leaflet/               # Leaflet 1.9.4 CSS + JS + ikon lokal (dimuat saat peta dibuka)
-└── images/                    # WebP 600w & 1200w untuk kartu, galeri, lightbox
-    ├── uploads/               # Foto asli hasil unggahan /admin (sumber build-images)
-    └── _source/               # (git-ignored) arsip foto master kamera
+|-- _headers                   # CSP + caching edge (statis murni, tanpa Functions)
+|-- 404.html                   # Halaman fallback 404 mandiri tanpa dependensi luar
+|-- index.html                 # Markup utama; katalog & galeri dicetak build dari content/
+|-- stock.json                 # Ketersediaan menu (edit manual, di-fetch must-revalidate)
+|-- package.json               # Skrip npm build
+|-- tailwind.config.js         # Token warna, font, dan scanning kelas
+|-- robots.txt                 # Tidak mengindeks /images/uploads & /images/_source
+|-- sitemap.xml
+|-- content/                   # SUMBER KEBENARAN konten (diedit manual di repo)
+|   |-- products.json          # 11 menu: harga, kategori, status, foto, deskripsi
+|   |-- gallery.json           # 6 slide galeri
+|   `-- site.json              # WhatsApp, jam buka, radius antar, koordinat, teks hero
+|-- scripts/
+|   |-- lib/content.js         # Pembaca + validator content/*.json
+|   |-- build-content.js       # Suntik konten ke app.js & index.html
+|   |-- build-images.js        # WebP 600w/1200w dari images/uploads (sharp)
+|   |-- prerender.js           # Cetak kartu produk & slide galeri ke HTML
+|   `-- cache-bust.js          # ?v=<hash> untuk assets/ & images/ + penjaga regresi
+|-- assets/
+|   |-- app.js                 # Keranjang, haversine, WhatsApp generator, checkout
+|   |-- site.css               # CSS Tailwind terkompilasi
+|   `-- 404.css                # Style halaman 404
+|-- fonts/                     # Font lokal WOFF2 (Plus Jakarta Sans & Playfair Display)
+|-- vendor/
+|   `-- leaflet/               # Leaflet 1.9.4 CSS + JS + ikon lokal (dimuat saat peta dibuka)
+`-- images/                    # WebP 600w & 1200w untuk kartu, galeri, lightbox
+    |-- uploads/               # Foto asli (sumber build-images)
+    `-- _source/               # (git-ignored) arsip foto master kamera
 ```

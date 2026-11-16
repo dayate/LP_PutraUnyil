@@ -7,7 +7,7 @@
    HTML, tata letak sudah final sejak paint pertama.
 
    Sumber data: content/products.json & content/gallery.json (satu sumber
-   kebenaran, dikelola lewat /admin). Skrip ini berjalan SEBELUM cache-bust,
+   kebenaran, diedit manual di repo). Skrip ini berjalan SEBELUM cache-bust,
    jadi semua URL gambar dicetak polos lalu diberi ?v=<hash> oleh
    scripts/cache-bust.js.
    ========================================================================== */

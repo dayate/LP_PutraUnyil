@@ -1,7 +1,7 @@
 /* ==========================================================================
    Optimasi foto produk & galeri.
 
-   Alur: pemilik toko mengunggah SATU foto asli lewat /admin (tersimpan di
+   Alur: pemilik toko menaruh SATU foto asli di images/uploads/ (tersimpan di
    images/uploads/), lalu build membuat dua ukuran WebP yang dipakai halaman:
    images/<slug>-600.webp  (kartu katalog, ~35-70 KB)
    images/<slug>-1200.webp (lightbox & layar besar)
@@ -26,7 +26,7 @@ try {
 } catch {
   fail(
     "modul sharp belum terpasang. Jalankan `npm install` (sharp dibutuhkan untuk " +
-      "membuat WebP dari foto unggahan /admin).",
+      "membuat WebP dari foto di images/uploads/).",
   );
 }
 

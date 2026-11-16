@@ -5,7 +5,7 @@
    ========================================================================== */
 
 // Pengaturan situs. Blok ini dihasilkan `npm run build` dari content/site.json
-// (dikelola lewat /admin), jadi jangan diubah manual di sini.
+// (diedit manual di content/), jadi jangan diubah manual di sini.
 const SITE = /* @site:start */ {
   "brand": "Dapur Mak Unyil",
   "whatsapp": "6285156175349",
@@ -65,7 +65,7 @@ const ASSET_VERSIONS = /* @asset-versions */ {
 };
 
 // Katalog produk. Blok di bawah dihasilkan `npm run build` dari
-// content/products.json (dikelola lewat /admin), jangan diubah manual.
+// content/products.json (diedit manual di repo), jangan diubah manual.
 // status: 'open' (bisa dipesan) | 'off' (tidak tersedia / di luar musim)
 const PRODUCTS = /* @products:start */ [
   {
@@ -1686,7 +1686,7 @@ async function applyStockOverrides() {
 
     const data = await res.json();
     // Terima dua format: peta { "sate-keong": "off" } maupun daftar
-    // [{ id, status }] (format yang diedit lewat /admin).
+    // [{ id, status }] (diedit manual di stock.json).
     const raw = data && data.items ? data.items : data;
     const items = Array.isArray(raw)
       ? raw.reduce((acc, row) => {
