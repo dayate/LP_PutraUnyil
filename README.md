@@ -116,7 +116,7 @@ Jika tidak ingin menghubungkan Git, deploy langsung dari komputer Anda menggunak
 npm run build
 
 # 2. Deploy folder saat ini sebagai project Pages
-wrangler pages deploy . --project-name=store-makunyil
+npx wrangler pages deploy . --project-name mak-unyil-store
 ```
 Pada deploy pertama, Wrangler akan menanyakan nama proyek dan branch produksi (pilih `main`).
 
@@ -129,7 +129,7 @@ Jika Anda ingin menggabungkan landing page ini ke dalam ekosistem Cloudflare Wor
 1. Buat berkas `wrangler.jsonc` di root project:
    ```jsonc
    {
-     "name": "store-makunyil",
+     "name": "mak-unyil-store",
      "compatibility_date": "2026-11-01",
      "assets": {
        "directory": ".",
@@ -157,7 +157,7 @@ Jika Anda ingin menggabungkan landing page ini ke dalam ekosistem Cloudflare Wor
 
 Untuk menghubungkan domain custom (misalnya `store.putraunyil.biz.id`):
 
-1. Masuk ke **Cloudflare Dashboard** → **Workers & Pages** → Pilih project `store-makunyil`.
+1. Masuk ke **Cloudflare Dashboard** → **Workers & Pages** → Pilih project `mak-unyil-store`.
 2. Klik tab **Custom Domains**.
 3. Klik **Set up a custom domain**.
 4. Masukkan nama domain: `store.putraunyil.biz.id`.
